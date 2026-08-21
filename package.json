@@ -1,0 +1,16 @@
+{
+  "name": "skillify-ai-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "chatbot": "python backend/chatbot/app.py",
+    "chatbot:api": "python backend/chatbot/chatbot.py --api",
+    "quiz:engine": "python backend/ai_quiz/skill-quiz/quiz_engine.py",
+    "quiz:api": "python backend/ai_quiz/skill-quiz/api.py",
+    "android:sync": "npm --prefix frontend run android:sync",
+    "android:open": "npm --prefix frontend run android:open"
+  }
+}

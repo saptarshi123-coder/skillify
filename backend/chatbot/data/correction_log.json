@@ -1,0 +1,1305 @@
+{
+  "corrections": [
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170250.7870002
+    },
+    {
+      "original": "i can definately help",
+      "corrected": "i can definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "i can definately help"
+        }
+      ],
+      "timestamp": 1787170250.825147
+    },
+    {
+      "original": "alot of people use this",
+      "corrected": "a lot of people use this",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of people"
+        }
+      ],
+      "timestamp": 1787170250.826416
+    },
+    {
+      "original": "i wont do that",
+      "corrected": "i won't do that",
+      "details": [
+        {
+          "original": "wont",
+          "corrected": "won't",
+          "probability": 0.85,
+          "context": "i wont do that"
+        }
+      ],
+      "timestamp": 1787170250.830818
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170250.8319402
+    },
+    {
+      "original": "i need to seperate them",
+      "corrected": "i need to separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "need to seperate them"
+        }
+      ],
+      "timestamp": 1787170250.84031
+    },
+    {
+      "original": "recieve the payment",
+      "corrected": "receive the payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve the payment"
+        }
+      ],
+      "timestamp": 1787170250.8514109
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787170250.8526661
+    },
+    {
+      "original": "i like writting code",
+      "corrected": "i like writing code",
+      "details": [
+        {
+          "original": "writting",
+          "corrected": "writing",
+          "probability": 0.99,
+          "context": "i like writting code"
+        }
+      ],
+      "timestamp": 1787170250.8638852
+    },
+    {
+      "original": "the enviroment matters",
+      "corrected": "the environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "the enviroment matters"
+        }
+      ],
+      "timestamp": 1787170250.874571
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170252.9329422
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787170252.9696472
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170253.0031612
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170298.483051
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170376.3358579
+    },
+    {
+      "original": "i can definately help",
+      "corrected": "i can definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "i can definately help"
+        }
+      ],
+      "timestamp": 1787170376.3643699
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170376.3664918
+    },
+    {
+      "original": "i wont do that",
+      "corrected": "i won't do that",
+      "details": [
+        {
+          "original": "wont",
+          "corrected": "won't",
+          "probability": 0.85,
+          "context": "i wont do that"
+        }
+      ],
+      "timestamp": 1787170376.368552
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170376.370213
+    },
+    {
+      "original": "i need to seperate them",
+      "corrected": "i need to separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "need to seperate them"
+        }
+      ],
+      "timestamp": 1787170376.377129
+    },
+    {
+      "original": "recieve the payment",
+      "corrected": "receive the payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve the payment"
+        }
+      ],
+      "timestamp": 1787170376.383683
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787170376.385598
+    },
+    {
+      "original": "i like writting code",
+      "corrected": "i like writing code",
+      "details": [
+        {
+          "original": "writting",
+          "corrected": "writing",
+          "probability": 0.99,
+          "context": "i like writting code"
+        }
+      ],
+      "timestamp": 1787170376.393632
+    },
+    {
+      "original": "the enviroment matters",
+      "corrected": "the environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "the enviroment matters"
+        }
+      ],
+      "timestamp": 1787170376.403286
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170379.9663281
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787170380.0153978
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170380.056658
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170380.092171
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170457.844385
+    },
+    {
+      "original": "i can definately help",
+      "corrected": "i can definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "i can definately help"
+        }
+      ],
+      "timestamp": 1787170457.8668969
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170457.869785
+    },
+    {
+      "original": "i wont do that",
+      "corrected": "i won't do that",
+      "details": [
+        {
+          "original": "wont",
+          "corrected": "won't",
+          "probability": 0.85,
+          "context": "i wont do that"
+        }
+      ],
+      "timestamp": 1787170457.872195
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170457.874893
+    },
+    {
+      "original": "i need to seperate them",
+      "corrected": "i need to separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "need to seperate them"
+        }
+      ],
+      "timestamp": 1787170457.883158
+    },
+    {
+      "original": "recieve the payment",
+      "corrected": "receive the payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve the payment"
+        }
+      ],
+      "timestamp": 1787170457.889845
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787170457.892241
+    },
+    {
+      "original": "the enviroment matters",
+      "corrected": "the environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "the enviroment matters"
+        }
+      ],
+      "timestamp": 1787170457.8988411
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787170461.93102
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170461.9712472
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170571.154986
+    },
+    {
+      "original": "i can definately help",
+      "corrected": "i can definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "i can definately help"
+        }
+      ],
+      "timestamp": 1787170571.1815329
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170571.184864
+    },
+    {
+      "original": "i wont do that",
+      "corrected": "i won't do that",
+      "details": [
+        {
+          "original": "wont",
+          "corrected": "won't",
+          "probability": 0.85,
+          "context": "i wont do that"
+        }
+      ],
+      "timestamp": 1787170571.1876721
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170571.1903858
+    },
+    {
+      "original": "i need to seperate them",
+      "corrected": "i need to separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "need to seperate them"
+        }
+      ],
+      "timestamp": 1787170571.197491
+    },
+    {
+      "original": "recieve the payment",
+      "corrected": "receive the payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve the payment"
+        }
+      ],
+      "timestamp": 1787170571.200408
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787170571.20364
+    },
+    {
+      "original": "the enviroment matters",
+      "corrected": "the environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "the enviroment matters"
+        }
+      ],
+      "timestamp": 1787170571.206966
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787170577.91606
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170577.958389
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170971.9145758
+    },
+    {
+      "original": "youre profile looks great",
+      "corrected": "you're profile looks great",
+      "details": [
+        {
+          "original": "youre",
+          "corrected": "you're",
+          "probability": 0.95,
+          "context": "youre profile looks"
+        }
+      ],
+      "timestamp": 1787170971.931892
+    },
+    {
+      "original": "i can definately help",
+      "corrected": "i can definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "i can definately help"
+        }
+      ],
+      "timestamp": 1787170971.9500532
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787170971.954745
+    },
+    {
+      "original": "i wont do that",
+      "corrected": "i won't do that",
+      "details": [
+        {
+          "original": "wont",
+          "corrected": "won't",
+          "probability": 0.85,
+          "context": "i wont do that"
+        }
+      ],
+      "timestamp": 1787170971.963592
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170971.968881
+    },
+    {
+      "original": "i need to seperate them",
+      "corrected": "i need to separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "need to seperate them"
+        }
+      ],
+      "timestamp": 1787170971.9857411
+    },
+    {
+      "original": "recieve the payment",
+      "corrected": "receive the payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve the payment"
+        }
+      ],
+      "timestamp": 1787170971.995417
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787170972.004243
+    },
+    {
+      "original": "the enviroment matters",
+      "corrected": "the environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "the enviroment matters"
+        }
+      ],
+      "timestamp": 1787170972.0157492
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787170976.47679
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787170976.506021
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787170976.5626261
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171005.188779
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171083.027997
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787171083.114698
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171083.185657
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787171083.397696
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787171320.5516999
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171320.594492
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787171320.6717582
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787171320.8924742
+    },
+    {
+      "original": "definately help",
+      "corrected": "definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "definately help"
+        }
+      ],
+      "timestamp": 1787171320.9302971
+    },
+    {
+      "original": "seperate them",
+      "corrected": "separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "seperate them"
+        }
+      ],
+      "timestamp": 1787171320.9715252
+    },
+    {
+      "original": "recieve payment",
+      "corrected": "receive payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve payment"
+        }
+      ],
+      "timestamp": 1787171321.022136
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787171321.064966
+    },
+    {
+      "original": "enviroment matters",
+      "corrected": "environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "enviroment matters"
+        }
+      ],
+      "timestamp": 1787171321.123451
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787171360.2554162
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171360.285355
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787171360.407239
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787171360.417599
+    },
+    {
+      "original": "definately help",
+      "corrected": "definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "definately help"
+        }
+      ],
+      "timestamp": 1787171360.4473479
+    },
+    {
+      "original": "seperate them",
+      "corrected": "separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "seperate them"
+        }
+      ],
+      "timestamp": 1787171360.476278
+    },
+    {
+      "original": "recieve payment",
+      "corrected": "receive payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve payment"
+        }
+      ],
+      "timestamp": 1787171360.505766
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787171360.534347
+    },
+    {
+      "original": "enviroment matters",
+      "corrected": "environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "enviroment matters"
+        }
+      ],
+      "timestamp": 1787171360.56619
+    },
+    {
+      "original": "i cant login",
+      "corrected": "i can't login",
+      "details": [
+        {
+          "original": "cant",
+          "corrected": "can't",
+          "probability": 0.85,
+          "context": "i cant login"
+        }
+      ],
+      "timestamp": 1787171360.628747
+    },
+    {
+      "original": "recieve my payment yet",
+      "corrected": "receive my payment yet",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve my payment"
+        }
+      ],
+      "timestamp": 1787171575.8702312
+    },
+    {
+      "original": "doesnt make sense",
+      "corrected": "doesn't make sense",
+      "details": [
+        {
+          "original": "doesnt",
+          "corrected": "doesn't",
+          "probability": 0.85,
+          "context": "doesnt make sense"
+        }
+      ],
+      "timestamp": 1787171575.919531
+    },
+    {
+      "original": "i want to loose weight",
+      "corrected": "i want to lose weight",
+      "details": [
+        {
+          "original": "loose",
+          "corrected": "lose",
+          "probability": 1,
+          "context": "want to loose weight"
+        }
+      ],
+      "timestamp": 1787171576.241697
+    },
+    {
+      "original": "alot of money",
+      "corrected": "a lot of money",
+      "details": [
+        {
+          "original": "alot",
+          "corrected": "a lot",
+          "probability": 0.99,
+          "context": "alot of money"
+        }
+      ],
+      "timestamp": 1787171576.258247
+    },
+    {
+      "original": "definately help",
+      "corrected": "definitely help",
+      "details": [
+        {
+          "original": "definately",
+          "corrected": "definitely",
+          "probability": 0.99,
+          "context": "definately help"
+        }
+      ],
+      "timestamp": 1787171576.303849
+    },
+    {
+      "original": "seperate them",
+      "corrected": "separate them",
+      "details": [
+        {
+          "original": "seperate",
+          "corrected": "separate",
+          "probability": 0.99,
+          "context": "seperate them"
+        }
+      ],
+      "timestamp": 1787171576.455667
+    },
+    {
+      "original": "recieve payment",
+      "corrected": "receive payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve payment"
+        }
+      ],
+      "timestamp": 1787171576.577941
+    },
+    {
+      "original": "happend yesterday",
+      "corrected": "happened yesterday",
+      "details": [
+        {
+          "original": "happend",
+          "corrected": "happened",
+          "probability": 0.99,
+          "context": "happend yesterday"
+        }
+      ],
+      "timestamp": 1787171576.630513
+    },
+    {
+      "original": "enviroment matters",
+      "corrected": "environment matters",
+      "details": [
+        {
+          "original": "enviroment",
+          "corrected": "environment",
+          "probability": 0.99,
+          "context": "enviroment matters"
+        }
+      ],
+      "timestamp": 1787171576.686056
+    },
+    {
+      "original": "i cant login",
+      "corrected": "i can't login",
+      "details": [
+        {
+          "original": "cant",
+          "corrected": "can't",
+          "probability": 0.85,
+          "context": "i cant login"
+        }
+      ],
+      "timestamp": 1787171576.815418
+    },
+    {
+      "original": "i cant login",
+      "corrected": "i can't login",
+      "details": [
+        {
+          "original": "cant",
+          "corrected": "can't",
+          "probability": 0.85,
+          "context": "i cant login"
+        }
+      ],
+      "timestamp": 1787171595.720067
+    },
+    {
+      "original": "recieve payment",
+      "corrected": "receive payment",
+      "details": [
+        {
+          "original": "recieve",
+          "corrected": "receive",
+          "probability": 0.99,
+          "context": "recieve payment"
+        }
+      ],
+      "timestamp": 1787171595.7419982
+    }
+  ],
+  "stats": {
+    "loose->lose": 13,
+    "definately->definitely": 8,
+    "alot->a lot": 11,
+    "wont->won't": 5,
+    "doesnt->doesn't": 15,
+    "seperate->separate": 8,
+    "recieve->receive": 17,
+    "happend->happened": 8,
+    "writting->writing": 2,
+    "enviroment->environment": 8,
+    "youre->you're": 1,
+    "cant->can't": 3
+  }
+}

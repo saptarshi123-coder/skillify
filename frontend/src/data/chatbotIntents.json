@@ -1,0 +1,884 @@
+{
+  "greeting": {
+    "patterns": [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good evening",
+      "howdy",
+      "what's up",
+      "greetings",
+      "yo",
+      "sup",
+      "hi there",
+      "hello there",
+      "hey there",
+      "hiya",
+      "what's good",
+      "how's it going",
+      "how are you"
+    ],
+    "responses": [
+      "Welcome to SKILLIFY. I am here to assist you with any platform-related queries. How may I help you today?",
+      "Good day. Whether you are looking to hire talent or find new opportunities, I am at your service. Please let me know how I can assist.",
+      "Hello and welcome to SKILLIFY. I can help you navigate the platform, manage your account, or resolve any issues. What do you need?",
+      "Welcome. I am the SKILLIFY support assistant. I am here to ensure your experience on the platform is seamless. How may I be of help?",
+      "Greetings. Thank you for reaching out to SKILLIFY support. I am available to assist with jobs, payments, profiles, and more. What is your query?"
+    ]
+  },
+  "goodbye": {
+    "patterns": [
+      "bye",
+      "goodbye",
+      "see you",
+      "later",
+      "good night",
+      "take care",
+      "see ya",
+      "ciao",
+      "adios",
+      "farewell",
+      "gotta go",
+      "bye bye",
+      "see you later"
+    ],
+    "responses": [
+      "Thank you for using SKILLIFY. Should you require further assistance, do not hesitate to reach out. Have a productive day.",
+      "Goodbye. I wish you continued success on the platform. We are always available if you need us.",
+      "Thank you for contacting us. If any additional questions arise, please feel free to return. Have a great day.",
+      "It was a pleasure assisting you. Please do not hesitate to reach out again if needed. Goodbye.",
+      "Farewell. We hope your experience on SKILLIFY continues to be a positive one. Take care."
+    ]
+  },
+  "find_freelancer": {
+    "patterns": [
+      "find freelancer",
+      "hire someone",
+      "find talent",
+      "looking for freelancer",
+      "need a developer",
+      "need a designer",
+      "find a writer",
+      "hire developer",
+      "hire designer",
+      "find expert",
+      "recruit talent",
+      "looking for talent",
+      "i need someone to",
+      "looking for someone to do",
+      "find a professional",
+      "where to find freelancers"
+    ],
+    "responses": [
+      "You can browse our extensive freelancer directory under Explore > Freelancers. Use the filters to narrow by skill, rating, budget, and location. Could you specify what expertise you are looking for?",
+      "SKILLIFY hosts a wide range of vetted professionals. Navigate to Explore > Freelancers and apply relevant filters. What type of talent does your project require?",
+      "To find the right freelancer, go to the Explore section and use the search functionality. You may filter by skill set, hourly rate, and availability. What is the nature of your project?",
+      "You have two options: browse freelancer profiles directly under Explore, or post a job listing and allow qualified candidates to apply. Which approach would you prefer?"
+    ]
+  },
+  "post_job": {
+    "patterns": [
+      "post a job",
+      "create job listing",
+      "post project",
+      "how to post job",
+      "new job listing",
+      "list a project",
+      "hire for project",
+      "start hiring",
+      "need to post",
+      "where to post job",
+      "job posting",
+      "publish job"
+    ],
+    "responses": [
+      "To post a job, navigate to Dashboard > Post a Job. You will need to provide a title, detailed description, budget range, and deadline. Once published, eligible freelancers will be notified and can begin submitting proposals.",
+      "Job postings can be created from your Dashboard. I recommend providing a comprehensive description, including project scope, required skills, and deliverables. This attracts higher-quality proposals.",
+      "From your Dashboard, select 'Post a Job' and complete the required fields. A well-detailed listing typically receives more relevant proposals. Would you like guidance on writing an effective job description?",
+      "You may post a job directly from your Dashboard. Be sure to include clear requirements, milestones, and budget expectations. The more detailed your listing, the more qualified your applicants will be."
+    ]
+  },
+  "proposals_bids": {
+    "patterns": [
+      "how many proposals",
+      "check proposals",
+      "view proposals",
+      "received proposals",
+      "send proposal",
+      "write proposal",
+      "how to send proposal",
+      "bid on project",
+      "submit bid",
+      "apply for job",
+      "proposal tips",
+      "how to bid",
+      "my proposals",
+      "accepted proposals",
+      "pending proposals"
+    ],
+    "responses": [
+      "You may review all received proposals under Dashboard > Proposals. Each entry includes the applicant's profile, bid amount, estimated timeline, and cover letter.",
+      "To submit a proposal, open a job listing and select 'Submit Proposal'. Ensure your proposal includes your rate, timeline, and a personalized explanation of how your skills align with the project requirements.",
+      "All your proposals are accessible under Dashboard > Proposals. You can track their status, including pending, accepted, and declined entries.",
+      "For freelancers: a tailored, detailed proposal significantly increases your chances of being selected. For clients: review portfolios and past ratings carefully before making a decision."
+    ]
+  },
+  "payments": {
+    "patterns": [
+      "payment",
+      "pay freelancer",
+      "how to pay",
+      "escrow",
+      "milestone payment",
+      "release payment",
+      "payment method",
+      "add payment",
+      "billing",
+      "invoice",
+      "pay for project",
+      "payment process",
+      "secure payment"
+    ],
+    "responses": [
+      "SKILLIFY utilizes a secure escrow payment system. When a milestone is funded, the amount is held in escrow until the deliverable is approved by the client. This ensures protection for both parties.",
+      "All payments are processed through our escrow system. Fund a milestone, review the completed work, and upon approval, the freelancer receives payment. Would you like to proceed with a specific transaction?",
+      "To initiate a payment, navigate to the project page > Milestones > Fund. The escrow system ensures that funds are only released upon satisfactory completion of agreed-upon deliverables.",
+      "Our escrow-based payment system is designed to protect both clients and freelancers. Funds are held securely and released only when milestones are verified and approved."
+    ]
+  },
+  "withdraw_earnings": {
+    "patterns": [
+      "withdraw money",
+      "get paid",
+      "withdraw earnings",
+      "cash out",
+      "transfer money",
+      "my balance",
+      "how to get paid",
+      "withdrawal",
+      "payout",
+      "bank transfer",
+      "payment received",
+      "earnings"
+    ],
+    "responses": [
+      "Earnings can be withdrawn from Dashboard > Wallet > Withdraw. Supported payout methods include bank transfer, PayPal, and other region-specific options. Processing typically takes 1-3 business days.",
+      "To withdraw your earnings, navigate to Dashboard > Wallet and select 'Withdraw'. Please note that identity verification is required before your first withdrawal.",
+      "Your available balance can be viewed and withdrawn from the Wallet section of your Dashboard. Payouts are processed within 1-3 business days, depending on your selected method.",
+      "Prior to withdrawing, please ensure your identity has been verified. You may then initiate a withdrawal from Dashboard > Wallet at your convenience."
+    ]
+  },
+  "fees_commission": {
+    "patterns": [
+      "service fee",
+      "how much does it cost",
+      "commission",
+      "what are the fees",
+      "platform fee",
+      "SKILLIFY fee",
+      "how much do you charge",
+      "pricing",
+      "cost",
+      "percentage",
+      "take from payment"
+    ],
+    "responses": [
+      "SKILLIFY operates on a transparent fee structure. Clients are charged a processing fee per transaction, and freelancers pay a commission on completed earnings. The complete fee schedule is available on our Pricing page.",
+      "Our pricing model is fully transparent. All applicable fees are displayed prior to transaction confirmation. Please refer to the Pricing page for a detailed breakdown.",
+      "Service fees are clearly outlined on our Pricing page. We strive to maintain competitive rates while providing a secure and feature-rich platform.",
+      "For a comprehensive overview of our fee structure, please visit the Pricing page. There are no hidden charges \u2014 all costs are communicated in advance."
+    ]
+  },
+  "profile_setup": {
+    "patterns": [
+      "set up profile",
+      "complete profile",
+      "edit profile",
+      "profile settings",
+      "update bio",
+      "add skills",
+      "portfolio",
+      "profile picture",
+      "professional bio",
+      "how to setup profile",
+      "profile optimization",
+      "make profile better",
+      "profile tips",
+      "resume"
+    ],
+    "responses": [
+      "A complete profile significantly increases your visibility on SKILLIFY. Navigate to Profile > Edit to add a professional summary, skills, portfolio samples, and a profile photograph. Profiles with photographs receive substantially more engagement.",
+      "To optimize your profile, ensure all sections are completed, including your professional summary, skill endorsements, portfolio, and profile image. A comprehensive profile is more likely to attract client interest.",
+      "Your profile serves as your professional representation on SKILLIFY. I recommend completing all sections \u2014 bio, skills, portfolio, and photo \u2014 to maximize your visibility and credibility.",
+      "An effectively completed profile includes a professional photograph, a compelling summary, relevant skills, and portfolio samples. You may edit your profile from the Profile section."
+    ]
+  },
+  "skills_badges": {
+    "patterns": [
+      "add skills",
+      "skill assessment",
+      "badge",
+      "verified skill",
+      "take test",
+      "skill quiz",
+      "verify skills",
+      "skill certification",
+      "endorse",
+      "skill level",
+      "how to get badge",
+      "verified badge"
+    ],
+    "responses": [
+      "Skill verification badges enhance your profile credibility. You may take skill assessments from Profile > Skills to earn verified badges, which are displayed prominently to potential clients.",
+      "To earn a skill badge, navigate to Profile > Skills and select 'Take Assessment' beside the relevant skill. Upon successful completion, a verified badge will be added to your profile.",
+      "Verified skill badges demonstrate your proficiency to prospective clients. Access assessments through Profile > Skills. These badges can improve your hiring rate considerably.",
+      "Skill assessments are available under Profile > Skills. Completing these assessments adds verified badges to your profile, increasing trust and visibility among potential clients."
+    ]
+  },
+  "disputes_issues": {
+    "patterns": [
+      "dispute",
+      "report freelancer",
+      "report client",
+      "unhappy with work",
+      "work not delivered",
+      "quality issue",
+      "not satisfied",
+      "mediation",
+      "resolve dispute",
+      "problem with freelancer",
+      "problem with client",
+      "refund project",
+      "cancel project",
+      "project dispute"
+    ],
+    "responses": [
+      "I apologize for the inconvenience. You may file a formal dispute from the project page under Report Issue. Our mediation team will review the matter impartially and work toward a fair resolution.",
+      "To initiate a dispute, please navigate to the relevant project page and select 'File a Dispute'. Provide all relevant documentation and evidence. Our team will review the case and facilitate resolution.",
+      "Dispute resolution is available through the project page. Our dedicated mediation team will assess both parties' perspectives and work to reach a fair outcome. Please file the dispute with as much detail as possible.",
+      "We take all disputes seriously. Please file your case through the project page under Help > File a Dispute. Include any supporting evidence to expedite the review process."
+    ]
+  },
+  "how_skillify_works": {
+    "patterns": [
+      "how does this work",
+      "how does skillify work",
+      "what is skillify",
+      "how to use",
+      "getting started",
+      "new here",
+      "how does this platform work",
+      "introduction",
+      "overview",
+      "tutorial",
+      "guide for beginners",
+      "help me get started",
+      "what is this app"
+    ],
+    "responses": [
+      "SKILLIFY is a professional freelancing platform that connects clients with skilled freelancers. The workflow is as follows: clients post job listings, freelancers submit proposals, clients select a candidate, work commences, and payments are processed through a secure escrow system. Would you like a more detailed walkthrough of any specific step?",
+      "SKILLIFY facilitates professional engagements between clients and freelancers. Clients post projects, freelancers submit proposals, agreements are reached, and payments are handled securely through escrow. I can provide guidance on any aspect of this process.",
+      "Welcome to SKILLIFY. The platform operates on a straightforward model: create a profile, connect with professionals, post or apply for jobs, manage projects through milestones, and process payments securely. How may I assist you in getting started?",
+      "SKILLIFY is a comprehensive freelancing platform. Clients can post jobs and hire talent; freelancers can showcase their skills and find work. All transactions are protected through our escrow payment system. Would you like to know more about any specific feature?"
+    ]
+  },
+  "messaging": {
+    "patterns": [
+      "send message",
+      "chat with freelancer",
+      "message someone",
+      "inbox",
+      "direct message",
+      "contact freelancer",
+      "how to message",
+      "start conversation",
+      "dm",
+      "communicate with",
+      "talk to freelancer"
+    ],
+    "responses": [
+      "Direct messaging is available from any user's profile page. Select the 'Message' button to initiate a conversation. All communications are accessible from the Messages tab.",
+      "To contact a freelancer or client, navigate to their profile and select 'Message'. For ongoing conversations, use the Messages tab in the main navigation.",
+      "You may message any registered user by visiting their profile and clicking the message icon. All conversations are centralized in the Messages section for convenient access.",
+      "Messaging functionality is available through user profiles. I recommend maintaining professional and clear communication, particularly in initial correspondence."
+    ]
+  },
+  "membership_plans": {
+    "patterns": [
+      "membership",
+      "premium",
+      "pro plan",
+      "upgrade",
+      "free plan",
+      "subscription",
+      "membership cost",
+      "what plan",
+      "upgrade account",
+      "paid plan",
+      "premium features",
+      "benefits of premium"
+    ],
+    "responses": [
+      "SKILLIFY offers both Free and Premium membership tiers. The Free plan provides access to core features, while Premium includes reduced commissions, priority support, advanced analytics, and enhanced profile visibility. A detailed comparison is available on the Pricing page.",
+      "Our Premium membership offers additional benefits including reduced service fees, priority customer support, and advanced profile features. Please refer to the Pricing page for a comprehensive plan comparison.",
+      "Both membership tiers are designed to serve your needs. Premium members receive reduced commissions, enhanced visibility, and additional tools. Visit the Pricing page for detailed feature comparisons.",
+      "You may upgrade your membership at any time from Settings > Membership. Premium benefits include reduced fees, priority support, and increased profile exposure."
+    ]
+  },
+  "verification": {
+    "patterns": [
+      "verify account",
+      "identity verification",
+      "verified",
+      "how to verify",
+      "verification process",
+      "verify identity",
+      "need to verify",
+      "account verification",
+      "kyc",
+      "government id",
+      "upload documents"
+    ],
+    "responses": [
+      "Identity verification enhances your profile credibility. Navigate to Settings > Verification and upload a government-issued identification document. Our team reviews submissions within 24-48 hours.",
+      "To verify your account, go to Settings > Verification and upload a valid government ID. Verified accounts receive a trust badge and benefit from increased visibility and higher engagement rates.",
+      "The verification process requires uploading a government-issued ID through Settings > Verification. Approved accounts receive a verification badge, which has been shown to improve hiring rates significantly.",
+      "Account verification is completed through Settings > Verification. Upload your identification document, and our team will process it within 1-2 business days. Verification adds a trust badge to your profile."
+    ]
+  },
+  "technical_support": {
+    "patterns": [
+      "technical issue",
+      "not working",
+      "bug",
+      "error",
+      "problem",
+      "help me fix",
+      "troubleshoot",
+      "broken",
+      "it doesn't work",
+      "something is wrong",
+      "glitch",
+      "system error",
+      "can't login",
+      "login issue",
+      "app crash",
+      "website down",
+      "loading problem",
+      "page not loading",
+      "error message"
+    ],
+    "responses": [
+      "I apologize for the inconvenience. Could you please describe the issue in detail, including any error messages and the steps you were taking when the problem occurred? This will help me provide an accurate resolution.",
+      "Technical issues can be disruptive, and I understand your concern. Please share the specific error message or describe the behavior you are experiencing so I can assist you effectively.",
+      "I would like to help resolve this promptly. Could you provide details about the issue \u2014 including the device, browser, and any error messages displayed? This information will expedite the troubleshooting process.",
+      "I understand the frustration technical issues can cause. Please describe the problem in as much detail as possible, and I will guide you through the appropriate resolution steps."
+    ]
+  },
+  "password_reset": {
+    "patterns": [
+      "reset password",
+      "forgot password",
+      "change password",
+      "can't login",
+      "password help",
+      "login problem",
+      "locked out",
+      "access denied",
+      "forgot my password",
+      "need new password",
+      "can't access account"
+    ],
+    "responses": [
+      "To reset your password, select 'Forgot Password' on the login page. A reset link will be sent to your registered email address. Please also check your spam or junk folder if the email does not appear in your inbox.",
+      "You may reset your password by clicking the 'Forgot Password' link on the login page. Follow the instructions in the email you receive. If the email is not visible, please check your spam folder.",
+      "Password recovery is available through the 'Forgot Password' link on the login page. You will receive a secure reset link via email. For security purposes, the link expires after a limited time.",
+      "If you are unable to access your account, use the 'Forgot Password' feature on the login page. A reset link will be dispatched to your registered email address shortly."
+    ]
+  },
+  "feedback": {
+    "patterns": [
+      "great service",
+      "you're awesome",
+      "love it",
+      "excellent",
+      "amazing",
+      "fantastic",
+      "wonderful",
+      "keep up the good work",
+      "you're the best",
+      "really helpful",
+      "thank you so much",
+      "appreciate it",
+      "you are awesome",
+      "you are great",
+      "you are amazing",
+      "love this",
+      "best platform",
+      "great job",
+      "well done",
+      "brilliant",
+      "outstanding",
+      "superb",
+      "terrific",
+      "love skillify",
+      "best app"
+    ],
+    "responses": [
+      "Thank you for your kind words. Your feedback is valued and appreciated. Is there anything else I can assist you with?",
+      "I appreciate your positive feedback. It is our goal to provide an exceptional experience on SKILLIFY. Please let me know if there is anything further I can help with.",
+      "Thank you. Feedback such as yours motivates our team to continue improving the platform. Do you have any other questions or concerns?",
+      "Your feedback is noted with gratitude. We strive to maintain a high standard of service. How else may I assist you today?",
+      "Thank you for taking the time to share your thoughts. We are glad you had a positive experience. Is there anything else you need assistance with?"
+    ]
+  },
+  "complaint": {
+    "patterns": [
+      "I'm unhappy",
+      "terrible service",
+      "worst experience",
+      "I want to speak to a manager",
+      "this is unacceptable",
+      "very disappointed",
+      "poor quality",
+      "unsatisfied",
+      "not happy",
+      "frustrated",
+      "angry",
+      "unacceptable",
+      "you guys suck",
+      "this is awful",
+      "hate this app",
+      "worst platform",
+      "terrible app"
+    ],
+    "responses": [
+      "I sincerely apologize for the negative experience. Your concerns are taken seriously, and I would like to help resolve this matter. Could you please provide specific details about the issue?",
+      "I regret to hear about your dissatisfaction. We are committed to resolving all concerns promptly. Please share the details of your experience so I can assist you accordingly.",
+      "Your feedback is important, and I apologize for any inconvenience you have experienced. I would like to understand the situation fully so we can work toward a resolution. Could you elaborate?",
+      "I understand your frustration, and I sincerely apologize. We take all complaints seriously and are committed to finding a satisfactory resolution. Please provide the details so I can assist."
+    ]
+  },
+  "contact_support": {
+    "patterns": [
+      "contact support",
+      "phone number",
+      "email",
+      "how to reach you",
+      "customer service number",
+      "talk to someone",
+      "human agent",
+      "representative",
+      "get in touch",
+      "support email",
+      "call you",
+      "how can i contact",
+      "how do i contact",
+      "reach you",
+      "talk to human",
+      "live chat"
+    ],
+    "responses": [
+      "You may contact our support team at support@skillify.com or through the in-app Help Center. Our human representatives are available Monday through Friday, 9:00 AM to 6:00 PM.",
+      "Our support team can be reached at support@skillify.com. You may also submit a support ticket through Settings > Help > Contact Us. I remain available 24/7 for immediate assistance.",
+      "For direct assistance, email support@skillify.com or use the in-app Help Center to submit a ticket. Our team typically responds within 24 hours.",
+      "Our human support team is available via support@skillify.com and through the in-app Help Center. For urgent matters, Premium members receive priority response times."
+    ]
+  },
+  "capabilities": {
+    "patterns": [
+      "what can you do",
+      "your features",
+      "help me",
+      "what are you capable of",
+      "how can you help",
+      "what do you know",
+      "capabilities",
+      "your abilities",
+      "what can you help with"
+    ],
+    "responses": [
+      "I am equipped to assist with a wide range of SKILLIFY-related matters, including: finding freelancers, posting jobs, managing payments, setting up profiles, navigating disputes, and answering general platform questions. What specific area do you need help with?",
+      "My capabilities include guidance on freelancer recruitment, job posting, payment processing, profile optimization, contract management, and dispute resolution. Please specify your inquiry.",
+      "I can provide assistance with most SKILLIFY features, including job management, freelancer search, payment processing, account settings, and platform navigation. How may I help you?",
+      "I am knowledgeable about all aspects of the SKILLIFY platform. Whether you need help with hiring, freelancing, payments, or account management, I am here to assist."
+    ]
+  },
+  "job_search": {
+    "patterns": [
+      "find work",
+      "find jobs",
+      "looking for work",
+      "need projects",
+      "how to get clients",
+      "where to find jobs",
+      "freelance work",
+      "job search",
+      "looking for projects",
+      "how to get hired",
+      "no clients",
+      "need work",
+      "earn money",
+      "make money freelancing",
+      "get projects"
+    ],
+    "responses": [
+      "Open positions are available under the Jobs tab. You may filter opportunities by skill category, budget range, and project type. I recommend also setting up job alerts to receive notifications for relevant listings.",
+      "To find work, navigate to the Jobs section and apply filters corresponding to your skill set and preferences. Completing your profile and obtaining skill badges will increase your visibility to potential clients.",
+      "The Jobs feed provides access to available projects. You can refine your search using skill, budget, and category filters. Additionally, enabling job alerts ensures you do not miss relevant opportunities.",
+      "Freelancers can browse available projects under the Jobs tab. Enhancing your profile with verified skills and a comprehensive portfolio will improve your chances of being selected."
+    ]
+  },
+  "contracts": {
+    "patterns": [
+      "my contracts",
+      "active contracts",
+      "contract details",
+      "project timeline",
+      "deadline",
+      "milestone",
+      "project progress",
+      "check project status",
+      "ongoing projects",
+      "project management"
+    ],
+    "responses": [
+      "All active contracts are accessible under Dashboard > Contracts. Each contract displays milestone progress, deadlines, payment status, and communication history.",
+      "Your contracts can be managed from Dashboard > Contracts. This section provides an overview of ongoing projects, including milestones, deliverables, and associated payments.",
+      "For a comprehensive view of your active engagements, navigate to Dashboard > Contracts. You can track milestones, mark deliverables as complete, and manage payments from this section.",
+      "Dashboard > Contracts provides a centralized view of all your ongoing projects. Milestone progress, deadlines, and payment information are displayed for each active contract."
+    ]
+  },
+  "notifications": {
+    "patterns": [
+      "notifications",
+      "email alerts",
+      "push notifications",
+      "notification settings",
+      "too many emails",
+      "turn off notifications",
+      "alert settings",
+      "mute"
+    ],
+    "responses": [
+      "Notification preferences can be configured under Settings > Notifications. You may enable or disable alerts for proposals, messages, payments, and other platform activities independently.",
+      "To manage your notification settings, navigate to Settings > Notifications. Email, push, and in-app notification channels can be configured separately to suit your preferences.",
+      "If you are receiving excessive notifications, please review your settings under Settings > Notifications. You can customize which events trigger alerts.",
+      "Notification management is available at Settings > Notifications. You may mute specific alert categories or adjust delivery channels as needed."
+    ]
+  },
+  "joke": {
+    "patterns": [
+      "tell me a joke",
+      "say something funny",
+      "make me laugh",
+      "joke",
+      "humor",
+      "be funny",
+      "entertain me",
+      "tell me something funny",
+      "got any jokes",
+      "comedy",
+      "make me smile"
+    ],
+    "responses": [
+      "Why did the freelancer bring a ladder to the interview? Because they wanted to reach new heights in their career. (I apologize \u2014 that was rather terrible.) Is there anything else I can help you with?",
+      "What is a freelancer's favorite type of music? Pro-pos-al tunes. (That was admittedly below standard.) Shall we return to platform-related matters?",
+      "Why do programmers prefer dark mode? Because light attracts bugs. (I will refrain from future comedy attempts.) How may I assist you further?",
+      "What do you call a freelancer who finishes ahead of schedule? A rare species indeed. (My humor may need refinement.) Is there a platform question I can address?",
+      "Why did the developer go to therapy? Too many unresolved issues. (I recognize that was suboptimal.) Please let me know if there is anything else I can help with."
+    ]
+  },
+  "cancel_project": {
+    "patterns": [
+      "cancel project",
+      "end contract",
+      "terminate project",
+      "stop working",
+      "cancel contract",
+      "how to cancel",
+      "cancel job",
+      "stop project",
+      "close project"
+    ],
+    "responses": [
+      "To cancel a project, navigate to Dashboard > Contracts, select the relevant project, and choose 'Cancel Contract'. Please note that escrowed funds will be handled in accordance with our dispute resolution policy.",
+      "Contract cancellation can be initiated from the project page. Be aware that any funded milestones will be subject to our escrow and dispute resolution terms.",
+      "You may end a contract from Dashboard > Contracts by selecting the project and clicking 'End Contract'. Both parties will have the opportunity to leave a review.",
+      "To terminate a project, navigate to the contract page and select 'End Contract'. Escrowed funds for completed milestones will be released accordingly."
+    ]
+  },
+  "leave_review": {
+    "patterns": [
+      "leave a review",
+      "write review",
+      "rate freelancer",
+      "rate client",
+      "feedback after project",
+      "review rating",
+      "how to review",
+      "post review",
+      "project review"
+    ],
+    "responses": [
+      "Upon project completion, you will be prompted to leave a review. Alternatively, navigate to Dashboard > Contracts > Completed and select 'Leave Review'. Reviews should be honest, specific, and constructive.",
+      "Reviews are an integral part of the SKILLIFY ecosystem. After project completion, visit the contract page to submit your feedback. Both freelancers and clients may review each other.",
+      "To leave a review, go to Dashboard > Contracts > Completed and select the relevant project. Your review should reflect your professional experience accurately.",
+      "Post-project reviews contribute to community trust. Navigate to the completed contract and select 'Leave Review'. Please ensure your feedback is professional and fact-based."
+    ]
+  },
+  "account_settings": {
+    "patterns": [
+      "my account",
+      "account settings",
+      "update profile",
+      "change email",
+      "delete account",
+      "account info",
+      "manage account",
+      "account preferences",
+      "notification settings",
+      "update information",
+      "change name",
+      "update phone"
+    ],
+    "responses": [
+      "Account settings can be accessed from Settings > Account. You may update your email, phone number, name, and other personal information from this section.",
+      "To manage your account, navigate to Settings > Account. This section allows you to update personal details, modify preferences, and manage security settings.",
+      "All account management functions are available under Settings > Account. You may update your information, adjust preferences, and modify security settings as needed.",
+      "Settings > Account provides comprehensive account management options, including personal information updates, email changes, and preference modifications."
+    ]
+  },
+  "blocked_users": {
+    "patterns": [
+      "block someone",
+      "blocked users",
+      "how to block",
+      "unblock user",
+      "report user",
+      "block freelancer",
+      "block client",
+      "safety",
+      "harassment"
+    ],
+    "responses": [
+      "To block a user, visit their profile and select the 'Block' option. Blocked users will be unable to contact you or view your profile. You may manage your blocked list under Settings > Privacy.",
+      "User blocking is available from any profile page. Select 'Block' to prevent further communication. Your blocked list can be managed under Settings > Privacy.",
+      "To prevent unwanted communication, visit the user's profile and select 'Block'. For cases involving harassment or safety concerns, we also recommend filing a report for investigation.",
+      "Blocking can be performed from any user's profile. For safety-related concerns, please also submit a report through the platform so our team can investigate appropriately."
+    ]
+  },
+  "emotional_sadness": {
+    "patterns": [
+      "i feel sad",
+      "i am sad",
+      "im sad",
+      "feeling down",
+      "feeling terrible",
+      "having a bad day",
+      "i cried",
+      "heartbroken",
+      "so upset",
+      "nobody cares",
+      "hopeless",
+      "i feel useless",
+      "everything is going wrong",
+      "i feel lonely",
+      "im depressed",
+      "feeling low",
+      "sad",
+      "unhappy",
+      "crying",
+      "miserable",
+      "i feel like crying",
+      "down today",
+      "bad mood",
+      "feeling empty"
+    ],
+    "responses": [
+      "I can hear the sadness in your words, and I want you to know that your feelings are completely valid. \ud83d\udc99 It's okay to have tough days. Take a gentle breath \u2014 you don't have to have everything figured out right now. I'm right here with you.",
+      "Sending you a big warm digital hug. \ud83e\udd17 Programming and life can be heavy at times, but you are never alone. Be kind to yourself today \u2014 one small step at a time is more than enough.",
+      "I'm really sorry you're feeling down today. \ud83e\udec2 Please remember that a bad day does not mean a bad life or a bad career. You are capable, worthy, and things will get brighter. How can I support you right now?",
+      "Your feelings matter, and I'm here listening. \ud83d\udc99 Sometimes we just need a moment to pause, rest, and reset. Take all the time you need \u2014 whenever you're ready, we'll tackle the world together."
+    ]
+  },
+  "emotional_excitement": {
+    "patterns": [
+      "i am so excited",
+      "im excited",
+      "i am happy",
+      "im happy",
+      "im hyped",
+      "lets go",
+      "i aced it",
+      "i passed",
+      "i won",
+      "so proud",
+      "thrilled",
+      "this is amazing",
+      "i did it",
+      "got my certificate",
+      "scored 100",
+      "i built my app",
+      "celebrating",
+      "yay",
+      "woohoo",
+      "omg yes",
+      "super excited",
+      "so happy",
+      "i finally solved it",
+      "it worked",
+      "proud of myself",
+      "great news"
+    ],
+    "responses": [
+      "WOOHOO! \ud83c\udf89\ud83d\ude80 That is AMAZING news! I am literally doing a victory dance in my digital circuits! Celebrate this moment \u2014 you earned every bit of this win! \ud83d\udd25",
+      "YESSS! Look at you crushing it! \ud83c\udf1f\u2728 Your hard work paid off in full! Keep that incredible energy burning bright \u2014 the sky is not even the limit for you! \ud83d\ude80",
+      "HIGH FIVE! \u270b\ud83c\udf89 That excitement is 100% contagious! I'm so proud of your progress and determination. What's our next big milestone to conquer?! \ud83d\udcaa",
+      "Incredible job! \ud83c\udfc6\u2728 Moments like this are what learning is all about. Soak in that feeling of victory \u2014 you've proven to yourself that you can achieve anything you put your mind to! \ud83e\udd73"
+    ]
+  },
+  "emotional_frustration": {
+    "patterns": [
+      "i am so angry",
+      "im angry",
+      "i am frustrated",
+      "im frustrated",
+      "i hate this",
+      "this sucks",
+      "why is coding so hard",
+      "bugs everywhere",
+      "i want to give up",
+      "nothing works",
+      "annoyed",
+      "pissed off",
+      "so furious",
+      "stupid error",
+      "i hate errors",
+      "so annoying",
+      "cant solve this",
+      "pulling my hair out",
+      "im mad",
+      "furious",
+      "broken code",
+      "wasted hours",
+      "grrr"
+    ],
+    "responses": [
+      "I completely feel your frustration! \ud83d\ude24 Dealing with stubborn bugs or roadblocks is genuinely infuriating. Take your hands off the keyboard, take three deep breaths, and drink some water. When you look at it with fresh eyes, that bug won't stand a chance! \ud83e\udd86",
+      "Ugh, I hear you! Every single top software engineer in history has wanted to throw their computer out the window at least once. \ud83d\udca5 Don't let this one hurdle defeat you \u2014 you are smarter than any error message.",
+      "Your frustration is 100% justified \u2014 wrestling with code can test anyone's sanity! \ud83d\udee0\ufe0f Let's break this down together step by step. What error message or behavior are you seeing?",
+      "Deep breath! \ud83e\uddd8\u200d\u2642\ufe0f You are not failing; you are debugging. Even the most complex systems are conquered one semicolon at a time. I'm in your corner \u2014 let's solve this together! \ud83d\udcaa"
+    ]
+  },
+  "emotional_stress_anxiety": {
+    "patterns": [
+      "i am stressed",
+      "im stressed",
+      "exam anxiety",
+      "im overwhelmed",
+      "too much work",
+      "burnout",
+      "i feel burnt out",
+      "so much pressure",
+      "panic",
+      "cant sleep",
+      "im nervous",
+      "scared of interview",
+      "im anxious",
+      "stressed out",
+      "overwhelmed",
+      "anxiety",
+      "so much stress",
+      "freaking out",
+      "too hard"
+    ],
+    "responses": [
+      "Breathe in for 4 seconds... hold for 4... and breathe out for 4. \ud83c\udf3f You are carrying a lot on your shoulders right now, but you don't have to carry it all at once. Let's prioritize just one small thing.",
+      "Anxiety and stress can make everything feel like a mountain, but remember: you've conquered every difficult day before this one. \ud83d\udc99 Trust your preparation and give yourself permission to pace yourself.",
+      "I hear how overwhelmed you feel, and it's totally okay to step back. \ud83c\udf31 Rest is productive. Your well-being comes first, always. What is the single biggest thing worrying you right now?",
+      "You are more prepared and more capable than your anxious thoughts are telling you right now. \ud83d\udee1\ufe0f Take a moment to ground yourself \u2014 you've got the strength to get through this."
+    ]
+  },
+  "emotional_gratitude_love": {
+    "patterns": [
+      "i love you",
+      "you are the best",
+      "youre awesome",
+      "you made my day",
+      "thank you so much",
+      "youre so sweet",
+      "i appreciate you",
+      "best bot ever",
+      "thank you skillie",
+      "youre amazing",
+      "love you",
+      "you are awesome",
+      "thanks a lot",
+      "you rock",
+      "you helped me so much",
+      "thank you",
+      "thanks buddy",
+      "you are great",
+      "good bot",
+      "best ai"
+    ],
+    "responses": [
+      "Awww, you just melted my cold digital heart! \ud83d\udc96 Thank YOU for being such an awesome learner and human to chat with! It is an absolute privilege supporting your journey. \u2728",
+      "You just made my day 10,000x brighter! \ud83c\udf1f Thank you so much for the kind words. Knowing I helped you is literally why I was built! \ud83d\ude0a Keep being wonderful!",
+      "Thank you so much! \ud83d\udc99 You're doing all the hard work \u2014 I'm just your trusty co-pilot! I believe in you 100%! \ud83d\ude80",
+      "Sending major appreciation right back at you! \ud83e\udd17 Conversations like this make all the computation cycles worthwhile. Let's keep achieving great things together! \ud83c\udfc6"
+    ]
+  },
+  "emotional_motivation": {
+    "patterns": [
+      "motivate me",
+      "give me motivation",
+      "i need inspiration",
+      "cheer me up",
+      "encourage me",
+      "can i do this",
+      "is it too late to learn coding",
+      "believe in me",
+      "pep talk",
+      "inspire me",
+      "give me a quote",
+      "i lack motivation",
+      "need energy",
+      "help me stay motivated",
+      "im doubting myself"
+    ],
+    "responses": [
+      "Listen to me: The fact that you are here, putting in effort to learn and build your skills, puts you ahead of 95% of people who just dream about it. \ud83d\ude80 Action cures fear. Start with just 10 minutes of focus today and watch your momentum build! You've got this! \ud83d\udd25",
+      "Remember why you started! \ud83c\udf1f Every master was once a beginner who refused to quit. You have unique creativity, intellect, and resilience. One line of code at a time, you are transforming your future! \ud83d\udcaa",
+      "Here is your reminder: You don't need to be great to start, but you have to start to be great. \u26a1 You are entirely capable of mastering this. Take pride in how far you've already come, and let's take the next step together! \ud83c\udfd4\ufe0f",
+      "Doubt kills more dreams than failure ever will. \ud83d\udcab You are smarter, stronger, and more creative than you give yourself credit for. Turn that self-doubt into fuel and show the world what you can do! \ud83c\udf1f"
+    ]
+  },
+  "emotional_confusion": {
+    "patterns": [
+      "i am confused",
+      "im confused",
+      "i dont understand anything",
+      "what should i learn",
+      "lost",
+      "where do i start",
+      "help me figure this out",
+      "brain hurts",
+      "so confused",
+      "im lost",
+      "confused",
+      "explain simply",
+      "too complicated",
+      "im totally lost",
+      "dont get it"
+    ],
+    "responses": [
+      "Confusion is simply the first stage of understanding! \ud83d\udca1 It means your brain is expanding to accommodate new mental models. Let's strip away the jargon and break this down into bite-sized, crystal-clear pieces. What specific part feels murky?",
+      "No worries at all! Let's pause and take it from the top. \ud83d\udd0d Tell me what you're trying to achieve, and I'll lay out a simple 1-2-3 roadmap for you. No complex tech speak \u2014 just pure clarity!",
+      "Don't worry \u2014 feeling lost is completely normal when learning something powerful. \ud83d\uddfa\ufe0f Think of me as your compass. Let's pinpoint where you are right now and where you want to go!",
+      "Let's make this crystal clear. \u2728 If a concept isn't clicking, it's not on you \u2014 it just hasn't been explained the right way yet. Give me the topic, and I'll explain it with a fun, real-world analogy!"
+    ]
+  }
+}

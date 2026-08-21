@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Signature Red Branding - #960018 Carmine Red */
+    --color-primary: 150 0 24;           /* #960018 Carmine Red */
+    --color-primary-container: 176 0 28; /* #b0001c */
+    --color-on-primary: 255 255 255;
+    --color-on-primary-container: 254 226 226;
+    --color-primary-fixed: 150 0 24;     /* #960018 Exact Same Red */
+    --color-primary-fixed-dim: 176 0 28;
+    --color-on-primary-fixed: 255 255 255;
+    --color-on-primary-fixed-variant: 150 0 24;
+    --color-inverse-primary: 150 0 24;
+
+    /* Light Mode Palette */
+    --color-background: 250 248 246;     /* #faf8f6 */
+    --color-on-background: 24 24 27;     /* #18181b */
+
+    --color-surface: 255 255 255;        /* #ffffff */
+    --color-surface-dim: 241 239 236;
+    --color-surface-bright: 255 255 255;
+    --color-surface-container-lowest: 255 255 255;
+    --color-surface-container-low: 248 246 243;
+    --color-surface-container: 242 239 235;
+    --color-surface-container-high: 235 231 226;
+    --color-surface-container-highest: 226 221 214;
+    
+    --color-on-surface: 24 24 27;
+    --color-on-surface-variant: 82 82 91;
+    --color-inverse-surface: 39 39 42;
+    --color-inverse-on-surface: 244 244 245;
+    --color-surface-tint: 150 0 24;
+
+    --color-secondary: 100 100 110;
+    --color-secondary-container: 240 238 235;
+    --color-on-secondary: 255 255 255;
+    --color-on-secondary-container: 60 60 70;
+    --color-secondary-fixed: 240 238 235;
+    --color-secondary-fixed-dim: 215 210 205;
+    --color-on-secondary-fixed: 24 24 27;
+    --color-on-secondary-fixed-variant: 60 60 70;
+
+    --color-outline: 161 161 170;
+    --color-outline-variant: 228 228 231;
+
+    --color-error: 150 0 24;
+    --color-error-container: 254 226 226;
+    --color-on-error: 255 255 255;
+    --color-on-error-container: 153 27 27;
+  }
+
+  html.dark, :root.dark, .dark {
+    /* SIGNATURE RED BRANDING - #960018 FOR DARK MODE */
+    --color-primary: 150 0 24;           /* #960018 Carmine Red */
+    --color-primary-container: 176 0 28; /* #b0001c */
+    --color-on-primary: 255 255 255;     /* #ffffff Crisp White */
+    --color-on-primary-container: 255 228 230;
+    --color-primary-fixed: 150 0 24;     /* #960018 Exact Same Red */
+    --color-primary-fixed-dim: 176 0 28;
+    --color-on-primary-fixed: 255 255 255;
+    --color-on-primary-fixed-variant: 150 0 24;
+    --color-inverse-primary: 150 0 24;
+
+    /* REFINED MODERN DARK MODE - LESS PITCH BLACK, SLEEK SLATE & CHARCOAL */
+    --color-background: 24 26 32;        /* #181a20 Slate / Charcoal Background */
+    --color-on-background: 245 246 248;  /* #f5f6f8 Crisp Light text */
+
+    /* HEADER & SURFACES: Sleek layered dark tones instead of #000000 */
+    --color-surface: 28 31 39;           /* #1c1f27 Elevated Header & Navbar */
+    --color-surface-dim: 20 22 28;       /* #14161c */
+    --color-surface-bright: 38 42 53;    /* #262a35 */
+    --color-surface-container-lowest: 24 26 32; /* #181a20 */
+    --color-surface-container-low: 29 32 40;    /* #1d2028 */
+    --color-surface-container: 34 38 48;        /* #222630 Base Card */
+    --color-surface-container-high: 40 45 57;   /* #282d39 Elevated Card */
+    --color-surface-container-highest: 48 54 68;/* #303644 Highlight / Pill Card */
+
+    --color-on-surface: 245 246 248;         /* #f5f6f8 Clean High-Contrast Text */
+    --color-on-surface-variant: 175 182 196; /* #afb6c4 Legible Soft Gray */
+    --color-inverse-surface: 34 38 48;
+    --color-inverse-on-surface: 245 246 248;
+    --color-surface-tint: 150 0 24;
+
+    --color-secondary: 156 163 175;
+    --color-secondary-container: 40 45 57;
+    --color-on-secondary: 255 255 255;
+    --color-on-secondary-container: 229 231 235;
+    --color-secondary-fixed: 40 45 57;
+    --color-secondary-fixed-dim: 156 163 175;
+    --color-on-secondary-fixed: 245 246 248;
+    --color-on-secondary-fixed-variant: 175 182 196;
+
+    --color-outline: 75 85 99;
+    --color-outline-variant: 55 65 81;
+
+    --color-error: 255 84 73;
+    --color-error-container: 147 0 10;
+    --color-on-error: 255 255 255;
+    --color-on-error-container: 255 218 214;
+  }
+
+  body {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-on-background));
+    font-family: 'Hanken Grotesk', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* High Specificity Dark Mode Overrides - Softened Slate & Charcoal */
+html.dark, html.dark body, html.dark #root {
+  background-color: #181a20 !important;
+  color: #f5f6f8 !important;
+}
+
+html.dark .bg-background {
+  background-color: #181a20 !important;
+}
+
+/* Header & Nav in Dark Mode: Refined Deep Slate (#1c1f27) instead of pitch black */
+html.dark header,
+html.dark nav,
+html.dark .bg-surface {
+  background-color: #1c1f27 !important;
+}
+
+html.dark .bg-surface-container-lowest {
+  background-color: #181a20 !important;
+}
+
+html.dark .bg-surface-container-low {
+  background-color: #1d2028 !important;
+}
+
+html.dark .bg-surface-container {
+  background-color: #222630 !important;
+}
+
+html.dark .bg-surface-container-high {
+  background-color: #282d39 !important;
+}
+
+html.dark .bg-surface-container-highest {
+  background-color: #303644 !important;
+}
+
+html.dark .text-on-surface {
+  color: #f5f6f8 !important;
+}
+
+html.dark .border-surface-variant\/40,
+html.dark .border-surface-variant\/50,
+html.dark .border-surface-variant\/60,
+html.dark .border-surface-variant\/70,
+html.dark .border-surface-variant {
+  border-color: rgba(255, 255, 255, 0.09) !important;
+}
+
+html.dark .border-outline-variant\/60,
+html.dark .border-outline-variant\/70,
+html.dark .border-outline-variant\/80,
+html.dark .border-outline-variant {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Carmine Red (#960018) Button Glow & Hover Styles */
+button.bg-primary, .bg-primary, a.bg-primary {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
+  filter: brightness(1.12);
+}
+
+.dark button.bg-primary, .dark .bg-primary, .dark a.bg-primary {
+  box-shadow: 0 4px 16px 0 rgba(150, 0, 24, 0.40);
+}
+
+.dark button.bg-primary:hover, .dark .bg-primary:hover, .dark a.bg-primary:hover {
+  box-shadow: 0 6px 22px 0 rgba(150, 0, 24, 0.55);
+  filter: brightness(1.15);
+}
+
+/* Animations */
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(154, 0, 2, 0.2);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(154, 0, 2, 0.4);
+  }
+}
+
+.breathe-animation {
+  animation: breathe 3s ease-in-out infinite alternate;
+}
+
+@keyframes fillBar {
+  0% { width: 0%; opacity: 0.8; }
+  50% { width: 70%; opacity: 1; }
+  100% { width: 100%; opacity: 1; }
+}
+
+.loading-bar-fill {
+  animation: fillBar 2.2s ease-in-out infinite;
+}
+
+@keyframes spin-pause {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spin-pause-animation {
+  animation: spin-pause 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Custom UI Polish */
+.lift-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lift-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px 0 rgba(111, 0, 1, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(228, 190, 184, 0.4);
+}
+
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.90);
+  border-color: rgba(60, 60, 60, 0.6);
+}
+
+/* Hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Material Symbols fill utility */
+.icon-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.icon-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
