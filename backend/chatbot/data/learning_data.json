@@ -12,14 +12,14 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 207,
+    "total_messages": 220,
     "avg_conversation_length": 0,
     "top_intents": {
-      "greeting": 38,
+      "greeting": 45,
       "find_freelancer": 22,
       "fees_commission": 4,
       "joke": 13,
-      "unknown": 52,
+      "unknown": 54,
       "feedback": 19,
       "proposals_bids": 4,
       "goodbye": 5,
@@ -37,7 +37,7 @@
       "emotional_confusion": 2,
       "emotional_frustration": 1,
       "emotional_motivation": 1,
-      "emotional_gratitude_love": 3
+      "emotional_gratitude_love": 7
     },
     "common_phrases": {},
     "peak_hours": {},
@@ -480,33 +480,6 @@
     ],
     "terminal_user": [
       {
-        "step": 1,
-        "data": {
-          "intent": "greeting",
-          "confidence": 1.0,
-          "sentiment": "negative"
-        },
-        "timestamp": 1787168892.393875
-      },
-      {
-        "step": 2,
-        "data": {
-          "intent": "fees_commission",
-          "confidence": 0.95,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787168892.396078
-      },
-      {
-        "step": 1,
-        "data": {
-          "intent": "greeting",
-          "confidence": 1.0,
-          "sentiment": "negative"
-        },
-        "timestamp": 1787169540.620963
-      },
-      {
         "step": 2,
         "data": {
           "intent": "greeting",
@@ -613,6 +586,78 @@
           "sentiment": "negative"
         },
         "timestamp": 1787171595.828732
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787412315.2178366
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787412332.9748487
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "emotional_gratitude_love",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787412340.8524578
+      },
+      {
+        "step": 4,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787412355.8274632
+      },
+      {
+        "step": 5,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787412365.637663
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787412460.1561966
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787412561.05232
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787412676.5969224
       }
     ],
     "test": [
@@ -1168,6 +1213,53 @@
         },
         "timestamp": 1787348201.8579636
       }
+    ],
+    "student.coder@gmail.com": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787412928.935909
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "emotional_gratitude_love",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787412935.894092
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "emotional_gratitude_love",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787412961.1218407
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787413322.7529926
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "emotional_gratitude_love",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787413331.7781382
+      }
     ]
   },
   "user_profiles": {
@@ -1203,7 +1295,7 @@
     },
     "terminal_user": {
       "first_seen": 1787168892.392353,
-      "total_messages": 15,
+      "total_messages": 23,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1246,6 +1338,12 @@
     "test_user_emotion": {
       "first_seen": 1787348168.184749,
       "total_messages": 14,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "student.coder@gmail.com": {
+      "first_seen": 1787412928.9344635,
+      "total_messages": 5,
       "preferred_intents": [],
       "sentiment_history": []
     }

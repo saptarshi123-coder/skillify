@@ -4,13 +4,17 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
+    "dev:all": "concurrently -k -n \"CHATBOT,FRONTEND\" -c \"cyan,green\" \"npm run chatbot\" \"npm run dev\"",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "chatbot": "python backend/chatbot/app.py",
-    "chatbot:api": "python backend/chatbot/chatbot.py --api",
-    "quiz:engine": "python backend/ai_quiz/skill-quiz/quiz_engine.py",
-    "quiz:api": "python backend/ai_quiz/skill-quiz/api.py",
+    "chatbot": "bash backend/chatbot/start.sh",
+    "chatbot:api": "backend/chatbot/venv/bin/python backend/chatbot/chatbot.py --api",
+    "quiz:engine": "backend/chatbot/venv/bin/python backend/ai_quiz/skill-quiz/quiz_engine.py",
+    "quiz:api": "backend/chatbot/venv/bin/python backend/ai_quiz/skill-quiz/api.py",
     "android:sync": "npm --prefix frontend run android:sync",
     "android:open": "npm --prefix frontend run android:open"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }
