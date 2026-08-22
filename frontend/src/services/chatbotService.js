@@ -420,27 +420,22 @@ class ChatbotService {
   }
 
   async checkBackendHealth(force = false) {
-    // If running in APK native environment, bypass network check to avoid WebView lag
-    if (isMobileNative()) {
-      this.isBackendOnline = false;
-      return { online: false, version: 'Local Standalone Engine' };
-    }
-
     const now = Date.now();
     if (!force && now - this.lastHealthCheck < 8000) {
       return { online: this.isBackendOnline, version: this.backendVersion };
     }
 
     this.lastHealthCheck = now;
+
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
 
       let res;
       try {
-        res = await fetch(`${API_BASE}/health`, { signal: controller.signal });
-      } catch (err) {
         res = await fetch(`${DIRECT_API_BASE}/health`, { signal: controller.signal });
+      } catch (err) {
+        res = await fetch(`${API_BASE}/health`, { signal: controller.signal });
       }
 
       clearTimeout(timeoutId);
@@ -466,18 +461,18 @@ class ChatbotService {
     const health = await this.checkBackendHealth();
     const sentiment = this.localClient.detectSentiment(messageText);
 
-    // If Python Backend is online (e.g. Localhost dev), call live API
+    // If Python Backend is online (e.g. Localhost dev, or mobile pointed at port 5001), call live API
     if (health.online) {
       try {
         let res;
         try {
-          res = await fetch(`${API_BASE}/chat`, {
+          res = await fetch(`${DIRECT_API_BASE}/chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: messageText, user_id: userId })
           });
         } catch (fetchErr) {
-          res = await fetch(`${DIRECT_API_BASE}/chat`, {
+          res = await fetch(`${API_BASE}/chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: messageText, user_id: userId })

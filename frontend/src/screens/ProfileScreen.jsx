@@ -120,7 +120,7 @@ export default function ProfileScreen() {
 
           {/* Skill Progress Bars */}
           <div className="space-y-2.5 pt-2 border-t border-surface-variant/30">
-            {userProfile.skillsProgress.map((sp, idx) => (
+            {userProfile.skillsProgress?.map((sp, idx) => (
               <div key={idx} className="space-y-1">
                 <div className="flex justify-between text-[11px] font-semibold">
                   <span>{sp.name}</span>

@@ -10,11 +10,6 @@ export default function LoadingScreen() {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          if (isAuthenticated) {
-            navigate('dashboard');
-          } else {
-            navigate('login');
-          }
           return 100;
         }
         return prev + 25;
@@ -24,18 +19,25 @@ export default function LoadingScreen() {
     // Fallback safety timeout (max 500ms)
     const safety = setTimeout(() => {
       clearInterval(timer);
-      if (isAuthenticated) {
-        navigate('dashboard');
-      } else {
-        navigate('login');
-      }
+      setProgress(100);
     }, 500);
 
     return () => {
       clearInterval(timer);
       clearTimeout(safety);
     };
-  }, [navigate, isAuthenticated]);
+  }, []);
+
+  // Navigate once progress hits 100 - runs after commit, not during render
+  useEffect(() => {
+    if (progress >= 100) {
+      if (isAuthenticated) {
+        navigate('dashboard');
+      } else {
+        navigate('login');
+      }
+    }
+  }, [progress, isAuthenticated, navigate]);
 
   const handleSkip = () => {
     if (isAuthenticated) {
