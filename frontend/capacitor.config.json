@@ -1,6 +1,6 @@
 {
   "appId": "com.skillify.ai",
-  "appName": "Skillify AI",
+  "appName": "Skillify",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {
