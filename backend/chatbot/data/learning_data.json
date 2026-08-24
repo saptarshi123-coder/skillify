@@ -12,10 +12,10 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 220,
+    "total_messages": 221,
     "avg_conversation_length": 0,
     "top_intents": {
-      "greeting": 45,
+      "greeting": 46,
       "find_freelancer": 22,
       "fees_commission": 4,
       "joke": 13,
@@ -1260,6 +1260,17 @@
         },
         "timestamp": 1787413331.7781382
       }
+    ],
+    "6fd61584-f058-4347-be00-4bf39b3eab00": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787516908.935011
+      }
     ]
   },
   "user_profiles": {
@@ -1344,6 +1355,12 @@
     "student.coder@gmail.com": {
       "first_seen": 1787412928.9344635,
       "total_messages": 5,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "6fd61584-f058-4347-be00-4bf39b3eab00": {
+      "first_seen": 1787516908.9338944,
+      "total_messages": 1,
       "preferred_intents": [],
       "sentiment_history": []
     }

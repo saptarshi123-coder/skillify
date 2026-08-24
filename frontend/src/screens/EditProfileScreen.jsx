@@ -19,23 +19,30 @@ export default function EditProfileScreen() {
   const [newSkill, setNewSkill] = useState('');
 
   const handleImageUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+   const file = e.target.files?.[0];
+   if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      showToast("Please upload a valid image file", "error");
-      return;
+   if (!file.type.startsWith('image/')) {
+     showToast("Please upload a valid image file", "error");
+     return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (uploadEvent) => {
-      const base64Url = uploadEvent.target?.result;
-      if (base64Url) {
-        setFormData(prev => ({ ...prev, avatar: base64Url }));
-        showToast("📸 Photo uploaded! Click 'Save Changes' to update.");
+    const MAX_SIZE_MB = 5;
+    const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+    if (file.size > MAX_SIZE_BYTES) {
+     showToast(`Image must be smaller than ${MAX_SIZE_MB}MB`, "error");
+     return;
+    }
+
+   const reader = new FileReader();
+   reader.onload = (uploadEvent) => {
+     const base64Url = uploadEvent.target?.result;
+     if (base64Url) {
+       setFormData(prev => ({ ...prev, avatar: base64Url }));
+       showToast("📷 Photo uploaded! Click 'Save Changes' to update.");
       }
     };
-    reader.readAsDataURL(file);
+   reader.readAsDataURL(file);
   };
 
   const handleAddSkill = (e) => {
