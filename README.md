@@ -39,3 +39,20 @@ npm run dev:all
 | `npm run build` | Build frontend for production |
 | `npm run android:sync` | Sync build with Capacitor Android project |
 | `npm run android:open` | Open project in Android Studio |
+| `npm run android:build` | Build debug APK (`gradlew assembleDebug`) |
+| `npm run android:build:release` | Build release APK (`gradlew assembleRelease`) |
+
+---
+
+## 📱 Android Studio & APK Instructions
+
+### Open in Android Studio
+1. Open **Android Studio**.
+2. Click **Open** (or `File > Open...`).
+3. Select the folder: `frontend/android` (`c:\Users\sapta\skillify ai\frontend\android`).
+4. Android Studio will automatically sync Gradle and load the native project.
+
+### Generated APK Locations
+- **Root Ready-to-Install APK**: [`Skillify-AI.apk`](file:///c:/Users/sapta/skillify%20ai/Skillify-AI.apk)
+- **Gradle Debug APK**: [`frontend/android/app/build/outputs/apk/debug/app-debug.apk`](file:///c:/Users/sapta/skillify%20ai/frontend/android/app/build/outputs/apk/debug/app-debug.apk)
+- **Gradle Release APK**: [`frontend/android/app/build/outputs/apk/release/app-release-unsigned.apk`](file:///c:/Users/sapta/skillify%20ai/frontend/android/app/build/outputs/apk/release/app-release-unsigned.apk)

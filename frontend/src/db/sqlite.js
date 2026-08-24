@@ -1,5 +1,4 @@
-// SQLite Database Layer for Skillify Mobile Application
-// Uses SQL database tables to store users, skills, projects, certificates, and AI chatbot messages.
+import { INITIAL_INTERNSHIPS } from '../data/internshipsData';
 
 const DB_STORAGE_KEY = 'skillify_sqlite_data';
 
@@ -10,7 +9,10 @@ class SQLiteService {
       skills: [],
       projects: [],
       certificates: [],
-      chat_messages: []
+      chat_messages: [],
+      internships: [],
+      saved_internship_ids: [],
+      internship_applications: []
     };
     this.isInitialized = false;
   }
@@ -29,17 +31,16 @@ class SQLiteService {
             u.auth_provider = "guest";
             u.avatar = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80";
           }
-          if (u.level === 14 || !u.skills_progress) {
-            u.level = 1;
-            u.xp = 0;
-            u.streak = 1;
-            u.skills_progress = [
-              { name: "Frontend Development", progress: 0 },
-              { name: "Data Structures & Algorithms", progress: 0 },
-              { name: "UI/UX Design", progress: 0 },
-              { name: "Python & Data Science", progress: 0 }
-            ];
-          }
+          u.skills = Array.isArray(u.skills) ? u.skills.filter(s => !['JavaScript', 'React', 'Node.js', 'Python', 'Git', 'SQL', 'TypeScript'].includes(s)) : [];
+          u.level = 1;
+          u.xp = 0;
+          u.streak = 0;
+          u.skills_progress = [
+            { name: "Frontend Development", progress: 0 },
+            { name: "Data Structures & Algorithms", progress: 0 },
+            { name: "UI/UX Design", progress: 0 },
+            { name: "Python & Data Science", progress: 0 }
+          ];
         }
         if (this.tables.projects && Array.isArray(this.tables.projects)) {
           // Remove legacy pre-seeded mock projects so users start with 0 submitted projects
@@ -60,12 +61,21 @@ class SQLiteService {
           );
           this.purgeExpiredChatMessages(30);
         }
+        if (!this.tables.internships || !Array.isArray(this.tables.internships) || this.tables.internships.length === 0) {
+          this.tables.internships = [...INITIAL_INTERNSHIPS];
+        }
+        if (!this.tables.saved_internship_ids) {
+          this.tables.saved_internship_ids = [];
+        }
+        if (!this.tables.internship_applications) {
+          this.tables.internship_applications = [];
+        }
         this._persist();
       } else {
         this._seedInitialData();
       }
       this.isInitialized = true;
-      console.log('SQLite Database Initialized with tables: users, skills, projects, certificates, chat_messages');
+      console.log('SQLite Database Initialized with tables: users, skills, projects, certificates, chat_messages, internships');
       return true;
     } catch (e) {
       console.error('Error initializing SQLite DB:', e);
@@ -119,6 +129,11 @@ class SQLiteService {
 
     this.tables.certificates = [];
 
+    // Internships initialized from seed
+    this.tables.internships = [...INITIAL_INTERNSHIPS];
+    this.tables.saved_internship_ids = [];
+    this.tables.internship_applications = [];
+
     this._persist();
   }
 
@@ -162,6 +177,13 @@ class SQLiteService {
         { name: "UI/UX Design", progress: 0 },
         { name: "Python & Data Science", progress: 0 }
       ],
+      role: userData.role || existing.role || null,
+      role_selected: userData.role_selected !== undefined ? userData.role_selected : (userData.roleSelected !== undefined ? userData.roleSelected : (existing.role_selected || false)),
+      job_role: userData.job_role || userData.jobRole || existing.job_role || "Senior Technical Recruiter",
+      company_name: userData.company_name || userData.companyName || existing.company_name || "Skillify Inc.",
+      hr_location: userData.hr_location || userData.location || existing.hr_location || "Bengaluru, India",
+      bio: userData.bio !== undefined ? userData.bio : (existing.bio || "Passionate about connecting top-tier student talent with innovative tech teams. Specialized in engineering and design recruitment with over 8 years of experience."),
+      hr_profile_completed: userData.hr_profile_completed !== undefined ? userData.hr_profile_completed : (userData.hrProfileCompleted !== undefined ? userData.hrProfileCompleted : (existing.hr_profile_completed || false)),
       created_at: userData.created_at || existing.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
@@ -173,6 +195,79 @@ class SQLiteService {
     }
     this._persist();
     return updatedUser;
+  }
+
+  // Set User Role ('student' | 'recruiter')
+  setUserRole(role = 'student') {
+    const user = this.getCurrentUser();
+    if (user) {
+      user.role = role;
+      user.role_selected = true;
+      this._persist();
+      return user;
+    }
+    return null;
+  }
+
+  // Save / Update Complete HR Profile
+  saveHRProfile(hrData = {}) {
+    const user = this.getCurrentUser();
+    if (user) {
+      user.role = 'recruiter';
+      user.role_selected = true;
+      if (hrData.fullName || hrData.name) user.name = hrData.fullName || hrData.name;
+      if (hrData.jobRole || hrData.job_role) user.job_role = hrData.jobRole || hrData.job_role;
+      if (hrData.companyName || hrData.company_name) user.company_name = hrData.companyName || hrData.company_name;
+      if (hrData.location || hrData.hr_location) user.hr_location = hrData.location || hrData.hr_location;
+      if (hrData.bio !== undefined) user.bio = hrData.bio;
+      if (hrData.avatar) user.avatar = hrData.avatar;
+      user.hr_profile_completed = true;
+      this._persist();
+      return user;
+    }
+    return null;
+  }
+
+  // Get Applicants for Recruiter view
+  getApplicantsForRecruiter() {
+    return [
+      {
+        id: 'std_alex_rivera',
+        name: 'Alex Rivera',
+        email: 'alex.rivera@tit.edu',
+        role: 'Frontend Engineering Intern',
+        appliedDate: '2 hours ago',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+        college: 'Tech Institute of Technology',
+        score: '94% Quiz Accuracy',
+        badgesCount: 4,
+        portfolioUrl: 'https://alexrivera.dev'
+      },
+      {
+        id: 'std_sarah_jenkins',
+        name: 'Sarah Jenkins',
+        email: 'sarah.j@stanford.edu',
+        role: 'UI/UX Design Intern',
+        appliedDate: '1 day ago',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
+        college: 'Stanford University',
+        score: '91% Quiz Accuracy',
+        badgesCount: 3,
+        portfolioUrl: 'https://sarahdesign.io'
+      },
+      {
+        id: 'std_rohit_sharma',
+        name: 'Rohit Sharma',
+        email: 'rohit.s@iitb.ac.in',
+        role: 'Python & AI Engineer Intern',
+        appliedDate: '3 days ago',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+        college: 'IIT Bombay',
+        score: '98% Quiz Accuracy',
+        badgesCount: 6,
+        portfolioUrl: 'https://github.com/rohitsharma'
+      }
+    ];
   }
 
   // Find or Create OAuth User (Google, LinkedIn, GitHub)
@@ -388,6 +483,93 @@ class SQLiteService {
     this.tables.certificates.unshift(newCert);
     this._persist();
     return newCert;
+  }
+
+  // SQL: SELECT * FROM internships
+  getInternships() {
+    return [...(this.tables.internships || [])];
+  }
+
+  // SQL: INSERT INTO internships VALUES (...)
+  addInternship(internship) {
+    const newIntern = {
+      id: internship.id || `intern_${Date.now()}`,
+      role: internship.role || "Software Intern",
+      company: internship.company || "Company",
+      location: internship.mode === 'online' ? (internship.location || "Remote (India)") : (internship.location || "On-site, India"),
+      mode: internship.mode || 'online',
+      workType: internship.mode === 'online' ? 'Online' : 'Offline',
+      compensation: internship.compensation || (internship.stipend ? 'paid' : 'unpaid'),
+      stipend: internship.compensation === 'unpaid' ? 'Unpaid' : (internship.stipend || (internship.stipendAmount ? `₹${Number(internship.stipendAmount).toLocaleString()}/mo` : '₹15,000/mo')),
+      stipendAmount: internship.stipendAmount || 0,
+      category: internship.category || "Engineering",
+      icon: internship.icon || "corporate_fare",
+      tags: internship.tags || [
+        internship.compensation === 'unpaid' ? 'Unpaid' : 'Paid',
+        internship.mode === 'online' ? 'Online' : 'Offline',
+        internship.category || 'Tech'
+      ],
+      description: internship.description || "Exciting internship opportunity for ambitious students and developers.",
+      duration: internship.duration || "3 - 6 Months",
+      postedDate: "Just now",
+      applicantsCount: 0,
+      created_at: new Date().toISOString()
+    };
+    this.tables.internships.unshift(newIntern);
+    this._persist();
+    return newIntern;
+  }
+
+  // SQL: SELECT * FROM saved_internship_ids
+  getSavedInternshipIds() {
+    return [...(this.tables.saved_internship_ids || [])];
+  }
+
+  // SQL: Toggle Saved Internship
+  toggleSaveInternship(internshipId) {
+    if (!this.tables.saved_internship_ids) this.tables.saved_internship_ids = [];
+    const index = this.tables.saved_internship_ids.indexOf(internshipId);
+    let isSaved = false;
+    if (index >= 0) {
+      this.tables.saved_internship_ids.splice(index, 1);
+      isSaved = false;
+    } else {
+      this.tables.saved_internship_ids.push(internshipId);
+      isSaved = true;
+    }
+    this._persist();
+    return { isSaved, savedIds: [...this.tables.saved_internship_ids] };
+  }
+
+  // SQL: INSERT INTO internship_applications VALUES (...)
+  applyToInternship(internshipId, applicantData = {}) {
+    if (!this.tables.internship_applications) this.tables.internship_applications = [];
+    const existing = this.tables.internship_applications.find(a => a.internship_id === internshipId);
+    if (existing) return { alreadyApplied: true, application: existing };
+
+    const newApp = {
+      id: `app_${Date.now()}`,
+      internship_id: internshipId,
+      applicant_name: applicantData.name || "Student",
+      applicant_email: applicantData.email || "guest@skillify.ai",
+      status: "Submitted",
+      applied_at: new Date().toISOString()
+    };
+    this.tables.internship_applications.push(newApp);
+
+    // Increment applicantsCount on internship
+    const targetIntern = this.tables.internships.find(i => i.id === internshipId);
+    if (targetIntern) {
+      targetIntern.applicantsCount = (targetIntern.applicantsCount || 0) + 1;
+    }
+
+    this._persist();
+    return { alreadyApplied: false, application: newApp };
+  }
+
+  // SQL: SELECT * FROM internship_applications
+  getAppliedInternships() {
+    return [...(this.tables.internship_applications || [])];
   }
 }
 

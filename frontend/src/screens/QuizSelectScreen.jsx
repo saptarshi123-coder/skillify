@@ -4,9 +4,16 @@ import { QUIZ_SUBJECTS } from '../data/quizData';
 import Navbar from '../components/Navigation/Navbar';
 
 export default function QuizSelectScreen() {
-  const { startQuiz } = useApp();
+  const { startQuiz, userRole, navigate } = useApp();
   const [activeTab, setActiveTab] = useState('languages'); // 'languages' | 'topics'
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Recruiter guard: No quizzes in HR mode
+  React.useEffect(() => {
+    if (userRole === 'recruiter' || userRole === 'hr') {
+      navigate('recruiter-profile');
+    }
+  }, [userRole, navigate]);
 
   const currentList = activeTab === 'languages' ? QUIZ_SUBJECTS.languages : QUIZ_SUBJECTS.topics;
 

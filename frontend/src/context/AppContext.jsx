@@ -4,17 +4,18 @@ import { STUDENTS_DATA } from '../data/studentsData';
 import { sqliteDB } from '../db/sqlite';
 import { chatbotService } from '../services/chatbotService';
 import { aiQuizService, isAISupportedSkill, normalizeSkillKey } from '../services/aiQuizService';
+import {
+  auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from '../services/firebase';
 import confetti from 'canvas-confetti';
 
 const AppContext = createContext();
 
-const DEFAULT_BADGES = [
-  { id: "fast-learner", name: "Fast Learner", icon: "bolt", date: "Earned Nov 2023", unlocked: true },
-  { id: "quiz-master", name: "Quiz Master", icon: "quiz", date: "Earned Oct 2023", unlocked: true },
-  { id: "python-pro", name: "Python Pro", icon: "terminal", date: "Earned Oct 2023", unlocked: true },
-  { id: "team-player", name: "Team Player", icon: "group", date: "Earned Sep 2023", unlocked: true },
-  { id: "cloud-pioneer", name: "Cloud Pioneer", icon: "cloud", date: "Earned Aug 2023", unlocked: true }
-];
+const DEFAULT_BADGES = [];
 
 export const extractNameFromEmail = (email) => {
   if (!email || !email.includes('@')) return "Google User";
@@ -62,6 +63,13 @@ export function AppProvider({ children }) {
       honorsRoll: Boolean(dbUser.honors_roll),
       lookingForInternships: Boolean(dbUser.looking_for_internships),
       authProvider: dbUser.auth_provider || "guest",
+      role: dbUser.role || "student",
+      roleSelected: Boolean(dbUser.role_selected),
+      job_role: dbUser.job_role || "Senior Technical Recruiter",
+      company_name: dbUser.company_name || "Skillify Inc.",
+      hr_location: dbUser.hr_location || "Bengaluru, India",
+      bio: dbUser.bio || "Passionate about connecting top-tier student talent with innovative tech teams. Specialized in engineering and design recruitment with over 8 years of experience.",
+      hrProfileCompleted: Boolean(dbUser.hr_profile_completed),
       skills: dbUser.skills || [],
       skillsProgress: dbUser.skills_progress || [
         { name: "Frontend Development", progress: 0 },
@@ -82,6 +90,13 @@ export function AppProvider({ children }) {
       honorsRoll: false,
       lookingForInternships: true,
       authProvider: "guest",
+      role: "student",
+      roleSelected: false,
+      job_role: "Senior Technical Recruiter",
+      company_name: "Skillify Inc.",
+      hr_location: "Bengaluru, India",
+      bio: "Passionate about connecting top-tier student talent with innovative tech teams. Specialized in engineering and design recruitment with over 8 years of experience.",
+      hrProfileCompleted: false,
       skills: [],
       skillsProgress: [
         { name: "Frontend Development", progress: 0 },
@@ -137,6 +152,24 @@ export function AppProvider({ children }) {
   const [quizStartTime, setQuizStartTime] = useState(null);
   const [quizTimeRemaining, setQuizTimeRemaining] = useState(300);
 
+  // Internships in SQLite
+  const [internships, setInternships] = useState(() => {
+    return sqliteDB.getInternships();
+  });
+
+  // Saved Internship IDs in SQLite
+  const [savedInternshipIds, setSavedInternshipIds] = useState(() => {
+    return sqliteDB.getSavedInternshipIds();
+  });
+
+  // Applied Internships in SQLite
+  const [appliedInternships, setAppliedInternships] = useState(() => {
+    return sqliteDB.getAppliedInternships();
+  });
+
+  // CV Generator Modal State
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+
   // Certificate Modal View
   const [viewingCertificate, setViewingCertificate] = useState(null);
 
@@ -161,6 +194,30 @@ export function AppProvider({ children }) {
     } catch (e) {
       console.log('Hash deep link parse error:', e);
     }
+  }, []);
+
+  // Firebase Authentication State Listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        localStorage.setItem('skillify_auth', 'true');
+        const email = user.email || "";
+        const name = user.displayName || extractNameFromEmail(email);
+        setUserProfile(prev => ({
+          ...prev,
+          id: user.uid,
+          email: email,
+          name: name || prev.name,
+          authProvider: "firebase"
+        }));
+      } else {
+        setIsAuthenticated(false);
+        localStorage.removeItem('skillify_auth');
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // Exit App Confirmation Modal
@@ -379,23 +436,22 @@ export function AppProvider({ children }) {
     const skillNames = savedSkills.map(s => s.skill_name || s);
     setUserSelectedSkills(skillNames);
 
-    setUserProfile({
+    const mergedProfile = {
       ...user,
       honorsRoll: Boolean(user.honors_roll),
       lookingForInternships: Boolean(user.looking_for_internships),
       authProvider: "google",
+      role: user.role || (isNew ? null : 'student'),
+      roleSelected: Boolean(user.role_selected),
+      hrProfileCompleted: Boolean(user.hr_profile_completed),
       skills: skillNames.length > 0 ? skillNames : user.skills
-    });
+    };
+    setUserProfile(mergedProfile);
 
     setIsAuthenticated(true);
     localStorage.setItem('skillify_auth', 'true');
     showToast(`👋 Welcome, ${name}! Signed in via Google.`);
-
-    if (skillNames.length > 0) {
-      navigate('dashboard');
-    } else {
-      navigate('select-skill');
-    }
+    routeAfterAuth(mergedProfile);
   };
 
   const loginWithLinkedIn = (accountData = {}) => {
@@ -430,30 +486,29 @@ export function AppProvider({ children }) {
     const skillNames = savedSkills.map(s => s.skill_name || s);
     setUserSelectedSkills(skillNames);
 
-    setUserProfile({
+    const mergedProfile = {
       ...user,
       honorsRoll: Boolean(user.honors_roll),
       lookingForInternships: Boolean(user.looking_for_internships),
       authProvider: "linkedin",
+      role: user.role || (isNew ? null : 'student'),
+      roleSelected: Boolean(user.role_selected),
+      hrProfileCompleted: Boolean(user.hr_profile_completed),
       skills: skillNames.length > 0 ? skillNames : user.skills
-    });
+    };
+    setUserProfile(mergedProfile);
 
     setIsAuthenticated(true);
     localStorage.setItem('skillify_auth', 'true');
     showToast(`👋 Welcome, ${name}! Connected via LinkedIn.`);
-
-    if (skillNames.length > 0) {
-      navigate('dashboard');
-    } else {
-      navigate('select-skill');
-    }
+    routeAfterAuth(mergedProfile);
   };
 
   const loginWithGitHub = (accountData = {}) => {
     const name = accountData.name || "OpenSource Contributor";
     const email = accountData.email || "developer@github.com";
     
-    const { user } = sqliteDB.findOrCreateOAuthUser({
+    const { user, isNew } = sqliteDB.findOrCreateOAuthUser({
       name: name,
       email: email,
       avatar: accountData.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
@@ -466,76 +521,122 @@ export function AppProvider({ children }) {
     const skillNames = savedSkills.map(s => s.skill_name || s);
     setUserSelectedSkills(skillNames);
 
-    setUserProfile({
+    const mergedProfile = {
       ...user,
       authProvider: "github",
+      role: user.role || (isNew ? null : 'student'),
+      roleSelected: Boolean(user.role_selected),
+      hrProfileCompleted: Boolean(user.hr_profile_completed),
       skills: skillNames.length > 0 ? skillNames : user.skills
-    });
+    };
+    setUserProfile(mergedProfile);
 
     setIsAuthenticated(true);
     localStorage.setItem('skillify_auth', 'true');
     showToast(`👋 Welcome, ${name}! Connected via GitHub.`);
+    routeAfterAuth(mergedProfile);
+  };
 
-    if (skillNames.length > 0) {
+  const routeAfterAuth = (profile) => {
+    if (!profile.roleSelected && !profile.role_selected) {
+      navigate('choose-role');
+      return;
+    }
+    if (profile.role === 'recruiter') {
+      if (!profile.hrProfileCompleted && !profile.hr_profile_completed) {
+        navigate('complete-hr-profile');
+      } else {
+        navigate('recruiter-profile');
+      }
+      return;
+    }
+    // Student path
+    const savedSkills = sqliteDB.getUserSkills(profile.id || profile.email);
+    if (savedSkills && savedSkills.length > 0) {
       navigate('dashboard');
     } else {
       navigate('select-skill');
     }
   };
 
-  const loginWithEmail = (email, password) => {
+  const loginWithEmail = async (email, password) => {
     const cleanEmail = email ? email.trim() : "";
     if (!cleanEmail) {
       showToast("Please enter your email address", "error");
       return false;
     }
     if (!password || !password.trim()) {
-      showToast("Please enter your password to sign in", "error");
+      showToast("Please enter your password", "error");
       return false;
     }
 
-    const existingUser = sqliteDB.getUserByEmail(cleanEmail);
-    if (existingUser && existingUser.password && existingUser.password !== password.trim()) {
-      showToast("Incorrect password. Please verify your credentials.", "error");
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password.trim());
+      const user = userCredential.user;
+      const name = user.displayName || extractNameFromEmail(cleanEmail);
+
+      const dbUser = sqliteDB.getUserByEmail(cleanEmail) || {};
+
+      const profileObj = {
+        id: user.uid,
+        email: cleanEmail,
+        name: name,
+        avatar: dbUser.avatar || userProfile.avatar,
+        major: dbUser.major || "Computer Science Major",
+        college: dbUser.college || "Tech Institute of Technology",
+        level: dbUser.level || 1,
+        xp: dbUser.xp || 0,
+        streak: dbUser.streak || 0,
+        honorsRoll: Boolean(dbUser.honors_roll),
+        lookingForInternships: Boolean(dbUser.looking_for_internships),
+        role: dbUser.role || null,
+        roleSelected: Boolean(dbUser.role_selected),
+        job_role: dbUser.job_role || "Senior Technical Recruiter",
+        company_name: dbUser.company_name || "Skillify Inc.",
+        hr_location: dbUser.hr_location || "Bengaluru, India",
+        bio: dbUser.bio || "",
+        hrProfileCompleted: Boolean(dbUser.hr_profile_completed),
+        skills: dbUser.skills || [],
+        skillsProgress: dbUser.skills_progress || [
+          { name: "Frontend Development", progress: 0 },
+          { name: "Data Structures & Algorithms", progress: 0 },
+          { name: "UI/UX Design", progress: 0 },
+          { name: "Python & Data Science", progress: 0 }
+        ],
+        authProvider: "firebase"
+      };
+
+      setUserProfile(profileObj);
+      setBadges([]);
+      setCertificates([]);
+      setProjects([]);
+      setUserSelectedSkills(dbUser.skills || []);
+
+      setIsAuthenticated(true);
+      localStorage.setItem('skillify_auth', 'true');
+      showToast(`👋 Welcome back, ${name}!`);
+      routeAfterAuth(profileObj);
+      return true;
+    } catch (error) {
+      console.error("Firebase Auth Sign-In Error:", error);
+      if (
+        error.code === 'auth/invalid-credential' ||
+        error.code === 'auth/user-not-found' ||
+        error.code === 'auth/wrong-password' ||
+        error.code === 'auth/invalid-email' ||
+        error.code === 'auth/invalid-login-credentials'
+      ) {
+        showToast("Email or password is incorrect", "error");
+      } else if (error.code === 'auth/too-many-requests') {
+        showToast("Too many failed attempts. Please try again later.", "error");
+      } else {
+        showToast("Email or password is incorrect", "error");
+      }
       return false;
     }
-
-    const name = existingUser?.name || extractNameFromEmail(cleanEmail);
-    
-    const { user } = sqliteDB.findOrCreateOAuthUser({
-      name: name,
-      email: cleanEmail,
-      avatar: existingUser?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
-      major: existingUser?.major || "Computer Science Major",
-      college: existingUser?.college || "Tech Institute of Technology",
-      auth_provider: "email"
-    });
-
-    sqliteDB.saveUser({ ...user, password: password.trim() });
-
-    const savedSkills = sqliteDB.getUserSkills(user.id || user.email);
-    const skillNames = savedSkills.map(s => s.skill_name || s);
-    setUserSelectedSkills(skillNames);
-
-    setUserProfile({
-      ...user,
-      authProvider: "email",
-      skills: skillNames.length > 0 ? skillNames : user.skills
-    });
-
-    setIsAuthenticated(true);
-    localStorage.setItem('skillify_auth', 'true');
-    showToast(`👋 Welcome back, ${name}!`);
-
-    if (skillNames.length > 0) {
-      navigate('dashboard');
-    } else {
-      navigate('select-skill');
-    }
-    return true;
   };
 
-  const signupWithEmail = (fullName, email, password, avatarUrl) => {
+  const signupWithEmail = async (fullName, email, password, avatarUrl) => {
     const cleanEmail = email ? email.trim() : "";
     if (!cleanEmail) {
       showToast("Please enter your email address", "error");
@@ -546,34 +647,73 @@ export function AppProvider({ children }) {
       return false;
     }
 
-    const name = fullName || (cleanEmail ? extractNameFromEmail(cleanEmail) : "Student");
-    
-    const { user } = sqliteDB.findOrCreateOAuthUser({
-      name: name,
-      email: cleanEmail,
-      avatar: avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
-      major: "Software Engineering",
-      college: "Tech Institute of Technology",
-      auth_provider: "email"
-    });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, password.trim());
+      const user = userCredential.user;
+      const name = fullName?.trim() || (cleanEmail ? extractNameFromEmail(cleanEmail) : "User");
 
-    sqliteDB.saveUser({ ...user, password: password.trim() });
+      const profileObj = {
+        id: user.uid,
+        email: cleanEmail,
+        name: name,
+        avatar: avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
+        major: "Computer Science Major",
+        college: "Tech Institute of Technology",
+        level: 1,
+        xp: 0,
+        streak: 0,
+        honorsRoll: false,
+        lookingForInternships: true,
+        role: null,
+        roleSelected: false,
+        role_selected: false,
+        job_role: "Senior Technical Recruiter",
+        company_name: "Skillify Inc.",
+        hr_location: "Bengaluru, India",
+        bio: "",
+        hrProfileCompleted: false,
+        skills: [],
+        skillsProgress: [
+          { name: "Frontend Development", progress: 0 },
+          { name: "Data Structures & Algorithms", progress: 0 },
+          { name: "UI/UX Design", progress: 0 },
+          { name: "Python & Data Science", progress: 0 }
+        ],
+        authProvider: "firebase"
+      };
 
-    setUserProfile({
-      ...user,
-      authProvider: "email",
-      skills: []
-    });
-    setUserSelectedSkills([]);
+      sqliteDB.saveUser(profileObj);
+      setUserProfile(profileObj);
 
-    setIsAuthenticated(true);
-    localStorage.setItem('skillify_auth', 'true');
-    showToast(`🎉 Account created successfully! Welcome to Skillify, ${name}.`);
-    navigate('select-skill');
-    return true;
+      setBadges([]);
+      setCertificates([]);
+      setProjects([]);
+      setUserSelectedSkills([]);
+
+      setIsAuthenticated(true);
+      localStorage.setItem('skillify_auth', 'true');
+      showToast(`🎉 Account created! Welcome, ${name}.`);
+      routeAfterAuth(profileObj);
+      return true;
+    } catch (error) {
+      console.error("Firebase Auth Sign-Up Error:", error);
+      if (error.code === 'auth/email-already-in-use') {
+        showToast("This email is already registered. Please log in.", "error");
+      } else if (error.code === 'auth/weak-password') {
+        showToast("Password should be at least 6 characters.", "error");
+      } else {
+        showToast("Failed to create account. Please try again.", "error");
+      }
+      return false;
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Firebase SignOut Error:", error);
+    }
     setIsAuthenticated(false);
     localStorage.removeItem('skillify_auth');
     const guestUser = {
@@ -586,7 +726,7 @@ export function AppProvider({ children }) {
       address: "123 Education Lane, Tech City",
       level: 1,
       xp: 0,
-      streak: 1,
+      streak: 0,
       honorsRoll: false,
       lookingForInternships: true,
       authProvider: "guest",
@@ -598,10 +738,12 @@ export function AppProvider({ children }) {
         { name: "Python & Data Science", progress: 0 }
       ]
     };
-    sqliteDB.saveUser({ ...guestUser, honors_roll: 0, looking_for_internships: 1 });
     setUserProfile(guestUser);
+    setBadges([]);
+    setCertificates([]);
+    setProjects([]);
     setUserSelectedSkills([]);
-    showToast("You have been signed out. Switched to Guest Mode.");
+    showToast("You have been signed out.");
     navigate('login');
   };
 
@@ -1039,6 +1181,108 @@ export function AppProvider({ children }) {
     await copyPublicProfileLink(prof);
   };
 
+  // Internship Handlers
+  const listNewInternship = (internshipData) => {
+    const newIntern = sqliteDB.addInternship(internshipData);
+    setInternships(sqliteDB.getInternships());
+    showToast("🚀 Internship listing published successfully!");
+    navigate('find-internship');
+    return newIntern;
+  };
+
+  const applyToInternship = (internshipId) => {
+    const result = sqliteDB.applyToInternship(internshipId, {
+      name: userProfile.name,
+      email: userProfile.email
+    });
+    setAppliedInternships(sqliteDB.getAppliedInternships());
+    setInternships(sqliteDB.getInternships());
+    if (result.alreadyApplied) {
+      showToast("ℹ️ You have already applied to this internship.");
+    } else {
+      showToast("🎉 Application submitted successfully with your verified profile & CV!");
+    }
+    return result;
+  };
+
+  const toggleSaveInternship = (internshipId) => {
+    const { isSaved, savedIds } = sqliteDB.toggleSaveInternship(internshipId);
+    setSavedInternshipIds(savedIds);
+    showToast(isSaved ? "🔖 Internship saved to your bookmarks!" : "Removed internship from bookmarks.");
+  };
+
+  // CV Generator Handlers
+  const openCVGenerator = () => {
+    setIsCVModalOpen(true);
+  };
+
+  const closeCVGenerator = () => {
+    setIsCVModalOpen(false);
+  };
+
+  // Role & HR Management Handlers
+  const selectUserRole = (role) => {
+    sqliteDB.setUserRole(role);
+    setUserProfile(prev => ({
+      ...prev,
+      role: role,
+      roleSelected: true,
+      role_selected: true
+    }));
+    if (role === 'recruiter') {
+      if (userProfile.hrProfileCompleted || userProfile.hr_profile_completed) {
+        navigate('recruiter-profile');
+      } else {
+        navigate('complete-hr-profile');
+      }
+    } else {
+      if (userSelectedSkills && userSelectedSkills.length > 0) {
+        navigate('dashboard');
+      } else {
+        navigate('select-skill');
+      }
+    }
+  };
+
+  const updateHRProfile = (hrData) => {
+    sqliteDB.saveHRProfile(hrData);
+    setUserProfile(prev => ({
+      ...prev,
+      name: hrData.fullName || hrData.name || prev.name,
+      job_role: hrData.jobRole || hrData.job_role || prev.job_role,
+      company_name: hrData.companyName || hrData.company_name || prev.company_name,
+      hr_location: hrData.location || hrData.hr_location || prev.hr_location,
+      bio: hrData.bio !== undefined ? hrData.bio : prev.bio,
+      avatar: hrData.avatar || prev.avatar,
+      role: 'recruiter',
+      roleSelected: true,
+      role_selected: true,
+      hrProfileCompleted: true,
+      hr_profile_completed: true
+    }));
+    navigate('recruiter-profile');
+  };
+
+  const switchRole = (newRole) => {
+    sqliteDB.setUserRole(newRole);
+    setUserProfile(prev => ({
+      ...prev,
+      role: newRole,
+      roleSelected: true,
+      role_selected: true
+    }));
+    showToast(`Switched to ${newRole === 'recruiter' ? 'HR / Recruiter' : 'Student'} mode`);
+    if (newRole === 'recruiter') {
+      if (userProfile.hrProfileCompleted || userProfile.hr_profile_completed) {
+        navigate('recruiter-profile');
+      } else {
+        navigate('complete-hr-profile');
+      }
+    } else {
+      navigate('dashboard');
+    }
+  };
+
   return (
     <AppContext.Provider value={{
       currentScreen,
@@ -1049,6 +1293,13 @@ export function AppProvider({ children }) {
       isAuthenticated,
       userProfile,
       updateProfile,
+      // Role & HR Management
+      userRole: userProfile.role || 'student',
+      isRoleSelected: Boolean(userProfile.roleSelected || userProfile.role_selected),
+      isHRProfileCompleted: Boolean(userProfile.hrProfileCompleted || userProfile.hr_profile_completed),
+      selectUserRole,
+      updateHRProfile,
+      switchRole,
       loginWithGoogle,
       loginWithLinkedIn,
       loginWithGitHub,
@@ -1101,6 +1352,18 @@ export function AppProvider({ children }) {
       setSelectedCertModal: setViewingCertificate,
       isCertModalOpen: Boolean(viewingCertificate),
       setIsCertModalOpen: (val) => setViewingCertificate(val ? (viewingCertificate || certificates[0]) : null),
+      // Internships
+      internships,
+      savedInternshipIds,
+      appliedInternships,
+      listNewInternship,
+      applyToInternship,
+      toggleSaveInternship,
+      // CV Generator
+      isCVModalOpen,
+      setIsCVModalOpen,
+      openCVGenerator,
+      closeCVGenerator,
       toast,
       showToast,
       darkMode,

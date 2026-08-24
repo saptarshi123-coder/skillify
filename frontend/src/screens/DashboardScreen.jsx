@@ -4,8 +4,15 @@ import { QUIZ_SUBJECTS } from '../data/quizData';
 import Navbar from '../components/Navigation/Navbar';
 
 export default function DashboardScreen() {
-  const { userProfile, startQuiz, navigate, setViewingCertificate, certificates } = useApp();
+  const { userProfile, userRole, startQuiz, navigate, setViewingCertificate, certificates } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
+
+  // HR / Recruiter Guard: No learning tracks or quizzes for HR users
+  React.useEffect(() => {
+    if (userRole === 'recruiter' || userRole === 'hr') {
+      navigate('recruiter-profile');
+    }
+  }, [userRole, navigate]);
 
   const languages = QUIZ_SUBJECTS.languages.filter(l =>
     l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

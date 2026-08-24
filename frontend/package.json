@@ -10,7 +10,9 @@
     "chatbot": "python ../backend/chatbot/app.py",
     "chatbot:api": "python ../backend/chatbot/chatbot.py --api",
     "android:sync": "vite build && cap sync android",
-    "android:open": "cap open android"
+    "android:open": "cap open android",
+    "android:build": "vite build && cap sync android && cd android && gradlew assembleDebug",
+    "android:build:release": "vite build && cap sync android && cd android && gradlew assembleRelease"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.0",
@@ -19,6 +21,7 @@
     "@capacitor/core": "^8.5.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "firebase": "^12.18.0",
     "lucide-react": "^1.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

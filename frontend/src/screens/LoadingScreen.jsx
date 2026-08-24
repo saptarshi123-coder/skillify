@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export default function LoadingScreen() {
-  const { navigate, isAuthenticated } = useApp();
+  const { navigate, isAuthenticated, userProfile, userSelectedSkills } = useApp();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -28,23 +28,40 @@ export default function LoadingScreen() {
     };
   }, []);
 
-  // Navigate once progress hits 100 - runs after commit, not during render
-  useEffect(() => {
-    if (progress >= 100) {
-      if (isAuthenticated) {
-        navigate('dashboard');
-      } else {
-        navigate('login');
-      }
+  const routeDestination = () => {
+    if (!isAuthenticated) {
+      navigate('login');
+      return;
     }
-  }, [progress, isAuthenticated, navigate]);
-
-  const handleSkip = () => {
-    if (isAuthenticated) {
+    if (!userProfile.roleSelected && !userProfile.role_selected) {
+      navigate('choose-role');
+      return;
+    }
+    if (userProfile.role === 'recruiter') {
+      if (!userProfile.hrProfileCompleted && !userProfile.hr_profile_completed) {
+        navigate('complete-hr-profile');
+      } else {
+        navigate('recruiter-profile');
+      }
+      return;
+    }
+    // Student path
+    if (userSelectedSkills && userSelectedSkills.length > 0) {
       navigate('dashboard');
     } else {
-      navigate('login');
+      navigate('select-skill');
     }
+  };
+
+  // Navigate once progress hits 100
+  useEffect(() => {
+    if (progress >= 100) {
+      routeDestination();
+    }
+  }, [progress, isAuthenticated, userProfile, userSelectedSkills, navigate]);
+
+  const handleSkip = () => {
+    routeDestination();
   };
 
   return (

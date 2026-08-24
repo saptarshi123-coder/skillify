@@ -2,15 +2,21 @@ import React from 'react';
 import { useApp } from './context/AppContext';
 import BottomNav from './components/Navigation/BottomNav';
 import CertificateModal from './components/CertificateModal';
+import CVGeneratorModal from './components/CVGeneratorModal';
 import ExitAppModal from './components/ExitAppModal';
 import Toast from './components/Toast';
 
 import LoadingScreen from './screens/LoadingScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import ChooseRoleScreen from './screens/ChooseRoleScreen';
+import CompleteHRProfileScreen from './screens/CompleteHRProfileScreen';
+import RecruiterProfileScreen from './screens/RecruiterProfileScreen';
 import SelectSkillScreen from './screens/SelectSkillScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import DiscoverScreen from './screens/DiscoverScreen';
+import FindInternshipsScreen from './screens/FindInternshipsScreen';
+import ListInternshipScreen from './screens/ListInternshipScreen';
 import ExploreScreen from './screens/ExploreScreen';
 import AIChatScreen from './screens/AIChatScreen';
 import QuizSelectScreen from './screens/QuizSelectScreen';
@@ -35,12 +41,24 @@ export default function App() {
         return <LoginScreen />;
       case 'signup':
         return <SignupScreen />;
+      case 'choose-role':
+        return <ChooseRoleScreen />;
+      case 'complete-hr-profile':
+        return <CompleteHRProfileScreen />;
+      case 'recruiter-profile':
+        return <RecruiterProfileScreen />;
       case 'select-skill':
         return <SelectSkillScreen />;
       case 'dashboard':
         return <DashboardScreen />;
       case 'discover':
         return <DiscoverScreen />;
+      case 'find-internship':
+      case 'find-internships':
+        return <FindInternshipsScreen />;
+      case 'list-internship':
+      case 'list-internships':
+        return <ListInternshipScreen />;
       case 'explore':
         return <ExploreScreen />;
       case 'ai-chat':
@@ -70,7 +88,7 @@ export default function App() {
     }
   };
 
-  const showBottomNav = !['loading', 'login', 'signup', 'select-skill', 'quiz-active'].includes(currentScreen);
+  const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active'].includes(currentScreen);
 
   return (
     <div className="min-h-screen bg-slate-900/5 dark:bg-[#0f1115] flex justify-center w-full transition-colors">
@@ -87,6 +105,7 @@ export default function App() {
 
         {/* Modals & Global Notifications */}
         <CertificateModal />
+        <CVGeneratorModal />
         <ExitAppModal />
         <Toast />
       </div>

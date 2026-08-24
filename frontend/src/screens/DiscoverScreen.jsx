@@ -4,9 +4,11 @@ import Navbar from '../components/Navigation/Navbar';
 import { COMMUNITY_PROJECTS } from '../data/communityProjects';
 
 export default function DiscoverScreen() {
-  const { projects, openProjectRepo, navigate, userProfile, showToast, openPublicProfile } = useApp();
+  const { projects, openProjectRepo, navigate, userProfile, userRole, showToast, openPublicProfile } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+
+  const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
 
   // Like State Map: { [projectId]: { liked: boolean, count: number } }
   const [likesState, setLikesState] = useState({});
@@ -224,6 +226,40 @@ export default function DiscoverScreen() {
             </button>
           ))}
         </div>
+
+        {/* Internships Section (from Stitch Design) */}
+        <section className="bg-surface-container-low dark:bg-surface-container-high rounded-3xl p-5 border border-outline-variant/40 shadow-sm space-y-3.5">
+          <div className="space-y-1">
+            <h2 className="font-headline text-base font-bold text-primary dark:text-primary-fixed">
+              Internships
+            </h2>
+            <p className="text-xs text-secondary dark:text-secondary-fixed-dim leading-relaxed">
+              {isRecruiter
+                ? 'Manage active listings and review student applications.'
+                : 'Connect with top companies and kickstart your career with verified credentials.'}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2.5 pt-0.5">
+            {!isRecruiter && (
+              <button
+                onClick={() => navigate('find-internship')}
+                className="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-base">search</span>
+                <span>Find Internship</span>
+              </button>
+            )}
+            {isRecruiter && (
+              <button
+                onClick={() => navigate('list-internship')}
+                className="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-base">add_circle</span>
+                <span>List Internship</span>
+              </button>
+            )}
+          </div>
+        </section>
 
         {/* Projects Feed */}
         <div className="space-y-4">

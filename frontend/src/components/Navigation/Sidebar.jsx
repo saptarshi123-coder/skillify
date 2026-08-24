@@ -2,55 +2,114 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function Sidebar() {
-  const { currentScreen, navigate, userProfile, darkMode, setDarkMode } = useApp();
+  const { currentScreen, navigate, userProfile, userRole, darkMode, setDarkMode, logout } = useApp();
 
-  const menuItems = [
-    {
-      id: 'dashboard',
-      label: 'Dashboard',
-      icon: 'dashboard',
-      screen: 'dashboard'
-    },
-    {
-      id: 'explore',
-      label: 'Explore Courses',
-      icon: 'school',
-      screen: 'explore'
-    },
-    {
-      id: 'quizzes',
-      label: 'Skill Assessments',
-      icon: 'quiz',
-      screen: 'quiz-select',
-      activeScreens: ['quiz-select', 'quiz-active', 'quiz-results']
-    },
-    {
-      id: 'badges',
-      label: 'Certifications & Badges',
-      icon: 'verified',
-      screen: 'badges'
-    },
-    {
-      id: 'profile',
-      label: 'Student Profile',
-      icon: 'person',
-      screen: 'profile',
-      activeScreens: ['profile', 'public-profile', 'edit-profile']
-    },
-    {
-      id: 'projects',
-      label: 'Submit Project',
-      icon: 'cloud_upload',
-      screen: 'submit-project',
-      activeScreens: ['submit-project', 'project-repo']
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      icon: 'settings',
-      screen: 'settings'
-    }
-  ];
+  const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
+
+  const menuItems = isRecruiter
+    ? [
+        {
+          id: 'discover',
+          label: 'Talent & Projects',
+          icon: 'travel_explore',
+          screen: 'discover',
+          activeScreens: ['discover', 'submit-project', 'project-repo']
+        },
+        {
+          id: 'explore',
+          label: 'Explore Students',
+          icon: 'group',
+          screen: 'explore',
+          activeScreens: ['explore', 'public-profile']
+        },
+        {
+          id: 'internships',
+          label: 'Post & Manage Internships',
+          icon: 'campaign',
+          screen: 'list-internship',
+          activeScreens: ['list-internship', 'find-internship', 'find-internships', 'list-internships']
+        },
+        {
+          id: 'ai-chat',
+          label: 'AI Recruiter Assistant',
+          icon: 'smart_toy',
+          screen: 'ai-chat'
+        },
+        {
+          id: 'recruiter-profile',
+          label: 'Recruiter Profile',
+          icon: 'person',
+          screen: 'recruiter-profile',
+          activeScreens: ['recruiter-profile', 'complete-hr-profile']
+        },
+        {
+          id: 'settings',
+          label: 'Settings',
+          icon: 'settings',
+          screen: 'settings'
+        }
+      ]
+    : [
+        {
+          id: 'dashboard',
+          label: 'Dashboard & Learning',
+          icon: 'dashboard',
+          screen: 'dashboard'
+        },
+        {
+          id: 'explore',
+          label: 'Explore Students',
+          icon: 'school',
+          screen: 'explore',
+          activeScreens: ['explore', 'public-profile']
+        },
+        {
+          id: 'quizzes',
+          label: 'Skill Assessments',
+          icon: 'quiz',
+          screen: 'quiz-select',
+          activeScreens: ['quiz-select', 'quiz-active', 'quiz-results']
+        },
+        {
+          id: 'internships',
+          label: 'Find Internships',
+          icon: 'work',
+          screen: 'find-internship',
+          activeScreens: ['find-internship', 'find-internships']
+        },
+        {
+          id: 'badges',
+          label: 'Certifications & Badges',
+          icon: 'verified',
+          screen: 'badges'
+        },
+        {
+          id: 'profile',
+          label: 'Student Profile',
+          icon: 'person',
+          screen: 'profile',
+          activeScreens: ['profile', 'public-profile', 'edit-profile']
+        },
+        {
+          id: 'projects',
+          label: 'Submit Project',
+          icon: 'cloud_upload',
+          screen: 'submit-project',
+          activeScreens: ['submit-project', 'project-repo']
+        },
+        {
+          id: 'ai-chat',
+          label: 'Skillify AI Assistant',
+          icon: 'smart_toy',
+          screen: 'ai-chat'
+        },
+        {
+          id: 'settings',
+          label: 'Settings',
+          icon: 'settings',
+          screen: 'settings'
+        }
+      ];
 
   const isItemActive = (item) => {
     if (item.activeScreens) {
@@ -61,9 +120,9 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden md:flex h-full w-80 fixed left-0 top-0 z-50 bg-surface dark:bg-inverse-surface shadow-xl flex-col gap-base p-stack-md pt-margin-desktop border-r border-surface-container-high/60 transition-colors">
-      {/* Student Avatar & Identity */}
+      {/* User Avatar & Identity */}
       <div
-        onClick={() => navigate('profile')}
+        onClick={() => navigate(isRecruiter ? 'recruiter-profile' : 'profile')}
         className="flex items-center gap-4 px-4 mb-6 cursor-pointer hover:opacity-90 transition-opacity"
       >
         <img
@@ -131,8 +190,8 @@ export default function Sidebar() {
         </div>
 
         <button
-          onClick={() => navigate('auth')}
-          className="flex items-center gap-3 px-4 py-2.5 text-error hover:bg-error-container/20 rounded-xl font-label-md text-label-md transition-colors"
+          onClick={logout}
+          className="flex items-center gap-3 px-4 py-2.5 text-error hover:bg-error-container/20 rounded-xl font-label-md text-label-md transition-colors cursor-pointer"
         >
           <span className="material-symbols-outlined text-[20px]">logout</span>
           <span>Switch Account / Sign Out</span>
