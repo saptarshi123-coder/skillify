@@ -9,7 +9,8 @@ export default function ProfileScreen() {
     projects,
     openProjectRepo,
     openPublicProfile,
-    copyPublicProfileLink
+    copyPublicProfileLink,
+    logout
   } = useApp();
 
   const handleOpenPublicProfile = () => {
@@ -107,30 +108,40 @@ export default function ProfileScreen() {
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
-            {userProfile.skills.map((skill, idx) => (
-              <span
-                key={idx}
-                className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
+          {userProfile.skills && userProfile.skills.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {userProfile.skills.map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
 
           {/* Skill Progress Bars */}
           <div className="space-y-2.5 pt-2 border-t border-surface-variant/30">
-            {userProfile.skillsProgress?.map((sp, idx) => (
-              <div key={idx} className="space-y-1">
-                <div className="flex justify-between text-[11px] font-semibold">
-                  <span>{sp.name}</span>
-                  <span className="text-primary font-bold">{sp.progress}%</span>
+            {(userProfile.skillsProgress && userProfile.skillsProgress.length > 0 ? userProfile.skillsProgress : [
+              { name: "Frontend Development", progress: 0 },
+              { name: "Data Structures & Algorithms", progress: 0 },
+              { name: "UI/UX Design", progress: 0 },
+              { name: "Python & Data Science", progress: 0 }
+            ]).map((sp, idx) => {
+              const currentProgress = sp.progress || 0;
+              return (
+                <div key={idx} className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold">
+                    <span>{sp.name}</span>
+                    <span className="text-primary font-bold">{currentProgress}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-surface-container-high dark:bg-surface-container-highest rounded-full overflow-hidden">
+                    <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${currentProgress}%` }}></div>
+                  </div>
                 </div>
-                <div className="w-full h-1.5 bg-surface-container-high dark:bg-surface-container-highest rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: `${sp.progress}%` }}></div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -216,6 +227,17 @@ export default function ProfileScreen() {
               <p className="font-medium text-on-surface dark:text-inverse-on-surface">{userProfile.email}</p>
             </div>
           </div>
+        </div>
+
+        {/* Sign Out */}
+        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40">
+          <button
+            onClick={logout}
+            className="w-full py-3 bg-error/10 hover:bg-error/20 text-error text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-base">logout</span>
+            <span>Sign Out</span>
+          </button>
         </div>
 
       </main>

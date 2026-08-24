@@ -5,7 +5,7 @@ import GoogleAuthModal from '../components/GoogleAuthModal';
 import LinkedInAuthModal from '../components/LinkedInAuthModal';
 
 export default function SettingsScreen() {
-  const { darkMode, setDarkMode, navigate, showToast, userProfile, updateProfile, logout } = useApp();
+  const { darkMode, setDarkMode, navigate, showToast, userProfile, updateProfile, userRole, switchRole, logout } = useApp();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState('English (US)');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -14,6 +14,8 @@ export default function SettingsScreen() {
 
   const isGoogleConnected = userProfile.authProvider === 'google' && userProfile.email && !userProfile.email.includes('guest');
   const isLinkedInConnected = userProfile.authProvider === 'linkedin';
+
+  const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
 
   const handleDisconnectGoogle = () => {
     updateProfile({ authProvider: 'guest' });
@@ -31,6 +33,48 @@ export default function SettingsScreen() {
 
       <main className="px-4 py-4 space-y-4 w-full">
         
+        {/* Active Role & Perspective */}
+        <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-3">
+          <div className="flex items-center justify-between border-b border-surface-variant/40 pb-2">
+            <h2 className="font-headline text-xs font-bold text-primary">
+              Active App Role & Perspective
+            </h2>
+            <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
+              isRecruiter ? 'bg-primary/10 text-primary' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+            }`}>
+              {isRecruiter ? 'Recruiter Mode' : 'Student Mode'}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between py-1">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-xl">
+                  {isRecruiter ? 'work' : 'school'}
+                </span>
+              </div>
+              <div className="min-w-0">
+                <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate">
+                  {isRecruiter ? 'HR / Recruiter' : 'Student Developer'}
+                </p>
+                <p className="text-[10px] text-secondary truncate">
+                  {isRecruiter 
+                    ? `${userProfile.job_role || 'Recruiter'} at ${userProfile.company_name || 'Skillify Inc.'}`
+                    : 'Learning, Quizzes & Portfolio'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => switchRole(isRecruiter ? 'student' : 'recruiter')}
+              className="text-[11px] font-bold px-3.5 py-1.5 rounded-full transition-all shrink-0 bg-primary/10 hover:bg-primary text-primary hover:text-white cursor-pointer active:scale-95 flex items-center gap-1"
+            >
+              <span className="material-symbols-outlined text-xs">sync_alt</span>
+              <span>Switch to {isRecruiter ? 'Student' : 'Recruiter'}</span>
+            </button>
+          </div>
+        </section>
+
         {/* Account & Security */}
         <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-3">
           <h2 className="font-headline text-xs font-bold text-primary border-b border-surface-variant/40 pb-2">

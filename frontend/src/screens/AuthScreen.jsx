@@ -9,7 +9,7 @@ export default function AuthScreen() {
     loginWithLinkedIn,
     loginWithGitHub,
     loginWithEmail,
-    signUpWithEmail,
+    signupWithEmail,
     navigate
   } = useApp();
 
@@ -24,16 +24,12 @@ export default function AuthScreen() {
     major: 'Computer Science Major'
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSignUp) {
-      if (signUpWithEmail) {
-        signUpWithEmail(formData);
-      } else {
-        loginWithEmail(formData.email, formData.password);
-      }
+      await signupWithEmail(formData.name, formData.email, formData.password);
     } else {
-      loginWithEmail(formData.email, formData.password);
+      await loginWithEmail(formData.email, formData.password);
     }
   };
 

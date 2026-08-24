@@ -11,8 +11,9 @@ export default function LoginScreen() {
   const [isLinkedInModalOpen, setIsLinkedInModalOpen] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim()) {
       showToast("Please enter your email address", "error");
@@ -22,7 +23,12 @@ export default function LoginScreen() {
       showToast("Please enter your password", "error");
       return;
     }
-    loginWithEmail(email.trim(), password.trim());
+    setIsLoading(true);
+    try {
+      await loginWithEmail(email.trim(), password.trim());
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -138,10 +144,11 @@ export default function LoginScreen() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-primary hover:bg-primary-container text-white font-headline text-xs font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] mt-2 cursor-pointer flex items-center justify-center gap-1.5"
+              disabled={isLoading}
+              className="w-full py-3 bg-primary hover:bg-primary-container text-white font-headline text-xs font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] mt-2 cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-60"
             >
-              <span className="material-symbols-outlined text-sm">lock_open</span>
-              <span>Sign In with Password</span>
+              <span className="material-symbols-outlined text-sm">{isLoading ? 'progress_activity' : 'lock_open'}</span>
+              <span>{isLoading ? 'Signing In...' : 'Sign In with Password'}</span>
             </button>
           </form>
 

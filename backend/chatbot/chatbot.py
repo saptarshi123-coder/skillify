@@ -26,6 +26,22 @@ except Exception as e:
         print(f"SkillQuizAPI fallback error: {e2}")
         quiz_api = None
 
+# Import Skillify AI CV Generator from 'CV Generator'
+cv_gen_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CV Generator'))
+if cv_gen_path not in sys.path:
+    sys.path.insert(0, cv_gen_path)
+
+try:
+    import re
+    from service import generate_cv_pdf_bytes
+    from schemas import TargetDomain
+    import sample_data as cv_sample_data
+    CV_GENERATOR_AVAILABLE = True
+    print("Skillify AI CV Generator loaded successfully.")
+except Exception as e:
+    print(f"CV Generator import notice: {e}")
+    CV_GENERATOR_AVAILABLE = False
+
 
 class ChatBot:
     def __init__(self):
@@ -1456,6 +1472,7 @@ def create_app():
         except Exception as e:
             return jsonify({'error': str(e)}), 400
 
+    # AI Quiz Results Endpoints
     @app.route('/api/quiz/results', methods=['POST'])
     def get_ai_quiz_results():
         data = request.get_json() or {}
@@ -1467,6 +1484,127 @@ def create_app():
             return jsonify({'success': True, 'data': results})
         except Exception as e:
             return jsonify({'error': str(e)}), 400
+
+    # ==========================================
+    # SKILLIFY AI CV GENERATOR ENDPOINTS
+    # ==========================================
+    def _safe_filename(name: str, fallback: str = "CV") -> str:
+        cleaned = re.sub(r"[^A-Za-z0-9 _.-]+", "", name).strip()
+        cleaned = re.sub(r"\s+", "_", cleaned)
+        return cleaned[:60] or fallback
+
+    @app.route('/api/cv/domains', methods=['GET'])
+    def get_cv_domains():
+        domains_list = [
+            {"id": "SDE", "name": "Software Development (SDE)", "icon": "code", "desc": "Algorithms, Backend, Web & Mobile Engineering", "color": "from-blue-600 to-indigo-600"},
+            {"id": "AI/ML", "name": "AI & Machine Learning", "icon": "psychology", "desc": "Deep Learning, NLP, Computer Vision & MLOps", "color": "from-purple-600 to-pink-600"},
+            {"id": "Data Science", "name": "Data Science & Analytics", "icon": "analytics", "desc": "Statistics, SQL, Visualization & Predictive Models", "color": "from-emerald-600 to-teal-600"},
+            {"id": "UI/UX", "name": "UI/UX & Product Design", "icon": "palette", "desc": "Figma, Wireframing, User Research & Design Systems", "color": "from-pink-600 to-rose-600"},
+            {"id": "Engineering", "name": "Core Engineering & IoT", "icon": "precision_manufacturing", "desc": "Embedded Systems, Robotics & Applied Hardware", "color": "from-amber-600 to-orange-600"},
+            {"id": "Marketing", "name": "Growth & Digital Marketing", "icon": "campaign", "desc": "SEO, Content Strategy, Analytics & Campaigns", "color": "from-red-600 to-orange-600"},
+            {"id": "Writer", "name": "Technical & Content Writing", "icon": "edit_note", "desc": "Documentation, Storytelling, Research & Copywriting", "color": "from-cyan-600 to-blue-600"},
+            {"id": "Videography", "name": "Videography & Motion", "icon": "videocam", "desc": "Cinematography, Editing, Storyboarding & Motion Design", "color": "from-violet-600 to-purple-600"},
+            {"id": "Photography", "name": "Photography & Visual Arts", "icon": "photo_camera", "desc": "Photojournalism, Commercial, Portrait & Lighting", "color": "from-yellow-600 to-amber-600"}
+        ]
+        return jsonify({
+            'success': True,
+            'available': CV_GENERATOR_AVAILABLE,
+            'domains': domains_list
+        })
+
+    @app.route('/api/cv/generate', methods=['POST', 'OPTIONS'])
+    @app.route('/api/v1/cv/generate', methods=['POST', 'OPTIONS'])
+    def generate_cv_endpoint():
+        if request.method == 'OPTIONS':
+            return jsonify({'success': True}), 200
+
+        if not CV_GENERATOR_AVAILABLE:
+            return jsonify({'error': 'CV Generator engine is not initialized'}), 500
+
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Request body JSON is required'}), 400
+
+        target_domain = data.get('target_domain', 'SDE')
+        download = bool(data.get('download', False))
+        raw_profile = data.get('profile', {})
+
+        if not raw_profile:
+            return jsonify({'error': 'profile object is required'}), 400
+
+        full_name = raw_profile.get('full_name') or raw_profile.get('name', 'Student Developer')
+        if not raw_profile.get('full_name'):
+            raw_profile['full_name'] = full_name
+        if not raw_profile.get('email'):
+            raw_profile['email'] = raw_profile.get('email', 'student@skillify.ai')
+
+        try:
+            logo_path = os.path.join(cv_gen_path, 'assets', 'skillify_logo.jpeg')
+            if not os.path.isfile(logo_path):
+                logo_path = None
+
+            pdf_bytes = generate_cv_pdf_bytes(
+                target_domain=target_domain,
+                raw_profile=raw_profile,
+                logo_path=logo_path
+            )
+
+            base_name = _safe_filename(full_name, fallback="Skillify_CV")
+            suffix = f"_{_safe_filename(str(target_domain))}" if target_domain else ""
+            filename = f"{base_name}{suffix}_CV.pdf"
+            disposition_type = "attachment" if download else "inline"
+
+            return Response(
+                pdf_bytes,
+                mimetype="application/pdf",
+                headers={
+                    "Content-Disposition": f'{disposition_type}; filename="{filename}"',
+                    "Access-Control-Expose-Headers": "Content-Disposition"
+                }
+            )
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return jsonify({'error': f'CV generation failed: {str(e)}'}), 500
+
+    @app.route('/api/cv/demo/random', methods=['GET'])
+    @app.route('/api/v1/cv/demo/random', methods=['GET'])
+    def demo_random_cv_endpoint():
+        if not CV_GENERATOR_AVAILABLE:
+            return jsonify({'error': 'CV Generator engine is not initialized'}), 500
+
+        profile_id = request.args.get('id')
+        target_domain = request.args.get('target_domain')
+        download = request.args.get('download', 'false').lower() == 'true'
+
+        try:
+            demo = cv_sample_data.get_random_demo_profile(profile_id)
+            domain = target_domain or demo.default_domain
+            logo_path = os.path.join(cv_gen_path, 'assets', 'skillify_logo.jpeg')
+            if not os.path.isfile(logo_path):
+                logo_path = None
+
+            pdf_bytes = generate_cv_pdf_bytes(
+                target_domain=domain,
+                raw_profile=demo.profile,
+                logo_path=logo_path
+            )
+
+            base_name = _safe_filename(demo.profile.get('full_name', 'Demo_Student'))
+            suffix = f"_{_safe_filename(str(domain))}"
+            filename = f"{base_name}{suffix}_CV.pdf"
+            disposition_type = "attachment" if download else "inline"
+
+            return Response(
+                pdf_bytes,
+                mimetype="application/pdf",
+                headers={
+                    "Content-Disposition": f'{disposition_type}; filename="{filename}"',
+                    "Access-Control-Expose-Headers": "Content-Disposition"
+                }
+            )
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
     @app.errorhandler(404)
     def not_found(e):

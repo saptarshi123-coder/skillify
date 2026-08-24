@@ -2,7 +2,9 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function Navbar({ title, showBack = false, onBack }) {
-  const { navigate, goBack, userProfile, darkMode, setDarkMode } = useApp();
+  const { navigate, goBack, userProfile, userRole, darkMode, setDarkMode } = useApp();
+
+  const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
 
   const handleBack = () => {
     if (onBack) onBack();
@@ -22,7 +24,7 @@ export default function Navbar({ title, showBack = false, onBack }) {
           </button>
         ) : (
           <button
-            onClick={() => navigate('profile')}
+            onClick={() => navigate(isRecruiter ? 'recruiter-profile' : 'profile')}
             className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary/30 active:scale-95 transition-transform shrink-0 shadow-sm cursor-pointer"
           >
             <img
@@ -50,15 +52,17 @@ export default function Navbar({ title, showBack = false, onBack }) {
           </span>
         </button>
 
-        {/* Badges Button */}
-        <button
-          onClick={() => navigate('badges')}
-          className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 dark:from-amber-500/20 dark:to-orange-500/20 text-white hover:opacity-95 px-2.5 py-1 rounded-full cursor-pointer transition-all active:scale-95 border border-amber-400/60 dark:border-amber-400/50 shadow-xs"
-          title="Badges & Achievements"
-        >
-          <span className="material-symbols-outlined text-base icon-filled text-amber-100 dark:text-amber-400">workspace_premium</span>
-          <span className="font-label-sm text-[11px] font-bold text-white">Badges</span>
-        </button>
+        {/* Badges Button (Only visible in Student Mode; removed in HR Mode) */}
+        {!isRecruiter && (
+          <button
+            onClick={() => navigate('badges')}
+            className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 dark:from-amber-500/20 dark:to-orange-500/20 text-white hover:opacity-95 px-2.5 py-1 rounded-full cursor-pointer transition-all active:scale-95 border border-amber-400/60 dark:border-amber-400/50 shadow-xs"
+            title="Badges & Achievements"
+          >
+            <span className="material-symbols-outlined text-base icon-filled text-amber-100 dark:text-amber-400">workspace_premium</span>
+            <span className="font-label-sm text-[11px] font-bold text-white">Badges</span>
+          </button>
+        )}
 
         {/* Settings button */}
         <button

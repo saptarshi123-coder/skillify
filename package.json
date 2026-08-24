@@ -7,12 +7,14 @@
     "dev:all": "concurrently -k -n \"CHATBOT,FRONTEND\" -c \"cyan,green\" \"npm run chatbot\" \"npm run dev\"",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "chatbot": "bash backend/chatbot/start.sh",
+    "chatbot": "python backend/chatbot/app.py",
     "chatbot:api": "backend/chatbot/venv/bin/python backend/chatbot/chatbot.py --api",
     "quiz:engine": "backend/chatbot/venv/bin/python backend/ai_quiz/skill-quiz/quiz_engine.py",
     "quiz:api": "backend/chatbot/venv/bin/python backend/ai_quiz/skill-quiz/api.py",
     "android:sync": "npm --prefix frontend run android:sync",
-    "android:open": "npm --prefix frontend run android:open"
+    "android:open": "npm --prefix frontend run android:open",
+    "android:build": "npm --prefix frontend run android:build",
+    "android:build:release": "npm --prefix frontend run android:build:release"
   },
   "devDependencies": {
     "concurrently": "^10.0.5"

@@ -12,6 +12,7 @@ export default function SignupScreen() {
   const [agreed, setAgreed] = useState(true);
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
   const [isLinkedInModalOpen, setIsLinkedInModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   const presetAvatars = [
@@ -53,7 +54,7 @@ export default function SignupScreen() {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!fullName || !email || !password) {
       showToast("Please fill in all fields", "error");
@@ -63,7 +64,12 @@ export default function SignupScreen() {
       showToast("Please accept the terms and conditions", "error");
       return;
     }
-    signupWithEmail(fullName, email, password, avatar);
+    setIsLoading(true);
+    try {
+      await signupWithEmail(fullName, email, password, avatar);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -236,9 +242,10 @@ export default function SignupScreen() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-primary hover:bg-primary-container text-white font-headline text-xs font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] mt-2 cursor-pointer"
+              disabled={isLoading}
+              className="w-full py-3 bg-primary hover:bg-primary-container text-white font-headline text-xs font-bold rounded-2xl shadow-md transition-all active:scale-[0.98] mt-2 cursor-pointer disabled:opacity-60"
             >
-              Save Profile & Continue
+              {isLoading ? 'Creating Account...' : 'Save Profile & Continue'}
             </button>
           </form>
 

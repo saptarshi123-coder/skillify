@@ -2,50 +2,89 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function BottomNav() {
-  const { currentScreen, navigate } = useApp();
+  const { currentScreen, navigate, userRole } = useApp();
 
-  const navItems = [
-    {
-      id: 'discover',
-      label: 'Discover',
-      icon: 'travel_explore',
-      screen: 'discover',
-      activeScreens: ['discover', 'submit-project', 'project-repo']
-    },
-    {
-      id: 'explore',
-      label: 'Explore',
-      icon: 'group',
-      screen: 'explore',
-      activeScreens: ['explore', 'public-profile']
-    },
-    {
-      id: 'dashboard',
-      label: 'Learning',
-      icon: 'menu_book',
-      screen: 'dashboard'
-    },
-    {
-      id: 'quiz',
-      label: 'Quizzes',
-      icon: 'quiz',
-      screen: 'quiz-select',
-      activeScreens: ['quiz-select', 'quiz-active', 'quiz-results']
-    },
-    {
-      id: 'ai-chat',
-      label: 'AI Chat',
-      icon: 'smart_toy',
-      screen: 'ai-chat'
-    },
-    {
-      id: 'profile',
-      label: 'Profile',
-      icon: 'person',
-      screen: 'profile',
-      activeScreens: ['profile', 'edit-profile', 'badges', 'settings']
-    }
-  ];
+  const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
+
+  const navItems = isRecruiter
+    ? [
+        {
+          id: 'discover',
+          label: 'Talent',
+          icon: 'travel_explore',
+          screen: 'discover',
+          activeScreens: ['discover', 'submit-project', 'project-repo']
+        },
+        {
+          id: 'explore',
+          label: 'Students',
+          icon: 'group',
+          screen: 'explore',
+          activeScreens: ['explore', 'public-profile']
+        },
+        {
+          id: 'postings',
+          label: 'Postings',
+          icon: 'campaign',
+          screen: 'list-internship',
+          activeScreens: ['list-internship', 'find-internship', 'find-internships', 'list-internships']
+        },
+        {
+          id: 'ai-chat',
+          label: 'AI Recruiter',
+          icon: 'smart_toy',
+          screen: 'ai-chat'
+        },
+        {
+          id: 'recruiter-profile',
+          label: 'Profile',
+          icon: 'person',
+          screen: 'recruiter-profile',
+          activeScreens: ['recruiter-profile', 'complete-hr-profile', 'settings']
+        }
+      ]
+    : [
+        {
+          id: 'discover',
+          label: 'Discover',
+          icon: 'travel_explore',
+          screen: 'discover',
+          activeScreens: ['discover', 'submit-project', 'project-repo', 'find-internship', 'list-internship', 'find-internships', 'list-internships']
+        },
+        {
+          id: 'explore',
+          label: 'Explore',
+          icon: 'group',
+          screen: 'explore',
+          activeScreens: ['explore', 'public-profile']
+        },
+        {
+          id: 'dashboard',
+          label: 'Learning',
+          icon: 'menu_book',
+          screen: 'dashboard'
+        },
+        {
+          id: 'quiz',
+          label: 'Quizzes',
+          icon: 'quiz',
+          screen: 'quiz-select',
+          activeScreens: ['quiz-select', 'quiz-active', 'quiz-results']
+        },
+        {
+          id: 'ai-chat',
+          label: 'AI Chat',
+          icon: 'smart_toy',
+          screen: 'ai-chat'
+        },
+        {
+          id: 'profile',
+          label: 'Profile',
+          icon: 'person',
+          screen: 'profile',
+          activeScreens: ['profile', 'edit-profile', 'badges', 'settings']
+        }
+      ];
 
   const isItemActive = (item) => {
     if (item.activeScreens) {
