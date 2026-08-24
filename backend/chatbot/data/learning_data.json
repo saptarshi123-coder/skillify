@@ -12,10 +12,10 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 221,
+    "total_messages": 223,
     "avg_conversation_length": 0,
     "top_intents": {
-      "greeting": 46,
+      "greeting": 48,
       "find_freelancer": 22,
       "fees_commission": 4,
       "joke": 13,
@@ -287,15 +287,6 @@
     ],
     "test_user": [
       {
-        "step": 4,
-        "data": {
-          "intent": "payments",
-          "confidence": 0.75,
-          "sentiment": "neutral"
-        },
-        "timestamp": 1787170577.954823
-      },
-      {
         "step": 5,
         "data": {
           "intent": "unknown",
@@ -465,6 +456,15 @@
           "sentiment": "positive"
         },
         "timestamp": 1787348305.6512725
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 1.0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787577538.4526992
       }
     ],
     "test123": [
@@ -1271,6 +1271,17 @@
         },
         "timestamp": 1787516908.935011
       }
+    ],
+    "user123": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787577479.3822622
+      }
     ]
   },
   "user_profiles": {
@@ -1294,7 +1305,7 @@
     },
     "test_user": {
       "first_seen": 1787168704.6119978,
-      "total_messages": 48,
+      "total_messages": 49,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1360,6 +1371,12 @@
     },
     "6fd61584-f058-4347-be00-4bf39b3eab00": {
       "first_seen": 1787516908.9338944,
+      "total_messages": 1,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "user123": {
+      "first_seen": 1787577479.3810105,
       "total_messages": 1,
       "preferred_intents": [],
       "sentiment_history": []
