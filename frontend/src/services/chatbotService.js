@@ -1,8 +1,20 @@
 import intentsData from '../data/chatbotIntents.json';
 
 // Configuration
-const API_BASE = '/api';
+const DEFAULT_NGROK_URL = 'https://script-ungloved-plutonium.ngrok-free.dev/api';
 const DIRECT_API_BASE = 'http://localhost:5001/api';
+const PROXY_API_BASE = '/api';
+
+// Configurable via Vite environment variable VITE_CHATBOT_API_URL or defaults to your ngrok tunnel
+const NGROK_API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_CHATBOT_API_URL)
+  ? `${import.meta.env.VITE_CHATBOT_API_URL.replace(/\/$/, '')}/api`
+  : DEFAULT_NGROK_URL;
+
+// Default headers for API calls (including ngrok-skip-browser-warning for ngrok free tier)
+const API_HEADERS = {
+  'Content-Type': 'application/json',
+  'ngrok-skip-browser-warning': 'true'
+};
 
 // Check if running inside mobile native / Capacitor webview
 const isMobileNative = () => {
@@ -417,39 +429,51 @@ class ChatbotService {
     this.backendVersion = null;
     this.activeUserId = 'user_' + Date.now();
     this.lastHealthCheck = 0;
+    this.activeApiBase = null;
   }
 
   async checkBackendHealth(force = false) {
     const now = Date.now();
     if (!force && now - this.lastHealthCheck < 8000) {
-      return { online: this.isBackendOnline, version: this.backendVersion };
+      return { online: this.isBackendOnline, version: this.backendVersion, activeUrl: this.activeApiBase };
     }
 
     this.lastHealthCheck = now;
 
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+    // Candidate backend endpoints in priority order (Ngrok remote tunnel -> direct localhost -> local proxy)
+    const candidateEndpoints = [
+      NGROK_API_BASE,
+      DIRECT_API_BASE,
+      PROXY_API_BASE
+    ].filter(Boolean);
 
-      let res;
+    for (const base of candidateEndpoints) {
       try {
-        res = await fetch(`${DIRECT_API_BASE}/health`, { signal: controller.signal });
-      } catch (err) {
-        res = await fetch(`${API_BASE}/health`, { signal: controller.signal });
-      }
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-      clearTimeout(timeoutId);
-      if (res && res.ok) {
-        const data = await res.json();
-        this.isBackendOnline = true;
-        this.backendVersion = data.version || '2.0.0';
-        return { online: true, version: this.backendVersion, data };
+        const res = await fetch(`${base}/health`, {
+          signal: controller.signal,
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
+        clearTimeout(timeoutId);
+
+        if (res && res.ok) {
+          const data = await res.json();
+          if (data.status === 'healthy' || data.service) {
+            this.isBackendOnline = true;
+            this.backendVersion = data.version || '2.0.0';
+            this.activeApiBase = base;
+            return { online: true, version: this.backendVersion, data, activeUrl: base };
+          }
+        }
+      } catch (e) {
+        // Continue to check next candidate endpoint
       }
-    } catch (e) {
-      this.isBackendOnline = false;
     }
 
     this.isBackendOnline = false;
+    this.activeApiBase = null;
     return { online: false, version: 'Local Standalone Engine' };
   }
 
@@ -461,23 +485,19 @@ class ChatbotService {
     const health = await this.checkBackendHealth();
     const sentiment = this.localClient.detectSentiment(messageText);
 
-    // If Python Backend is online (e.g. Localhost dev, or mobile pointed at port 5001), call live API
-    if (health.online) {
+    // If Python Backend is online (via Ngrok tunnel, localhost, or dev proxy), call live API
+    if (health.online && this.activeApiBase) {
       try {
-        let res;
-        try {
-          res = await fetch(`${DIRECT_API_BASE}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: messageText, user_id: userId })
-          });
-        } catch (fetchErr) {
-          res = await fetch(`${API_BASE}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: messageText, user_id: userId })
-          });
-        }
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const res = await fetch(`${this.activeApiBase}/chat`, {
+          method: 'POST',
+          headers: API_HEADERS,
+          body: JSON.stringify({ message: messageText, user_id: userId }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
 
         if (res && res.ok) {
           const result = await res.json();
@@ -506,6 +526,11 @@ class ChatbotService {
               return act;
             });
 
+            const isTunnel = this.activeApiBase.includes('ngrok');
+            const engineName = isTunnel 
+              ? `Python Server (Live Tunnel v${this.backendVersion})` 
+              : `Python Server (v${this.backendVersion})`;
+
             return {
               text: fullResponse,
               intent: botData.intent || 'general',
@@ -517,7 +542,7 @@ class ChatbotService {
               },
               responseType: botData.response_type || 'standard',
               suggestedActions: formattedActions.length > 0 ? formattedActions : (INTENT_ACTIONS[botData.intent] || []),
-              engine: `Python Server (v${this.backendVersion})`,
+              engine: engineName,
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
           }
@@ -527,7 +552,7 @@ class ChatbotService {
       }
     }
 
-    // High Performance Client-side Standalone NLP Engine (100% Offline & APK Parity)
+    // High Performance Client-side Standalone NLP Engine (100% Offline & Fallback Parity)
     const nlpResult = this.localClient.findBestIntent(messageText);
     const fullText = nlpResult.response;
 
@@ -564,11 +589,11 @@ class ChatbotService {
   }
 
   async getQuickReplies(userId = this.activeUserId, lastIntent = null) {
-    if (this.isBackendOnline && !isMobileNative()) {
+    if (this.isBackendOnline && this.activeApiBase) {
       try {
-        const res = await fetch(`${API_BASE}/quick-replies`, {
+        const res = await fetch(`${this.activeApiBase}/quick-replies`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: API_HEADERS,
           body: JSON.stringify({ user_id: userId, last_intent: lastIntent })
         });
         if (res.ok) {
@@ -585,11 +610,11 @@ class ChatbotService {
   }
 
   async submitFeedback(userId, messageIndex, rating, comment = '') {
-    if (this.isBackendOnline && !isMobileNative()) {
+    if (this.isBackendOnline && this.activeApiBase) {
       try {
-        await fetch(`${API_BASE}/feedback`, {
+        await fetch(`${this.activeApiBase}/feedback`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: API_HEADERS,
           body: JSON.stringify({ user_id: userId, message_index: messageIndex, rating, comment })
         });
       } catch (e) {
@@ -600,9 +625,11 @@ class ChatbotService {
   }
 
   async getSessionMood(userId = this.activeUserId, localMessages = []) {
-    if (this.isBackendOnline && !isMobileNative()) {
+    if (this.isBackendOnline && this.activeApiBase) {
       try {
-        const res = await fetch(`${API_BASE}/session/${userId}/mood`);
+        const res = await fetch(`${this.activeApiBase}/session/${userId}/mood`, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
         if (res.ok) {
           const json = await res.json();
           if (json.success && json.data) {
@@ -639,9 +666,12 @@ class ChatbotService {
   }
 
   async clearBackendConversation(userId = this.activeUserId) {
-    if (this.isBackendOnline && !isMobileNative()) {
+    if (this.isBackendOnline && this.activeApiBase) {
       try {
-        await fetch(`${API_BASE}/conversation/${userId}/clear`, { method: 'POST' });
+        await fetch(`${this.activeApiBase}/conversation/${userId}/clear`, {
+          method: 'POST',
+          headers: API_HEADERS
+        });
       } catch (e) {
         // ignore
       }
