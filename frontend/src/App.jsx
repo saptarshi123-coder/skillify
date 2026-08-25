@@ -29,6 +29,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import SubmitProjectScreen from './screens/SubmitProjectScreen';
 import ProjectRepoScreen from './screens/ProjectRepoScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import ExploreCoursesScreen from './screens/ExploreCoursesScreen';
 
 export default function App() {
   const { currentScreen } = useApp();
@@ -51,6 +52,9 @@ export default function App() {
         return <SelectSkillScreen />;
       case 'dashboard':
         return <DashboardScreen />;
+      case 'courses':
+      case 'explore-courses':
+        return <ExploreCoursesScreen />;
       case 'discover':
         return <DiscoverScreen />;
       case 'find-internship':

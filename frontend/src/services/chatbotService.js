@@ -29,7 +29,7 @@ const isMobileNative = () => {
 
 // Humorous Typing Indicators
 const TYPING_INDICATORS = [
-  "Skillie is consulting the neural matrix... 🧠",
+  "Skille is consulting the neural matrix... 🧠",
   "Untangling neural cables... 🔌",
   "Consulting the rubber duck on desk... 🦆",
   "Searching the SKILLIFY knowledge base... 🔍",
@@ -203,7 +203,7 @@ const INTENT_ACTIONS = {
     { label: "💼 View Project Showcase", screen: "discover" }
   ],
   job_search: [
-    { label: "📂 Discover Projects", screen: "discover" },
+    { label: "📂 Projects", screen: "discover" },
     { label: "🏆 Earn Skill Badges", screen: "badges" },
     { label: "✏️ Update Profile", screen: "edit-profile" }
   ],
@@ -219,7 +219,7 @@ const INTENT_ACTIONS = {
   ],
   greeting: [
     { label: "🎯 Take a Skill Quiz", screen: "quiz-select" },
-    { label: "🌟 Discover Projects", screen: "discover" },
+    { label: "🌟 Projects", screen: "discover" },
     { label: "💡 How does Skillify work?", prompt: "How does Skillify work?" }
   ],
   emotional_sadness: [
@@ -230,7 +230,7 @@ const INTENT_ACTIONS = {
   emotional_excitement: [
     { label: "📝 Take Another Quiz", screen: "quiz-select" },
     { label: "🏆 View My Badges", screen: "badges" },
-    { label: "🌟 Discover Projects", screen: "discover" }
+    { label: "🌟 Projects", screen: "discover" }
   ],
   emotional_frustration: [
     { label: "🦆 Explain Debugging Steps", prompt: "How do I debug code step by step?" },
@@ -245,7 +245,7 @@ const INTENT_ACTIONS = {
   emotional_gratitude_love: [
     { label: "🚀 Explore New Skills", screen: "select-skill" },
     { label: "📝 Take a Coding Quiz", screen: "quiz-select" },
-    { label: "🌟 Discover Projects", screen: "discover" }
+    { label: "🌟 Projects", screen: "discover" }
   ],
   emotional_motivation: [
     { label: "🔥 Start a Quiz Assessment", screen: "quiz-select" },
@@ -398,7 +398,7 @@ class LocalNLPClient {
     return {
       intent: 'general_assistance',
       confidence: 0.7,
-      response: `I'm Skillie, your AI Learning & Career Guide on SKILLIFY! 🚀\n\nI can help you with:\n- **Skill Certifications:** Take AI-graded assessments in Python, Web Dev, and App Dev.\n- **Coding Assistance:** Ask about Algorithms, Binary Search, Hash Tables, React, C++, and Git.\n- **Freelancing & Platform Guidance:** Learn about Escrow protection, posting jobs, and earning verified badges.`,
+      response: `I'm Skille, your AI Learning & Career Guide on SKILLIFY! 🚀\n\nI can help you with:\n- **Skill Certifications:** Take AI-graded assessments in Python, Web Dev, and App Dev.\n- **Coding Assistance:** Ask about Algorithms, Binary Search, Hash Tables, React, C++, and Git.\n- **Freelancing & Platform Guidance:** Learn about Escrow protection, posting jobs, and earning verified badges.`,
       suggestedActions: [
         { label: "🎯 Take a Skill Quiz", screen: "quiz-select" },
         { label: "💡 How Escrow Works", prompt: "How does escrow payment work?" },

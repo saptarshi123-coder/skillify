@@ -3290,7 +3290,7 @@ class NLPEngine:
                                         'i feel burnt out', 'so much pressure', 'panic', 'cant sleep', 'im nervous', 'scared of interview',
                                         'im anxious', 'stressed out', 'overwhelmed', 'freaking out', 'too hard', 'stressing me out'],
             'emotional_gratitude_love': ['i love you', 'you are the best', 'youre awesome', 'you made my day', 'thank you so much',
-                                        'youre so sweet', 'i appreciate you', 'best bot ever', 'thank you skillie', 'youre amazing',
+                                        'youre so sweet', 'i appreciate you', 'best bot ever', 'thank you skille', 'thank you skillie', 'youre amazing',
                                         'love you', 'you are awesome', 'thanks a lot', 'you rock', 'you helped me so much',
                                         'thanks buddy', 'good bot', 'best ai', 'ilysm', 'ily', 'ilu', 'luv u', 'love u'],
             'emotional_motivation': ['motivate me', 'give me motivation', 'i need inspiration', 'cheer me up', 'encourage me',

@@ -136,7 +136,7 @@ export function AppProvider({ children }) {
 
   // AI Chatbot Live Integration State
   const [isAITyping, setIsAITyping] = useState(false);
-  const [typingStatus, setTypingStatus] = useState("Skillie is thinking... 🧠");
+  const [typingStatus, setTypingStatus] = useState("Skille is thinking... 🧠");
   const [streamingResponse, setStreamingResponse] = useState("");
   const [chatbotStatus, setChatbotStatus] = useState({ online: false, version: 'Local Engine' });
   const [botMood, setBotMood] = useState({ current_mood: 'positive', dominant_mood: 'positive', mood_breakdown: {} });
@@ -836,7 +836,7 @@ export function AppProvider({ children }) {
     const msgIndex = chatMessages.findIndex(m => m.id === messageId);
     const userIdentifier = userProfile.email || userProfile.name || 'guest_user';
     await chatbotService.submitFeedback(userIdentifier, msgIndex, rating, comment);
-    showToast(rating >= 4 ? "🌟 Thank you for the positive feedback!" : "👍 Feedback saved to improve Skillie AI!");
+    showToast(rating >= 4 ? "🌟 Thank you for the positive feedback!" : "👍 Feedback saved to improve Skille!");
   };
 
   // Clear AI Chat History

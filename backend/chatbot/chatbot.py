@@ -499,7 +499,7 @@ class ChatBot:
             suggested_actions = ["Quick Breathing Reset", "Study Roadmap", "Easy Practice Quiz", "Motivation"]
         elif intent == "emotional_gratitude_love":
             response = self._handle_emotional_gratitude(user_input, humor_level)
-            suggested_actions = ["Explore New Skills", "Take a Coding Quiz", "Discover Projects", "Tell Another Joke"]
+            suggested_actions = ["Explore New Skills", "Take a Coding Quiz", "Projects", "Tell Another Joke"]
         elif intent == "emotional_motivation":
             response = self._handle_emotional_motivation(user_input, humor_level)
             suggested_actions = ["Start Skill Assessment", "Browse Hot Skills", "Inspire Me Again", "Platform Tips"]

@@ -1,38 +1,67 @@
+@font-face {
+  font-family: 'Ndot 55';
+  src: url('/fonts/ndot55.woff2') format('woff2'),
+       url('/fonts/ndot55.woff') format('woff'),
+       url('/fonts/ndot55.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NDOT 55';
+  src: url('/fonts/ndot55.woff2') format('woff2'),
+       url('/fonts/ndot55.woff') format('woff'),
+       url('/fonts/ndot55.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Signature Red Branding - #960018 Carmine Red */
-    --color-primary: 150 0 24;           /* #960018 Carmine Red */
-    --color-primary-container: 176 0 28; /* #b0001c */
+    /* Signature Red Branding */
+    --color-primary: 215 25 33;
+    /* #D71921 Nothing / Carmine Red */
+    --color-primary-container: 176 0 20;
+    /* #B00014 */
     --color-on-primary: 255 255 255;
     --color-on-primary-container: 254 226 226;
-    --color-primary-fixed: 150 0 24;     /* #960018 Exact Same Red */
-    --color-primary-fixed-dim: 176 0 28;
+    --color-primary-fixed: 215 25 33;
+    --color-primary-fixed-dim: 176 0 20;
     --color-on-primary-fixed: 255 255 255;
-    --color-on-primary-fixed-variant: 150 0 24;
-    --color-inverse-primary: 150 0 24;
+    --color-on-primary-fixed-variant: 215 25 33;
+    --color-inverse-primary: 215 25 33;
 
-    /* Light Mode Palette */
-    --color-background: 250 248 246;     /* #faf8f6 */
-    --color-on-background: 24 24 27;     /* #18181b */
+    /* Bright / Light Mode Palette */
+    --color-background: 250 248 246;
+    /* #FAF8F6 Clean light background */
+    --color-on-background: 24 24 27;
+    /* #18181B Dark readable text */
 
-    --color-surface: 255 255 255;        /* #ffffff */
+    --color-surface: 255 255 255;
+    /* #FFFFFF White Header & Base */
     --color-surface-dim: 241 239 236;
     --color-surface-bright: 255 255 255;
     --color-surface-container-lowest: 255 255 255;
     --color-surface-container-low: 248 246 243;
-    --color-surface-container: 242 239 235;
-    --color-surface-container-high: 235 231 226;
-    --color-surface-container-highest: 226 221 214;
-    
+    --color-surface-container: 255 255 255;
+    /* #FFFFFF Card background in light mode */
+    --color-surface-container-high: 243 244 246;
+    /* #F3F4F6 Pill / Input in light mode */
+    --color-surface-container-highest: 229 231 235;
+
     --color-on-surface: 24 24 27;
+    /* #18181B */
     --color-on-surface-variant: 82 82 91;
+    /* #52525B */
     --color-inverse-surface: 39 39 42;
     --color-inverse-on-surface: 244 244 245;
-    --color-surface-tint: 150 0 24;
+    --color-surface-tint: 215 25 33;
 
     --color-secondary: 100 100 110;
     --color-secondary-container: 240 238 235;
@@ -46,110 +75,158 @@
     --color-outline: 161 161 170;
     --color-outline-variant: 228 228 231;
 
-    --color-error: 150 0 24;
+    --color-error: 215 25 33;
     --color-error-container: 254 226 226;
     --color-on-error: 255 255 255;
     --color-on-error-container: 153 27 27;
   }
 
-  html.dark, :root.dark, .dark {
-    /* SIGNATURE RED BRANDING - #960018 FOR DARK MODE */
-    --color-primary: 150 0 24;           /* #960018 Carmine Red */
-    --color-primary-container: 176 0 28; /* #b0001c */
-    --color-on-primary: 255 255 255;     /* #ffffff Crisp White */
+  html.dark,
+  :root.dark,
+  .dark {
+    /* AUTHENTIC NOTHING OS RED ACCENT - #D71921 */
+    --color-primary: 215 25 33;
+    /* #D71921 Nothing Red */
+    --color-primary-container: 176 0 20;
+    /* #B00014 */
+    --color-on-primary: 255 255 255;
+    /* #FFFFFF Crisp White */
     --color-on-primary-container: 255 228 230;
-    --color-primary-fixed: 150 0 24;     /* #960018 Exact Same Red */
-    --color-primary-fixed-dim: 176 0 28;
+    --color-primary-fixed: 215 25 33;
+    --color-primary-fixed-dim: 176 0 20;
     --color-on-primary-fixed: 255 255 255;
-    --color-on-primary-fixed-variant: 150 0 24;
-    --color-inverse-primary: 150 0 24;
+    --color-on-primary-fixed-variant: 215 25 33;
+    --color-inverse-primary: 215 25 33;
 
-    /* REFINED MODERN DARK MODE - LESS PITCH BLACK, SLEEK SLATE & CHARCOAL */
-    --color-background: 24 26 32;        /* #181a20 Slate / Charcoal Background */
-    --color-on-background: 245 246 248;  /* #f5f6f8 Crisp Light text */
+    /* AUTHENTIC NOTHING OS PITCH BLACK BACKGROUND */
+    --color-background: 0 0 0;
+    /* #000000 Pitch Black */
+    --color-on-background: 255 255 255;
+    /* #FFFFFF Stark White */
 
-    /* HEADER & SURFACES: Sleek layered dark tones instead of #000000 */
-    --color-surface: 28 31 39;           /* #1c1f27 Elevated Header & Navbar */
-    --color-surface-dim: 20 22 28;       /* #14161c */
-    --color-surface-bright: 38 42 53;    /* #262a35 */
-    --color-surface-container-lowest: 24 26 32; /* #181a20 */
-    --color-surface-container-low: 29 32 40;    /* #1d2028 */
-    --color-surface-container: 34 38 48;        /* #222630 Base Card */
-    --color-surface-container-high: 40 45 57;   /* #282d39 Elevated Card */
-    --color-surface-container-highest: 48 54 68;/* #303644 Highlight / Pill Card */
+    /* SURFACES & CONTAINERS: Exact Dark Charcoal Gray Cards with 1px border */
+    --color-surface: 0 0 0;
+    /* #000000 Header & Bottom Nav */
+    --color-surface-dim: 0 0 0;
+    --color-surface-bright: 25 29 34;
+    /* #191D22 */
+    --color-surface-container-lowest: 0 0 0;
+    --color-surface-container-low: 18 20 23;
+    /* #121417 */
+    --color-surface-container: 20 23 26;
+    /* #14171A Card Background */
+    --color-surface-container-high: 25 29 34;
+    /* #191D22 Elevated / Input */
+    --color-surface-container-highest: 32 37 43;
+    /* #20252B Pill / Level Badge */
 
-    --color-on-surface: 245 246 248;         /* #f5f6f8 Clean High-Contrast Text */
-    --color-on-surface-variant: 175 182 196; /* #afb6c4 Legible Soft Gray */
-    --color-inverse-surface: 34 38 48;
-    --color-inverse-on-surface: 245 246 248;
-    --color-surface-tint: 150 0 24;
+    --color-on-surface: 255 255 255;
+    /* #FFFFFF Headings */
+    --color-on-surface-variant: 168 175 184;
+    /* #A8AFB8 Body Text */
+    --color-inverse-surface: 25 29 34;
+    --color-inverse-on-surface: 255 255 255;
+    --color-surface-tint: 215 25 33;
 
-    --color-secondary: 156 163 175;
-    --color-secondary-container: 40 45 57;
+    --color-secondary: 142 149 158;
+    /* #8E959E Subtitles & Secondary */
+    --color-secondary-container: 25 29 34;
     --color-on-secondary: 255 255 255;
-    --color-on-secondary-container: 229 231 235;
-    --color-secondary-fixed: 40 45 57;
-    --color-secondary-fixed-dim: 156 163 175;
-    --color-on-secondary-fixed: 245 246 248;
-    --color-on-secondary-fixed-variant: 175 182 196;
+    --color-on-secondary-container: 220 220 220;
+    --color-secondary-fixed: 25 29 34;
+    --color-secondary-fixed-dim: 120 120 120;
+    --color-on-secondary-fixed: 255 255 255;
+    --color-on-secondary-fixed-variant: 168 175 184;
 
-    --color-outline: 75 85 99;
-    --color-outline-variant: 55 65 81;
+    --color-outline: 45 51 59;
+    /* #2D333B */
+    --color-outline-variant: 36 41 47;
+    /* #24292F */
 
-    --color-error: 255 84 73;
+    --color-error: 215 25 33;
     --color-error-container: 147 0 10;
     --color-on-error: 255 255 255;
     --color-on-error-container: 255 218 214;
   }
 
+  html {
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     background-color: rgb(var(--color-background));
     color: rgb(var(--color-on-background));
-    font-family: 'Hanken Grotesk', sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-/* High Specificity Dark Mode Overrides - Softened Slate & Charcoal */
-html.dark, html.dark body, html.dark #root {
-  background-color: #181a20 !important;
-  color: #f5f6f8 !important;
+/* Ensure Nothing Ndot font applies to all headline elements */
+.font-headline,
+.font-headline-xl,
+.font-headline-lg,
+.font-headline-lg-mobile,
+.font-headline-md {
+  font-family: 'Ndot 55', 'NDOT 55', 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: 0.02em;
+}
+
+/* Ensure crystal clear letters for headings and titles */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.015em;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Nothing OS Dark Mode Overrides - Pitch Black & Translucent Charcoal Cards */
+html.dark,
+html.dark body,
+html.dark #root {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
 }
 
 html.dark .bg-background {
-  background-color: #181a20 !important;
+  background-color: #000000 !important;
 }
 
-/* Header & Nav in Dark Mode: Refined Deep Slate (#1c1f27) instead of pitch black */
+/* Header & Nav in Dark Mode: Pitch Black (#000000) */
 html.dark header,
-html.dark nav,
-html.dark .bg-surface {
-  background-color: #1c1f27 !important;
+html.dark nav {
+  background-color: rgba(0, 0, 0, 0.95) !important;
 }
 
 html.dark .bg-surface-container-lowest {
-  background-color: #181a20 !important;
+  background-color: #000000 !important;
 }
 
 html.dark .bg-surface-container-low {
-  background-color: #1d2028 !important;
+  background-color: #121417 !important;
 }
 
 html.dark .bg-surface-container {
-  background-color: #222630 !important;
+  background-color: #14171A !important;
 }
 
 html.dark .bg-surface-container-high {
-  background-color: #282d39 !important;
+  background-color: #191D22 !important;
 }
 
 html.dark .bg-surface-container-highest {
-  background-color: #303644 !important;
+  background-color: #20252B !important;
 }
 
 html.dark .text-on-surface {
-  color: #f5f6f8 !important;
+  color: #FFFFFF !important;
 }
 
 html.dark .border-surface-variant\/40,
@@ -168,21 +245,29 @@ html.dark .border-outline-variant {
 }
 
 /* Carmine Red (#960018) Button Glow & Hover Styles */
-button.bg-primary, .bg-primary, a.bg-primary {
+button.bg-primary,
+.bg-primary,
+a.bg-primary {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
-  filter: brightness(1.12);
+button.bg-primary:hover,
+.bg-primary:hover,
+a.bg-primary:hover {
+  filter: brightness(1.08);
 }
 
-.dark button.bg-primary, .dark .bg-primary, .dark a.bg-primary {
-  box-shadow: 0 4px 16px 0 rgba(150, 0, 24, 0.40);
+.dark button.bg-primary,
+.dark .bg-primary,
+.dark a.bg-primary {
+  box-shadow: none !important;
 }
 
-.dark button.bg-primary:hover, .dark .bg-primary:hover, .dark a.bg-primary:hover {
-  box-shadow: 0 6px 22px 0 rgba(150, 0, 24, 0.55);
-  filter: brightness(1.15);
+.dark button.bg-primary:hover,
+.dark .bg-primary:hover,
+.dark a.bg-primary:hover {
+  box-shadow: none !important;
+  filter: brightness(1.1);
 }
 
 /* Animations */
@@ -191,6 +276,7 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
     transform: scale(1);
     box-shadow: 0 0 15px rgba(154, 0, 2, 0.2);
   }
+
   100% {
     transform: scale(1.05);
     box-shadow: 0 0 30px rgba(154, 0, 2, 0.4);
@@ -202,9 +288,20 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
 }
 
 @keyframes fillBar {
-  0% { width: 0%; opacity: 0.8; }
-  50% { width: 70%; opacity: 1; }
-  100% { width: 100%; opacity: 1; }
+  0% {
+    width: 0%;
+    opacity: 0.8;
+  }
+
+  50% {
+    width: 70%;
+    opacity: 1;
+  }
+
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
 }
 
 .loading-bar-fill {
@@ -212,9 +309,17 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
 }
 
 @keyframes spin-pause {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(360deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spin-pause-animation {
@@ -225,6 +330,7 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
 .lift-hover {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .lift-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 25px 0 rgba(111, 0, 1, 0.1);
@@ -246,6 +352,7 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -255,6 +362,7 @@ button.bg-primary:hover, .bg-primary:hover, a.bg-primary:hover {
 .icon-filled {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
 .icon-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }

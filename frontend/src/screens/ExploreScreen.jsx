@@ -11,12 +11,12 @@ export default function ExploreScreen() {
   const categories = ['All', 'Computer Science', 'Data Science', 'Cloud & DevOps', 'Cybersecurity', 'Web Dev'];
 
   const filteredStudents = STUDENTS_DATA.filter(s => {
-    const matchCategory = activeFilter === 'All' || 
-      s.major.toLowerCase().includes(activeFilter.toLowerCase()) || 
+    const matchCategory = activeFilter === 'All' ||
+      s.major.toLowerCase().includes(activeFilter.toLowerCase()) ||
       s.skills.some(sk => sk.toLowerCase().includes(activeFilter.toLowerCase()));
-    const matchSearch = !searchQuery || 
-      s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      s.major.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchSearch = !searchQuery ||
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.major.toLowerCase().includes(searchQuery.toLowerCase()) ||
       s.skills.some(sk => sk.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchCategory && matchSearch;
   });
@@ -27,36 +27,36 @@ export default function ExploreScreen() {
 
   return (
     <div className="w-full pb-24 transition-colors">
-      <Navbar title="Explore Talent" />
+      <Navbar title="EXPLORE TALENT" />
 
       <main className="px-4 py-4 space-y-4 w-full">
-        
+
         {/* Header Title */}
-        <div>
-          <h1 className="font-headline text-lg font-extrabold text-on-surface dark:text-inverse-on-surface">
-            Explore Talent
+        <div className="space-y-1">
+          <h1 className="font-headline text-lg sm:text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+            EXPLORE TALENT
           </h1>
-          <p className="text-xs text-secondary">
+          <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E]">
             Connect with student developers, peer coders & view verified public profiles
           </p>
         </div>
 
         {/* Search Bar */}
         <div className="relative">
-          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary text-lg">
+          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] text-lg">
             search
           </span>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search students, skills, universities..."
-            className="w-full bg-surface-container-lowest dark:bg-surface-container-high border border-outline-variant/60 rounded-2xl py-2.5 pl-10 pr-10 text-xs outline-none focus:border-primary text-on-surface dark:text-inverse-on-surface shadow-sm"
+            placeholder="Search students..."
+            className="w-full bg-white dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl py-2.5 pl-10 pr-10 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] outline-none focus:border-[#D71921] shadow-xs dark:shadow-none"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-primary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] hover:text-slate-700 dark:hover:text-white"
             >
               <span className="material-symbols-outlined text-base">close</span>
             </button>
@@ -64,15 +64,15 @@ export default function ExploreScreen() {
         </div>
 
         {/* Category Filters */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1 hide-scrollbar">
+        <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
                 activeFilter === cat
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-surface-container-lowest dark:bg-surface-container-high text-secondary border border-outline-variant/50'
+                  ? 'bg-transparent border border-[#D71921] text-[#D71921] font-bold'
+                  : 'bg-white dark:bg-[#16181A] text-slate-600 dark:text-[#B0B4BA] border border-slate-200 dark:border-[#2C3036] hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {cat}
@@ -85,38 +85,44 @@ export default function ExploreScreen() {
           {filteredStudents.map((student) => (
             <div
               key={student.id}
-              className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40 space-y-3 transition-all hover:border-primary/40 hover:shadow-md"
+              className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-3.5 transition-all"
             >
-              {/* Header Info - Clickable to open student's profile */}
-              <div 
-                onClick={() => openPublicProfile(student)}
-                className="flex items-start gap-3.5 cursor-pointer group"
-              >
-                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+              {/* Header Info */}
+              <div className="flex items-start gap-3.5">
+                <div
+                  onClick={() => openPublicProfile(student)}
+                  className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 dark:border-[#2D333B] shrink-0 cursor-pointer"
+                >
                   <img src={student.avatar} alt={student.name} className="w-full h-full object-cover" />
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <h2 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate group-hover:text-primary transition-colors">
+                    <h2
+                      onClick={() => openPublicProfile(student)}
+                      className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider truncate cursor-pointer hover:text-[#D71921] transition-colors"
+                    >
                       {student.name}
                     </h2>
-                    <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full shrink-0">
+                    <span className="text-[11px] font-mono font-bold text-slate-600 dark:text-[#8E959E] bg-slate-100 dark:bg-[#20252B] border border-slate-200 dark:border-[#2D333B] px-2.5 py-0.5 rounded-full shrink-0">
                       Lvl {student.level}
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-secondary truncate mt-0.5">
+                  <p className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] truncate mt-0.5">
                     {student.major} • {student.college}
                   </p>
 
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[9px] font-bold text-white bg-amber-600 dark:bg-amber-600 px-2 py-0.5 rounded-full shadow-2xs">
-                      🏆 {student.honorsBadge}
+                  {/* Monochrome Outline Badges */}
+                  <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                    <span className="text-[10px] font-mono text-slate-700 dark:text-[#C5C9D0] bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <span className="material-symbols-outlined text-xs">emoji_events</span>
+                      <span>{student.honorsBadge || 'Honors Roll'}</span>
                     </span>
                     {student.lookingForInternships && (
-                      <span className="text-[9px] font-bold text-white bg-emerald-600 dark:bg-emerald-600 px-2 py-0.5 rounded-full shadow-2xs">
-                        💼 Open to Work
+                      <span className="text-[10px] font-mono text-slate-700 dark:text-[#C5C9D0] bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">work</span>
+                        <span>Open to Work</span>
                       </span>
                     )}
                   </div>
@@ -124,16 +130,16 @@ export default function ExploreScreen() {
               </div>
 
               {/* Bio */}
-              <p className="text-xs text-on-surface-variant dark:text-secondary-fixed-dim line-clamp-2">
+              <p className="text-xs font-mono text-slate-600 dark:text-[#A8AFB8] line-clamp-2 leading-relaxed">
                 {student.bio}
               </p>
 
               {/* Skills Tags */}
-              <div className="flex flex-wrap gap-1 pt-1 border-t border-surface-variant/30">
+              <div className="flex flex-wrap gap-1.5">
                 {student.skills.map((sk, sIdx) => (
                   <span
                     key={sIdx}
-                    className="bg-surface dark:bg-inverse-surface/60 text-[10px] text-primary font-bold px-2.5 py-0.5 rounded-md border border-outline-variant/40"
+                    className="bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-800 dark:text-[#D0D4DC] text-xs font-mono px-3 py-1 rounded-xl"
                   >
                     {sk}
                   </span>
@@ -141,11 +147,11 @@ export default function ExploreScreen() {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 pt-1">
+              <div className="flex items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={() => openPublicProfile(student)}
-                  className="flex-1 py-2 bg-surface dark:bg-inverse-surface/40 hover:bg-surface-container border border-outline-variant/60 text-on-surface dark:text-inverse-on-surface text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95"
+                  className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-800 dark:text-white text-xs font-mono font-bold rounded-2xl transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
                 >
                   <span className="material-symbols-outlined text-sm">visibility</span>
                   <span>View Profile</span>
@@ -153,7 +159,7 @@ export default function ExploreScreen() {
                 <button
                   type="button"
                   onClick={() => copyPublicProfileLink(student)}
-                  className="px-2.5 py-2 bg-surface dark:bg-inverse-surface/40 hover:border-primary border border-outline-variant/60 text-secondary hover:text-primary rounded-xl transition-all flex items-center justify-center cursor-pointer active:scale-95"
+                  className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-700 dark:text-white rounded-2xl transition-all flex items-center justify-center cursor-pointer active:scale-95"
                   title="Copy Student Public Link"
                 >
                   <span className="material-symbols-outlined text-sm">share</span>
@@ -161,7 +167,7 @@ export default function ExploreScreen() {
                 <button
                   type="button"
                   onClick={() => handleConnect(student.name)}
-                  className="flex-1 py-2 bg-primary hover:bg-primary-container text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95"
+                  className="flex-1 py-2.5 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 shadow-none"
                 >
                   <span className="material-symbols-outlined text-sm">person_add</span>
                   <span>Connect</span>
@@ -173,8 +179,8 @@ export default function ExploreScreen() {
 
           {filteredStudents.length === 0 && (
             <div className="text-center py-12 space-y-2">
-              <span className="material-symbols-outlined text-4xl text-secondary">person_search</span>
-              <p className="text-xs text-secondary font-medium">No students found matching your search</p>
+              <span className="material-symbols-outlined text-4xl text-slate-400 dark:text-secondary">person_search</span>
+              <p className="text-xs text-slate-500 dark:text-secondary font-medium">No students found matching your search</p>
             </div>
           )}
         </div>
