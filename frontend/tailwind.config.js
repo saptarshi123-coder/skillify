@@ -17,7 +17,7 @@ export default {
         "on-primary-fixed": "rgb(var(--color-on-primary-fixed) / <alpha-value>)",
         "on-primary-fixed-variant": "rgb(var(--color-on-primary-fixed-variant) / <alpha-value>)",
         "inverse-primary": "rgb(var(--color-inverse-primary) / <alpha-value>)",
-        
+
         "surface": "rgb(var(--color-surface) / <alpha-value>)",
         "surface-dim": "rgb(var(--color-surface-dim) / <alpha-value>)",
         "surface-bright": "rgb(var(--color-surface-bright) / <alpha-value>)",
@@ -31,7 +31,7 @@ export default {
         "inverse-surface": "rgb(var(--color-inverse-surface) / <alpha-value>)",
         "inverse-on-surface": "rgb(var(--color-inverse-on-surface) / <alpha-value>)",
         "surface-tint": "rgb(var(--color-surface-tint) / <alpha-value>)",
-        
+
         "secondary": "rgb(var(--color-secondary) / <alpha-value>)",
         "secondary-container": "rgb(var(--color-secondary-container) / <alpha-value>)",
         "on-secondary": "rgb(var(--color-on-secondary) / <alpha-value>)",
@@ -82,27 +82,36 @@ export default {
         "container-max": "1280px"
       },
       fontFamily: {
-        "sans": ["Hanken Grotesk", "sans-serif"],
-        "headline": ["'Ndot 55'", "sans-serif"],
-        "headline-xl": ["'Ndot 55'", "sans-serif"],
-        "headline-lg": ["'Ndot 55'", "sans-serif"],
-        "headline-lg-mobile": ["'Ndot 55'", "sans-serif"],
-        "headline-md": ["'Ndot 55'", "sans-serif"],
-        "body-lg": ["Hanken Grotesk", "sans-serif"],
-        "body-md": ["Hanken Grotesk", "sans-serif"],
-        "label-md": ["Geist", "sans-serif"],
-        "label-sm": ["Geist", "sans-serif"],
-        "mono": ["Geist", "monospace"]
+        "sans": ["'Plus Jakarta Sans'", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        "headline": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "headline-xl": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "headline-lg": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "headline-lg-mobile": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "headline-md": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "body-lg": ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "body-md": ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "label-md": ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "label-sm": ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        "mono": ["'JetBrains Mono'", "Geist", "monospace"]
       },
       fontSize: {
-        "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "800" }],
-        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }],
-        "headline-lg-mobile": ["28px", { lineHeight: "34px", fontWeight: "700" }],
-        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "500" }],
-        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+        "2xs": ["0.7rem", { lineHeight: "0.95rem" }],
+        "xs": ["0.78rem", { lineHeight: "1.15rem", letterSpacing: "0.01em" }],
+        "sm": ["0.875rem", { lineHeight: "1.25rem", letterSpacing: "0.005em" }],
+        "base": ["0.98rem", { lineHeight: "1.45rem" }],
+        "lg": ["1.125rem", { lineHeight: "1.6rem" }],
+        "xl": ["1.28rem", { lineHeight: "1.75rem" }],
+        "2xl": ["1.5rem", { lineHeight: "1.95rem" }],
+        "3xl": ["1.85rem", { lineHeight: "2.2rem" }],
+        "4xl": ["2.25rem", { lineHeight: "2.6rem" }],
+        "headline-xl": ["44px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "800" }],
+        "headline-lg": ["30px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }],
+        "headline-lg-mobile": ["26px", { lineHeight: "32px", fontWeight: "700" }],
+        "headline-md": ["22px", { lineHeight: "28px", fontWeight: "600" }],
+        "body-lg": ["17px", { lineHeight: "25px", fontWeight: "400" }],
+        "body-md": ["15px", { lineHeight: "22px", fontWeight: "400" }],
+        "label-md": ["13.5px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "500" }],
+        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }]
       },
       boxShadow: {
         "card": "0 4px 14px 0 rgba(0, 0, 0, 0.04)",

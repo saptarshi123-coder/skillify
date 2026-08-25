@@ -10,7 +10,7 @@ export default function Sidebar() {
     ? [
         {
           id: 'discover',
-          label: 'Talent & Projects',
+          label: 'Project',
           icon: 'travel_explore',
           screen: 'discover',
           activeScreens: ['discover', 'submit-project', 'project-repo']
@@ -31,7 +31,7 @@ export default function Sidebar() {
         },
         {
           id: 'ai-chat',
-          label: 'AI Recruiter Assistant',
+          label: 'Skille Recruiter Assistant',
           icon: 'smart_toy',
           screen: 'ai-chat'
         },
@@ -52,14 +52,21 @@ export default function Sidebar() {
     : [
         {
           id: 'dashboard',
-          label: 'Dashboard & Learning',
+          label: 'Learning',
           icon: 'dashboard',
           screen: 'dashboard'
         },
         {
+          id: 'courses',
+          label: 'Explore Courses',
+          icon: 'school',
+          screen: 'explore-courses',
+          activeScreens: ['explore-courses', 'courses']
+        },
+        {
           id: 'explore',
           label: 'Explore Students',
-          icon: 'school',
+          icon: 'group',
           screen: 'explore',
           activeScreens: ['explore', 'public-profile']
         },
@@ -99,7 +106,7 @@ export default function Sidebar() {
         },
         {
           id: 'ai-chat',
-          label: 'Skillify AI Assistant',
+          label: 'Skille AI Assistant',
           icon: 'smart_toy',
           screen: 'ai-chat'
         },

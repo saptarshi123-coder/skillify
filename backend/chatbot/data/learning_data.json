@@ -12,23 +12,23 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 223,
+    "total_messages": 232,
     "avg_conversation_length": 0,
     "top_intents": {
-      "greeting": 48,
+      "greeting": 51,
       "find_freelancer": 22,
       "fees_commission": 4,
       "joke": 13,
-      "unknown": 54,
+      "unknown": 58,
       "feedback": 19,
-      "proposals_bids": 4,
+      "proposals_bids": 5,
       "goodbye": 5,
       "notifications": 2,
       "skills_badges": 1,
       "payments": 14,
       "withdraw_earnings": 1,
       "capabilities": 6,
-      "post_job": 6,
+      "post_job": 7,
       "technical_support": 3,
       "complaint": 3,
       "emotional_sadness": 2,
@@ -1055,6 +1055,60 @@
           "sentiment": "positive"
         },
         "timestamp": 1787349356.435666
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787582525.7312453
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787582586.3902903
+      },
+      {
+        "step": 6,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787582677.1161404
+      },
+      {
+        "step": 7,
+        "data": {
+          "intent": "post_job",
+          "confidence": 0.95,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787582685.1408603
+      },
+      {
+        "step": 8,
+        "data": {
+          "intent": "proposals_bids",
+          "confidence": 0.5,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787582688.0899382
+      },
+      {
+        "step": 10,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787584999.950356
       }
     ],
     "test_u1": [
@@ -1282,6 +1336,35 @@
         },
         "timestamp": 1787577479.3822622
       }
+    ],
+    "developer.tech@gmail.com": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787599972.549461
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787604383.7214596
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787604397.963419
+      }
     ]
   },
   "user_profiles": {
@@ -1347,7 +1430,7 @@
     },
     "saptarshic341@gmail.com": {
       "first_seen": 1787347824.8287435,
-      "total_messages": 9,
+      "total_messages": 15,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1378,6 +1461,12 @@
     "user123": {
       "first_seen": 1787577479.3810105,
       "total_messages": 1,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "developer.tech@gmail.com": {
+      "first_seen": 1787599972.5425234,
+      "total_messages": 3,
       "preferred_intents": [],
       "sentiment_history": []
     }

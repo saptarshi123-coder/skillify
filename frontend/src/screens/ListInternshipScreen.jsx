@@ -69,15 +69,15 @@ export default function ListInternshipScreen() {
 
   return (
     <div className="w-full pb-24 transition-colors">
-      <Navbar title="List Internship" showBack={true} />
+      <Navbar title="LIST INTERNSHIP" showBack={true} />
 
       <main className="max-w-xl mx-auto px-4 py-4 space-y-4 w-full">
         {/* Header */}
         <div className="space-y-1">
-          <h1 className="font-headline text-lg font-extrabold text-on-surface dark:text-inverse-on-surface">
+          <h1 className="font-headline text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
             Post an Internship
           </h1>
-          <p className="text-xs text-secondary dark:text-secondary-fixed-dim">
+          <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] leading-relaxed">
             Share student opportunities with thousands of verified university developers & designers.
           </p>
         </div>
@@ -85,12 +85,12 @@ export default function ListInternshipScreen() {
         {/* Form Container */}
         <form
           onSubmit={handleSubmit}
-          className="bg-surface-container-lowest dark:bg-surface-container-high p-5 md:p-6 rounded-3xl shadow-card border border-surface-variant/40 space-y-5"
+          className="bg-white dark:bg-[#14171A] p-5 md:p-6 rounded-3xl shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-5 font-mono"
         >
           {/* Role Title */}
           <div className="space-y-1.5">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface" htmlFor="role">
-              Internship Role <span className="text-primary">*</span>
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider" htmlFor="role">
+              Internship Role <span className="text-[#D71921]">*</span>
             </label>
             <input
               id="role"
@@ -99,14 +99,14 @@ export default function ListInternshipScreen() {
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="e.g. Frontend Developer Intern"
-              className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-3.5 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+              className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors"
             />
           </div>
 
           {/* Company Name */}
           <div className="space-y-1.5">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface" htmlFor="company">
-              Company / Organization <span className="text-primary">*</span>
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider" htmlFor="company">
+              Company / Organization <span className="text-[#D71921]">*</span>
             </label>
             <input
               id="company"
@@ -115,23 +115,23 @@ export default function ListInternshipScreen() {
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="e.g. TechCorp Solutions"
-              className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-3.5 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+              className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors"
             />
           </div>
 
           {/* Work Mode Toggle */}
-          <div className="space-y-2 border-b border-surface-variant/40 pb-4">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+          <div className="space-y-2 border-b border-slate-100 dark:border-[#24292F] pb-4">
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Work Mode
             </label>
-            <div className="flex items-center gap-2 p-1 bg-surface-container-low dark:bg-surface-container-lowest rounded-xl w-fit">
+            <div className="flex items-center gap-2 p-1 bg-slate-100 dark:bg-[#191D22] rounded-2xl w-fit border border-slate-200 dark:border-[#2D333B]">
               <button
                 type="button"
                 onClick={() => setMode('online')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   mode === 'online'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-secondary hover:text-primary'
+                    ? 'bg-[#D71921] text-white shadow-none'
+                    : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 🌐 Online / Remote
@@ -139,10 +139,10 @@ export default function ListInternshipScreen() {
               <button
                 type="button"
                 onClick={() => setMode('offline')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   mode === 'offline'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-secondary hover:text-primary'
+                    ? 'bg-[#D71921] text-white shadow-none'
+                    : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 🏢 Offline / On-site
@@ -152,11 +152,11 @@ export default function ListInternshipScreen() {
             {/* Dynamic Location Input for On-site */}
             {mode === 'offline' && (
               <div className="pt-2 animate-fadeIn space-y-1.5">
-                <label className="block text-[11px] font-semibold text-secondary" htmlFor="location">
-                  Office Location (City, State) <span className="text-primary">*</span>
+                <label className="block text-[11px] font-semibold text-slate-500 dark:text-[#8E959E]" htmlFor="location">
+                  Office Location (City, State) <span className="text-[#D71921]">*</span>
                 </label>
                 <div className="relative">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-base">
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] text-base">
                     location_on
                   </span>
                   <input
@@ -165,7 +165,7 @@ export default function ListInternshipScreen() {
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="e.g. Bangalore, Karnataka (Hybrid)"
-                    className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                    className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl pl-9 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -173,18 +173,18 @@ export default function ListInternshipScreen() {
           </div>
 
           {/* Compensation Toggle */}
-          <div className="space-y-2 border-b border-surface-variant/40 pb-4">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+          <div className="space-y-2 border-b border-slate-100 dark:border-[#24292F] pb-4">
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Compensation
             </label>
-            <div className="flex items-center gap-2 p-1 bg-surface-container-low dark:bg-surface-container-lowest rounded-xl w-fit">
+            <div className="flex items-center gap-2 p-1 bg-slate-100 dark:bg-[#191D22] rounded-2xl w-fit border border-slate-200 dark:border-[#2D333B]">
               <button
                 type="button"
                 onClick={() => setCompensation('paid')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   compensation === 'paid'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-secondary hover:text-primary'
+                    ? 'bg-[#D71921] text-white shadow-none'
+                    : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 💵 Paid
@@ -192,10 +192,10 @@ export default function ListInternshipScreen() {
               <button
                 type="button"
                 onClick={() => setCompensation('unpaid')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                   compensation === 'unpaid'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-secondary hover:text-primary'
+                    ? 'bg-[#D71921] text-white shadow-none'
+                    : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Unpaid / Academic
@@ -205,11 +205,11 @@ export default function ListInternshipScreen() {
             {/* Dynamic Stipend Amount Input */}
             {compensation === 'paid' && (
               <div className="pt-2 animate-fadeIn space-y-1.5">
-                <label className="block text-[11px] font-semibold text-secondary" htmlFor="stipend">
+                <label className="block text-[11px] font-semibold text-slate-500 dark:text-[#8E959E]" htmlFor="stipend">
                   Monthly Stipend Amount (INR ₹)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-primary text-sm">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-[#D71921] text-sm font-mono">
                     ₹
                   </span>
                   <input
@@ -220,7 +220,7 @@ export default function ListInternshipScreen() {
                     value={stipendAmount}
                     onChange={(e) => setStipendAmount(e.target.value)}
                     placeholder="25000"
-                    className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl pl-8 pr-3.5 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-mono font-bold"
+                    className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl pl-8 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors font-mono font-bold"
                   />
                 </div>
               </div>
@@ -231,16 +231,16 @@ export default function ListInternshipScreen() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Category */}
             <div className="space-y-1.5">
-              <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+              <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-3 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface outline-none focus:border-primary"
+                className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl px-3 py-2.5 text-xs text-slate-900 dark:text-white outline-none focus:border-[#D71921]"
               >
                 {categories.map((c) => (
-                  <option key={c} value={c}>
+                  <option key={c} value={c} className="bg-white dark:bg-[#14171A]">
                     {c}
                   </option>
                 ))}
@@ -249,16 +249,16 @@ export default function ListInternshipScreen() {
 
             {/* Duration */}
             <div className="space-y-1.5">
-              <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+              <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 Duration
               </label>
               <select
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-                className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-3 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface outline-none focus:border-primary"
+                className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl px-3 py-2.5 text-xs text-slate-900 dark:text-white outline-none focus:border-[#D71921]"
               >
                 {durationOptions.map((d) => (
-                  <option key={d} value={d}>
+                  <option key={d} value={d} className="bg-white dark:bg-[#14171A]">
                     {d}
                   </option>
                 ))}
@@ -268,7 +268,7 @@ export default function ListInternshipScreen() {
 
           {/* Required Skills */}
           <div className="space-y-1.5">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Required Skills (comma separated)
             </label>
             <input
@@ -276,13 +276,13 @@ export default function ListInternshipScreen() {
               value={skillsInput}
               onChange={(e) => setSkillsInput(e.target.value)}
               placeholder="e.g. React, TailwindCSS, TypeScript, Git"
-              className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-3.5 py-2.5 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+              className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors"
             />
           </div>
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="block font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+            <label className="block font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Role Description & Perks
             </label>
             <textarea
@@ -290,7 +290,7 @@ export default function ListInternshipScreen() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Provide key details about daily projects, mentoring, certificate of completion, pre-placement offer (PPO), etc."
-              className="w-full bg-surface-container-low dark:bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-3 text-xs text-on-surface dark:text-inverse-on-surface placeholder-secondary/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none leading-relaxed"
+              className="w-full bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl p-3 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] focus:border-[#D71921] outline-none transition-colors resize-none leading-relaxed"
             />
           </div>
 
@@ -298,9 +298,9 @@ export default function ListInternshipScreen() {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-primary hover:bg-primary-container text-white rounded-xl py-3.5 font-headline text-xs font-bold shadow-md hover:shadow-lg transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-[#D71921] hover:bg-[#b0141b] text-white rounded-2xl py-3.5 font-mono text-xs font-bold shadow-none transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>List Internship</span>
+              <span>LIST INTERNSHIP</span>
               <span className="material-symbols-outlined text-base">rocket_launch</span>
             </button>
           </div>

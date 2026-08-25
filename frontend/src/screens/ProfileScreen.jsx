@@ -24,13 +24,13 @@ export default function ProfileScreen() {
 
   return (
     <div className="w-full pb-24 transition-colors">
-      <Navbar title="Student Profile" />
+      <Navbar title="STUDENT PROFILE" />
 
       <main className="px-4 py-4 space-y-4 w-full">
         
         {/* Profile Card Header */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 flex flex-col items-center text-center space-y-3">
-          <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-md">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] flex flex-col items-center text-center space-y-3">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-slate-300 dark:border-white/20 shadow-none">
             <img
               alt={userProfile.name}
               className="w-full h-full object-cover"
@@ -40,30 +40,30 @@ export default function ProfileScreen() {
 
           <div>
             <div className="flex items-center justify-center gap-2">
-              <h2 className="font-headline text-lg font-bold text-on-surface dark:text-inverse-on-surface">
+              <h2 className="font-headline text-base md:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 {userProfile.name}
               </h2>
-              <span className="text-[10px] font-bold bg-primary text-white px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-[#8E959E] bg-slate-100 dark:bg-[#20252B] border border-slate-200 dark:border-[#2D333B] px-2.5 py-0.5 rounded-full">
                 Lvl {userProfile.level}
               </span>
             </div>
-            <p className="text-xs text-on-surface-variant dark:text-secondary-fixed-dim mt-0.5">
+            <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] mt-0.5">
               {userProfile.major}
             </p>
           </div>
 
-          {/* Badges / Status */}
+          {/* Badges / Status (Monochrome Outline Pills) */}
           <div className="flex flex-wrap gap-1.5 justify-center">
             {userProfile.honorsRoll && (
-              <span className="bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                <span className="material-symbols-outlined text-xs text-white">school</span>
-                <span className="text-white">Honors Roll</span>
+              <span className="bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] text-slate-700 dark:text-[#C5C9D0] text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span className="material-symbols-outlined text-xs">school</span>
+                <span>Honors Roll</span>
               </span>
             )}
             {userProfile.lookingForInternships && (
-              <span className="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                <span className="material-symbols-outlined text-xs text-white">work</span>
-                <span className="text-white">Open for Roles</span>
+              <span className="bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] text-slate-700 dark:text-[#C5C9D0] text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span className="material-symbols-outlined text-xs">work</span>
+                <span>Open for Roles</span>
               </span>
             )}
           </div>
@@ -72,22 +72,22 @@ export default function ProfileScreen() {
           <div className="flex gap-2 w-full pt-2">
             <button
               onClick={() => navigate('edit-profile')}
-              className="flex-1 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-container transition-all shadow-sm flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
+              className="flex-1 py-2.5 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl transition-all shadow-none flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
             >
               <span className="material-symbols-outlined text-sm">edit</span>
-              <span>Edit Profile</span>
+              <span>EDIT PROFILE</span>
             </button>
             <button
               onClick={handleOpenPublicProfile}
-              className="flex-1 py-2.5 bg-surface dark:bg-inverse-surface border border-outline-variant/60 hover:border-primary text-on-surface dark:text-inverse-on-surface text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95"
+              className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-800 dark:text-white text-xs font-mono font-bold rounded-2xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95"
             >
               <span className="material-symbols-outlined text-sm">visibility</span>
-              <span>Public Link</span>
+              <span>PUBLIC LINK</span>
             </button>
             <button
               onClick={handleCopyLink}
               title="Copy Public Profile Link"
-              className="px-3 py-2.5 bg-surface dark:bg-inverse-surface border border-outline-variant/60 hover:border-primary text-secondary hover:text-primary rounded-xl transition-all flex items-center justify-center cursor-pointer active:scale-95"
+              className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-700 dark:text-white rounded-2xl transition-all flex items-center justify-center cursor-pointer active:scale-95"
             >
               <span className="material-symbols-outlined text-sm">content_copy</span>
             </button>
@@ -95,16 +95,16 @@ export default function ProfileScreen() {
         </div>
 
         {/* Verified Coding Skills */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40 space-y-3">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+            <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Verified Coding Skills
             </h3>
             <button
               onClick={() => navigate('edit-profile')}
-              className="text-[11px] font-bold text-primary hover:underline cursor-pointer"
+              className="text-[11px] font-mono font-bold text-[#D71921] hover:underline cursor-pointer"
             >
-              Manage
+              MANAGE
             </button>
           </div>
 
@@ -113,7 +113,7 @@ export default function ProfileScreen() {
               {userProfile.skills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20"
+                  className="bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-800 dark:text-[#D0D4DC] text-xs font-mono px-3 py-1 rounded-xl"
                 >
                   {skill}
                 </span>
@@ -122,7 +122,7 @@ export default function ProfileScreen() {
           )}
 
           {/* Skill Progress Bars */}
-          <div className="space-y-2.5 pt-2 border-t border-surface-variant/30">
+          <div className="space-y-2.5 pt-2 border-t border-slate-100 dark:border-[#24292F]">
             {(userProfile.skillsProgress && userProfile.skillsProgress.length > 0 ? userProfile.skillsProgress : [
               { name: "Frontend Development", progress: 0 },
               { name: "Data Structures & Algorithms", progress: 0 },
@@ -131,13 +131,13 @@ export default function ProfileScreen() {
             ]).map((sp, idx) => {
               const currentProgress = sp.progress || 0;
               return (
-                <div key={idx} className="space-y-1">
-                  <div className="flex justify-between text-[11px] font-semibold">
-                    <span>{sp.name}</span>
-                    <span className="text-primary font-bold">{currentProgress}%</span>
+                <div key={idx} className="space-y-1 font-mono">
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-slate-800 dark:text-white">{sp.name}</span>
+                    <span className="text-[#D71921] font-bold">{currentProgress}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-surface-container-high dark:bg-surface-container-highest rounded-full overflow-hidden">
-                    <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${currentProgress}%` }}></div>
+                  <div className="w-full h-1.5 bg-slate-200 dark:bg-[#20252B] rounded-full overflow-hidden">
+                    <div className="h-full bg-[#D71921] rounded-full transition-all duration-500" style={{ width: `${currentProgress}%` }}></div>
                   </div>
                 </div>
               );
@@ -146,38 +146,38 @@ export default function ProfileScreen() {
         </div>
 
         {/* Projects / Repositories */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40 space-y-3">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+            <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Submitted Projects ({projects.length})
             </h3>
             <button
               onClick={() => navigate('submit-project')}
-              className="text-xs font-bold text-primary hover:underline cursor-pointer"
+              className="text-xs font-mono font-bold text-[#D71921] hover:underline cursor-pointer"
             >
-              + Submit New
+              + SUBMIT NEW
             </button>
           </div>
 
           {projects.length === 0 ? (
-            <div className="text-center py-6 px-4 bg-surface dark:bg-inverse-surface/30 rounded-2xl border border-dashed border-outline-variant/60 space-y-2">
-              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
+            <div className="text-center py-6 px-4 bg-slate-50 dark:bg-[#191D22] rounded-2xl border border-dashed border-slate-300 dark:border-[#2D333B] space-y-2">
+              <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] text-slate-900 dark:text-white flex items-center justify-center mx-auto">
                 <span className="material-symbols-outlined text-xl">folder_off</span>
               </div>
               <div>
-                <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+                <p className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   No projects submitted yet
                 </p>
-                <p className="text-[11px] text-secondary mt-0.5">
+                <p className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] mt-0.5">
                   Upload your code or GitHub repo to showcase it here.
                 </p>
               </div>
               <button
                 onClick={() => navigate('submit-project')}
-                className="mt-1 px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-container transition-all cursor-pointer inline-flex items-center gap-1 shadow-sm active:scale-95"
+                className="mt-1 px-3.5 py-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-xl transition-all cursor-pointer inline-flex items-center gap-1 shadow-none active:scale-95"
               >
                 <span className="material-symbols-outlined text-sm">upload_file</span>
-                <span>Upload Project</span>
+                <span>UPLOAD PROJECT</span>
               </button>
             </div>
           ) : (
@@ -186,23 +186,23 @@ export default function ProfileScreen() {
                 <div
                   key={proj.id}
                   onClick={() => openProjectRepo(proj)}
-                  className="p-3 bg-surface dark:bg-inverse-surface/40 rounded-2xl border border-surface-variant/40 cursor-pointer hover:border-primary transition-all flex items-center justify-between"
+                  className="p-3.5 bg-slate-50 dark:bg-[#191D22] rounded-2xl border border-slate-200 dark:border-[#2D333B] cursor-pointer hover:border-[#D71921] transition-all flex items-center justify-between"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] flex items-center justify-center text-slate-900 dark:text-white shrink-0">
                       <span className="material-symbols-outlined text-base">code</span>
                     </div>
                     <div className="min-w-0">
-                      <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate">
+                      <p className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider truncate">
                         {proj.title}
                       </p>
-                      <p className="text-[10px] text-secondary">
+                      <p className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E]">
                         {proj.language} • {proj.category}
                       </p>
                     </div>
                   </div>
 
-                  <span className="material-symbols-outlined text-secondary text-base">
+                  <span className="material-symbols-outlined text-slate-400 dark:text-[#8E959E] text-base">
                     chevron_right
                   </span>
                 </div>
@@ -212,31 +212,31 @@ export default function ProfileScreen() {
         </div>
 
         {/* Academic Details */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40 space-y-2.5 text-xs">
-          <h3 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-2.5 text-xs font-mono">
+          <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
             Academic Information
           </h3>
 
           <div className="space-y-2">
             <div>
-              <p className="text-[10px] font-semibold text-secondary uppercase">Institution</p>
-              <p className="font-medium text-on-surface dark:text-inverse-on-surface">{userProfile.college}</p>
+              <p className="text-[10px] font-semibold text-slate-400 dark:text-[#666666] uppercase">Institution</p>
+              <p className="font-medium text-slate-900 dark:text-white">{userProfile.college}</p>
             </div>
             <div>
-              <p className="text-[10px] font-semibold text-secondary uppercase">Email</p>
-              <p className="font-medium text-on-surface dark:text-inverse-on-surface">{userProfile.email}</p>
+              <p className="text-[10px] font-semibold text-slate-400 dark:text-[#666666] uppercase">Email</p>
+              <p className="font-medium text-slate-900 dark:text-white">{userProfile.email}</p>
             </div>
           </div>
         </div>
 
         {/* Sign Out */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-4 shadow-card border border-surface-variant/40">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-4 border border-slate-200 dark:border-[#24292F] shadow-card dark:shadow-none">
           <button
             onClick={logout}
-            className="w-full py-3 bg-error/10 hover:bg-error/20 text-error text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full py-3 bg-[#D71921]/10 hover:bg-[#D71921]/20 border border-[#D71921]/30 text-[#D71921] text-xs font-mono font-bold rounded-2xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span className="material-symbols-outlined text-base">logout</span>
-            <span>Sign Out</span>
+            <span>SIGN OUT</span>
           </button>
         </div>
 

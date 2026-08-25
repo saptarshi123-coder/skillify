@@ -64,16 +64,16 @@ export default function DiscoverScreen() {
   ];
 
   const filteredProjects = allDiscoverProjects.filter(p => {
-    const matchCategory = activeCategory === 'All' || 
-      (p.category && p.category.toLowerCase().includes(activeCategory.toLowerCase())) || 
+    const matchCategory = activeCategory === 'All' ||
+      (p.category && p.category.toLowerCase().includes(activeCategory.toLowerCase())) ||
       (p.tags && p.tags.some(t => t.toLowerCase().includes(activeCategory.toLowerCase())));
-    
-    const matchSearch = !searchQuery || 
-      (p.title && p.title.toLowerCase().includes(searchQuery.toLowerCase())) || 
-      (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase())) || 
-      (p.author && p.author.toLowerCase().includes(searchQuery.toLowerCase())) || 
+
+    const matchSearch = !searchQuery ||
+      (p.title && p.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (p.author && p.author.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (p.tags && p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
-    
+
     return matchCategory && matchSearch;
   });
 
@@ -165,15 +165,15 @@ export default function DiscoverScreen() {
 
   return (
     <div className="w-full pb-24 transition-colors">
-      <Navbar title="Discover Projects" />
+      <Navbar title="PROJECT" />
 
       <main className="px-4 py-4 space-y-4 w-full">
-        
+
         {/* Header & Submit Button */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-headline text-lg font-extrabold text-on-surface dark:text-inverse-on-surface">
-              Discover
+              Project
             </h1>
             <p className="text-xs text-secondary">
               Explore open-source student repositories & portfolio code
@@ -190,7 +190,7 @@ export default function DiscoverScreen() {
 
         {/* Search Bar */}
         <div className="relative">
-          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary text-lg">
+          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] text-lg">
             search
           </span>
           <input
@@ -198,12 +198,12 @@ export default function DiscoverScreen() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search projects, tags, or students..."
-            className="w-full bg-surface-container-lowest dark:bg-surface-container-high border border-outline-variant/60 rounded-2xl py-2.5 pl-10 pr-10 text-xs outline-none focus:border-primary text-on-surface dark:text-inverse-on-surface shadow-sm"
+            className="w-full bg-white dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl py-2.5 pl-10 pr-10 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] outline-none focus:border-[#D71921] shadow-xs dark:shadow-none"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-primary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] hover:text-slate-700 dark:hover:text-white"
             >
               <span className="material-symbols-outlined text-base">close</span>
             </button>
@@ -211,15 +211,15 @@ export default function DiscoverScreen() {
         </div>
 
         {/* Category Filters */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1 hide-scrollbar">
+        <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-mono whitespace-nowrap transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-surface-container-lowest dark:bg-surface-container-high text-secondary border border-outline-variant/50 hover:text-primary'
+                  ? 'bg-transparent border border-[#D71921] text-[#D71921] font-bold'
+                  : 'bg-white dark:bg-[#16181A] text-slate-600 dark:text-[#B0B4BA] border border-slate-200 dark:border-[#2C3036] hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {cat}
@@ -227,13 +227,13 @@ export default function DiscoverScreen() {
           ))}
         </div>
 
-        {/* Internships Section (from Stitch Design) */}
-        <section className="bg-surface-container-low dark:bg-surface-container-high rounded-3xl p-5 border border-outline-variant/40 shadow-sm space-y-3.5">
+        {/* Internships Section (Nothing OS Card) */}
+        <section className="bg-white dark:bg-[#14171A] rounded-3xl p-5 border border-slate-200 dark:border-[#24292F] shadow-card dark:shadow-none space-y-3.5">
           <div className="space-y-1">
-            <h2 className="font-headline text-base font-bold text-primary dark:text-primary-fixed">
+            <h2 className="font-headline text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Internships
             </h2>
-            <p className="text-xs text-secondary dark:text-secondary-fixed-dim leading-relaxed">
+            <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] leading-relaxed">
               {isRecruiter
                 ? 'Manage active listings and review student applications.'
                 : 'Connect with top companies and kickstart your career with verified credentials.'}
@@ -243,19 +243,19 @@ export default function DiscoverScreen() {
             {!isRecruiter && (
               <button
                 onClick={() => navigate('find-internship')}
-                className="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
+                className="flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white px-4 py-2 rounded-2xl text-xs font-mono font-bold transition-all active:scale-95 cursor-pointer shadow-none"
               >
                 <span className="material-symbols-outlined text-base">search</span>
-                <span>Find Internship</span>
+                <span>FIND INTERNSHIP</span>
               </button>
             )}
             {isRecruiter && (
               <button
                 onClick={() => navigate('list-internship')}
-                className="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
+                className="flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white px-4 py-2 rounded-2xl text-xs font-mono font-bold transition-all active:scale-95 cursor-pointer shadow-none"
               >
                 <span className="material-symbols-outlined text-base">add_circle</span>
-                <span>List Internship</span>
+                <span>LIST INTERNSHIP</span>
               </button>
             )}
           </div>
@@ -271,35 +271,35 @@ export default function DiscoverScreen() {
             return (
               <article
                 key={project.id}
-                className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl overflow-hidden shadow-card border border-surface-variant/40 hover:shadow-lg transition-all"
+                className="bg-white dark:bg-[#14171A] rounded-3xl overflow-hidden shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] hover:border-[#D71921] dark:hover:border-[#3A3A3A] transition-all"
               >
                 {/* Image banner */}
                 {project.image && (
-                  <div className="relative h-36 w-full bg-surface-container overflow-hidden">
+                  <div className="relative h-36 w-full bg-slate-100 dark:bg-[#191D22] overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
-                      <span className={`material-symbols-outlined text-xs ${likeInfo.liked ? 'text-primary' : 'text-white'}`} style={{ fontVariationSettings: '"FILL" 1' }}>
+                    <div className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-[10px] font-mono font-bold flex items-center gap-1 border border-white/10">
+                      <span className={`material-symbols-outlined text-xs ${likeInfo.liked ? 'text-[#D71921]' : 'text-white'}`}>
                         favorite
                       </span>
                       <span>{likeInfo.count}</span>
                     </div>
-                    <div className="absolute top-2.5 left-2.5 bg-primary text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold">
+                    <div className="absolute top-2.5 left-2.5 bg-[#D71921] text-white px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase">
                       {project.badge || "Public"}
                     </div>
                   </div>
                 )}
 
-                <div className="p-4 space-y-3">
+                <div className="p-4 md:p-5 space-y-3">
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5">
                     {(project.tags || [project.language, project.category]).map((tag, idx) => (
                       <span
                         key={idx}
-                        className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-md"
+                        className="bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-800 dark:text-[#D0D4DC] text-xs font-mono px-2.5 py-0.5 rounded-lg"
                       >
                         {tag}
                       </span>
@@ -307,61 +307,60 @@ export default function DiscoverScreen() {
                   </div>
 
                   <div>
-                    <h2 className="font-headline text-sm font-bold text-on-surface dark:text-inverse-on-surface">
+                    <h2 className="font-headline text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                       {project.title}
                     </h2>
-                    <p className="text-xs text-secondary line-clamp-2 mt-1">
+                    <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] line-clamp-2 mt-1">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Author & Star info */}
-                  <div className="flex items-center justify-between pt-1 border-t border-surface-variant/30 text-[11px] text-secondary">
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-[#24292F] text-[11px] font-mono text-slate-500 dark:text-[#8E959E]">
                     <button
                       type="button"
                       onClick={() => openPublicProfile(project.authorUsername || project.author)}
-                      className="font-medium truncate max-w-[200px] hover:text-primary transition-colors flex items-center gap-1.5 cursor-pointer text-left group"
+                      className="font-medium truncate max-w-[200px] hover:text-[#D71921] transition-colors flex items-center gap-1.5 cursor-pointer text-left group"
                     >
                       {project.authorAvatar ? (
                         <img
                           src={project.authorAvatar}
                           alt={project.author}
-                          className="w-4 h-4 rounded-full object-cover shrink-0 border border-outline-variant/40"
+                          className="w-4 h-4 rounded-full object-cover shrink-0 border border-slate-200 dark:border-white/10"
                         />
                       ) : (
                         <span className="text-xs">👤</span>
                       )}
-                      <span className="group-hover:underline font-bold text-on-surface dark:text-inverse-on-surface">{project.author || "Community Developer"}</span>
+                      <span className="group-hover:underline font-bold text-slate-900 dark:text-white">{project.author || "Community Developer"}</span>
                       {project.authorCollege && (
-                        <span className="text-[9px] text-secondary/80 hidden xs:inline">• {project.authorCollege}</span>
+                        <span className="text-[9px] text-slate-400 dark:text-[#666666] hidden xs:inline">• {project.authorCollege}</span>
                       )}
                     </button>
                     <div className="flex items-center gap-2">
                       <span className="flex items-center gap-0.5 text-amber-600 font-bold">
-                        <span className="material-symbols-outlined text-xs" style={{ fontVariationSettings: '"FILL" 1' }}>star</span>
+                        <span className="material-symbols-outlined text-xs">star</span>
                         {project.stars || 24}
                       </span>
                     </div>
                   </div>
 
                   {/* SOCIAL ACTIONS: Like, Comment, Share */}
-                  <div className="flex items-center justify-between pt-2 border-t border-surface-variant/30 text-xs">
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-[#24292F] text-xs font-mono">
                     {/* Like Button */}
                     <button
                       type="button"
                       onClick={() => handleLike(project.id, project.likes || 124)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all active:scale-95 cursor-pointer ${
                         likeInfo.liked
-                          ? 'bg-primary/10 text-primary shadow-xs'
-                          : 'text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5'
+                          ? 'bg-[#D71921]/15 text-[#D71921]'
+                          : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                       }`}
                       title={likeInfo.liked ? "Unlike" : "Like Project"}
                     >
                       <span
                         className={`material-symbols-outlined text-base transition-transform duration-200 ${
-                          likeInfo.liked ? 'text-primary scale-110' : ''
+                          likeInfo.liked ? 'text-[#D71921] scale-110' : ''
                         }`}
-                        style={likeInfo.liked ? { fontVariationSettings: '"FILL" 1' } : { fontVariationSettings: '"FILL" 0' }}
                       >
                         favorite
                       </span>
@@ -374,8 +373,8 @@ export default function DiscoverScreen() {
                       onClick={() => toggleComments(project.id)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition-all active:scale-95 cursor-pointer ${
                         isCommentsOpen
-                          ? 'bg-primary/10 text-primary shadow-xs'
-                          : 'text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5'
+                          ? 'bg-[#D71921]/15 text-[#D71921]'
+                          : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                       }`}
                       title="View & Add Comments"
                     >
@@ -389,7 +388,7 @@ export default function DiscoverScreen() {
                     <button
                       type="button"
                       onClick={() => handleShare(project)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5 transition-all active:scale-95 cursor-pointer font-bold"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95 cursor-pointer font-bold"
                       title="Share Project Link"
                     >
                       <span className="material-symbols-outlined text-base">
@@ -401,13 +400,13 @@ export default function DiscoverScreen() {
 
                   {/* EXPANDABLE COMMENTS SECTION */}
                   {isCommentsOpen && (
-                    <div className="pt-3 border-t border-surface-variant/40 space-y-3 animate-fadeIn">
-                      <div className="flex items-center justify-between text-[11px] font-bold text-on-surface dark:text-inverse-on-surface">
+                    <div className="pt-3 border-t border-slate-100 dark:border-[#24292F] space-y-3 animate-fadeIn">
+                      <div className="flex items-center justify-between text-[11px] font-mono font-bold text-slate-900 dark:text-white uppercase">
                         <span>Comments ({projectComments.length})</span>
                         <button
                           type="button"
                           onClick={() => setActiveCommentProjectId(null)}
-                          className="text-secondary hover:text-primary text-[10px]"
+                          className="text-slate-500 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white text-[10px]"
                         >
                           Hide
                         </button>
@@ -418,54 +417,54 @@ export default function DiscoverScreen() {
                         {projectComments.map((c) => (
                           <div
                             key={c.id}
-                            className="flex items-start gap-2.5 text-xs bg-surface/80 dark:bg-inverse-surface/40 p-2.5 rounded-2xl border border-surface-variant/30"
+                            className="flex items-start gap-2.5 text-xs bg-slate-50 dark:bg-[#191D22] p-2.5 rounded-2xl border border-slate-200 dark:border-[#2D333B]"
                           >
                             <img
                               src={c.avatar}
                               alt={c.author}
                               onClick={() => openPublicProfile(c.author)}
-                              className="w-6 h-6 rounded-full object-cover shrink-0 mt-0.5 border border-primary/20 cursor-pointer hover:scale-110 transition-transform"
+                              className="w-6 h-6 rounded-full object-cover shrink-0 mt-0.5 border border-slate-300 dark:border-white/10 cursor-pointer hover:scale-110 transition-transform"
                             />
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-1">
                                 <button
                                   type="button"
                                   onClick={() => openPublicProfile(c.author)}
-                                  className="font-bold text-on-surface dark:text-inverse-on-surface text-[11px] truncate hover:text-primary transition-colors cursor-pointer text-left"
+                                  className="font-bold text-slate-900 dark:text-white text-[11px] truncate hover:text-[#D71921] transition-colors cursor-pointer text-left font-mono"
                                 >
                                   {c.author}
                                 </button>
-                                <span className="text-[9px] text-secondary shrink-0">
+                                <span className="text-[9px] font-mono text-slate-400 dark:text-[#666666] shrink-0">
                                   {c.time}
                                 </span>
                               </div>
-                              <p className="text-on-surface-variant dark:text-secondary-fixed-dim text-[11px] mt-0.5 leading-relaxed">
+                              <p className="text-xs text-slate-600 dark:text-[#A0A0A0] mt-0.5 font-mono leading-relaxed">
                                 {c.text}
                               </p>
                             </div>
                           </div>
                         ))}
-
-                        {projectComments.length === 0 && (
-                          <p className="text-center text-[11px] text-secondary py-3">
-                            No comments yet. Be the first to leave feedback!
-                          </p>
-                        )}
                       </div>
 
                       {/* Add Comment Input */}
-                      <form onSubmit={(e) => handleAddComment(e, project.id)} className="flex items-center gap-2">
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleAddComment(e, project.id);
+                        }}
+                        className="flex gap-2 pt-1"
+                      >
                         <input
                           type="text"
                           value={commentInputText}
                           onChange={(e) => setCommentInputText(e.target.value)}
                           placeholder="Write a comment..."
-                          className="flex-1 bg-surface dark:bg-inverse-surface/40 border border-outline-variant/60 rounded-xl py-2 px-3 text-xs outline-none focus:border-primary text-on-surface dark:text-inverse-on-surface"
+                          className="flex-1 bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-xl py-2 px-3 text-xs font-mono outline-none focus:border-[#D71921] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#666666]"
                         />
                         <button
                           type="submit"
                           disabled={!commentInputText.trim()}
-                          className="px-3.5 py-2 bg-primary disabled:opacity-40 text-white rounded-xl text-xs font-bold hover:bg-primary-container transition-all flex items-center justify-center cursor-pointer shadow-sm active:scale-95 shrink-0"
+                          className="px-3.5 py-2 bg-[#D71921] disabled:opacity-40 text-white rounded-xl text-xs font-mono font-bold hover:bg-[#b0141b] transition-all flex items-center justify-center cursor-pointer shadow-none active:scale-95 shrink-0"
                         >
                           <span className="material-symbols-outlined text-sm">send</span>
                         </button>
@@ -476,10 +475,10 @@ export default function DiscoverScreen() {
                   {/* Explore Repository Button */}
                   <button
                     onClick={() => openProjectRepo(project)}
-                    className="w-full py-2.5 bg-surface dark:bg-inverse-surface/40 hover:bg-primary hover:text-white border border-outline-variant/60 text-primary text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
+                    className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-800 dark:text-white text-xs font-mono font-bold rounded-2xl transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
                   >
                     <span className="material-symbols-outlined text-sm">code</span>
-                    <span>Explore Repository & Code</span>
+                    <span>EXPLORE REPOSITORY & CODE</span>
                   </button>
                 </div>
               </article>
@@ -487,15 +486,15 @@ export default function DiscoverScreen() {
           })}
 
           {filteredProjects.length === 0 && (
-            <div className="text-center py-10 px-4 bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl border border-surface-variant/40 space-y-3 shadow-card">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
+            <div className="text-center py-10 px-4 bg-white dark:bg-[#14171A] rounded-3xl border border-slate-200 dark:border-[#24292F] space-y-3 shadow-card dark:shadow-none">
+              <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-900 dark:text-white flex items-center justify-center mx-auto">
                 <span className="material-symbols-outlined text-2xl">folder_open</span>
               </div>
               <div className="space-y-1">
-                <h3 className="font-headline text-sm font-bold text-on-surface dark:text-inverse-on-surface">
+                <h3 className="font-headline text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   {searchQuery || activeCategory !== 'All' ? 'No Matching Projects' : 'No Projects Uploaded Yet'}
                 </h3>
-                <p className="text-xs text-secondary max-w-xs mx-auto">
+                <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] max-w-xs mx-auto">
                   {searchQuery || activeCategory !== 'All'
                     ? `No projects found matching "${searchQuery || activeCategory}".`
                     : 'Be the first to submit a project and showcase your code to the community!'}
@@ -504,17 +503,17 @@ export default function DiscoverScreen() {
               {searchQuery || activeCategory !== 'All' ? (
                 <button
                   onClick={() => { setSearchQuery(''); setActiveCategory('All'); }}
-                  className="text-xs text-primary font-bold underline cursor-pointer"
+                  className="text-xs font-mono text-[#D71921] font-bold underline cursor-pointer"
                 >
                   Clear filters
                 </button>
               ) : (
                 <button
                   onClick={() => navigate('submit-project')}
-                  className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-container transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+                  className="px-4 py-2 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-none active:scale-95"
                 >
                   <span className="material-symbols-outlined text-base">upload_file</span>
-                  <span>Upload Your Project</span>
+                  <span>UPLOAD YOUR PROJECT</span>
                 </button>
               )}
             </div>

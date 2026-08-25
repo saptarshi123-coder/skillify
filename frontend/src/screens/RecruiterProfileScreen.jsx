@@ -11,8 +11,8 @@ export default function RecruiterProfileScreen() {
 
   const handleViewCandidate = (candidate) => {
     // Find matching student data from STUDENTS_DATA or fallback
-    const matched = STUDENTS_DATA.find(s => 
-      s.name?.toLowerCase() === candidate.name?.toLowerCase() || 
+    const matched = STUDENTS_DATA.find(s =>
+      s.name?.toLowerCase() === candidate.name?.toLowerCase() ||
       s.id === candidate.id
     ) || {
       id: candidate.id,
@@ -33,20 +33,14 @@ export default function RecruiterProfileScreen() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-background text-on-background pb-28 font-sans transition-colors animate-fadeIn">
-      
-      {/* Navbar */}
-      <Navbar title="Recruiter Profile" showSearch={false} />
+    <div className="w-full pb-24 transition-colors">
+      <Navbar title="RECRUITER PROFILE" />
 
-      {/* Main Content Area */}
-      <main className="w-full max-w-4xl mx-auto px-4 py-5 space-y-6">
-        
+      <main className="px-4 py-4 space-y-4 w-full">
+
         {/* Recruiter Header Profile Card */}
-        <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-6 shadow-card border border-surface-variant/40 relative overflow-hidden flex flex-col sm:flex-row items-center sm:items-start gap-5">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-
-          {/* Avatar Photo */}
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl overflow-hidden border-4 border-surface-variant/60 shrink-0 shadow-md relative">
+        <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] flex flex-col items-center text-center space-y-3">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-slate-300 dark:border-white/20 shadow-none">
             <img
               src={userProfile.avatar || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"}
               alt={userProfile.name}
@@ -54,107 +48,77 @@ export default function RecruiterProfileScreen() {
             />
           </div>
 
-          {/* Info Details */}
-          <div className="flex-1 text-center sm:text-left space-y-2 relative z-10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h2 className="font-headline text-lg sm:text-xl font-black text-primary dark:text-primary-fixed">
-                  {userProfile.name}
-                </h2>
-                <p className="text-xs font-bold text-on-surface-variant dark:text-secondary-fixed-dim">
-                  {userProfile.job_role || 'Senior Technical Recruiter'}
-                </p>
-              </div>
-
-              <span className="inline-flex items-center gap-1 bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-full text-[10px] font-bold mx-auto sm:mx-0">
-                <span className="material-symbols-outlined text-xs">verified</span>
-                Verified HR Partner
+          <div>
+            <div className="flex items-center justify-center gap-2">
+              <h2 className="font-headline text-base md:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                {userProfile.name}
+              </h2>
+              <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-[#8E959E] bg-slate-100 dark:bg-[#20252B] border border-slate-200 dark:border-[#2D333B] px-2.5 py-0.5 rounded-full">
+                VERIFIED HR
               </span>
             </div>
+            <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] mt-0.5">
+              {userProfile.job_role || 'Senior Technical Recruiter'} • {userProfile.company_name || 'Skillify Inc.'}
+            </p>
+          </div>
 
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-secondary pt-1">
-              <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm text-primary">business</span>
-                <strong>{userProfile.company_name || 'Skillify Inc.'}</strong>
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm text-primary">location_on</span>
-                {userProfile.hr_location || 'Bengaluru, India'}
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm text-primary">mail</span>
-                {userProfile.email}
-              </span>
-            </div>
-
-            {/* Quick Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-3">
-              <button
-                onClick={() => navigate('list-internship')}
-                className="px-4 py-2 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-xl text-xs shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
-              >
-                <span className="material-symbols-outlined text-sm">add_box</span>
-                <span>List Internship</span>
-              </button>
-
-              <button
-                onClick={() => navigate('complete-hr-profile')}
-                className="px-4 py-2 border border-outline-variant/60 hover:border-primary text-secondary hover:text-primary rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-sm">edit</span>
-                <span>Edit Profile</span>
-              </button>
-
-              <button
-                onClick={() => navigate('settings')}
-                className="px-3 py-2 bg-surface-container-high text-secondary hover:text-on-surface rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
-                title="Settings & Switch Role"
-              >
-                <span className="material-symbols-outlined text-sm">settings</span>
-                <span className="hidden sm:inline">Settings</span>
-              </button>
-            </div>
-
+          {/* Quick Action Buttons */}
+          <div className="flex gap-2 w-full pt-2">
+            <button
+              onClick={() => navigate('list-internship')}
+              className="flex-1 py-2.5 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl transition-all shadow-none flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-sm">add_box</span>
+              <span>LIST INTERNSHIP</span>
+            </button>
+            <button
+              onClick={() => navigate('complete-hr-profile')}
+              className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-800 dark:text-white text-xs font-mono font-bold rounded-2xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95"
+            >
+              <span className="material-symbols-outlined text-sm">edit</span>
+              <span>EDIT PROFILE</span>
+            </button>
+            <button
+              onClick={() => navigate('settings')}
+              title="Settings & Switch Role"
+              className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#24292F] dark:hover:bg-[#2C323A] border border-slate-200 dark:border-[#323842] text-slate-700 dark:text-white rounded-2xl transition-all flex items-center justify-center cursor-pointer active:scale-95"
+            >
+              <span className="material-symbols-outlined text-sm">settings</span>
+            </button>
           </div>
         </div>
 
         {/* Professional Bio Module */}
-        <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-2">
-          <h3 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <span className="material-symbols-outlined text-sm">person_book</span>
-            </div>
-            <span>Professional Bio & Hiring Philosophy</span>
+        <section className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-2">
+          <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="material-symbols-outlined text-base text-[#D71921]">person_book</span>
+            <span>Professional Bio & Philosophy</span>
           </h3>
-          <p className="text-xs text-on-surface-variant dark:text-secondary-fixed-dim leading-relaxed">
-            {userProfile.bio || 'Passionate about connecting top-tier student talent with innovative tech teams. Specialized in engineering and design recruitment with over 8 years of industry experience.'}
+          <p className="text-xs font-mono text-slate-600 dark:text-[#A8AFB8] leading-relaxed">
+            {userProfile.bio || 'Passionate about connecting top-tier student talent with innovative tech teams. Specialized in engineering and design recruitment with extensive industry experience.'}
           </p>
         </section>
 
         {/* Applied Students / Candidate Pipeline Module */}
-        <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-4">
+        <section className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <span className="material-symbols-outlined text-sm">group</span>
-              </div>
-              <h3 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
-                Applied Students & Candidate Pipeline
-              </h3>
-            </div>
-            <span className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-              {applicants.length} Active Applicants
+            <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+              <span className="material-symbols-outlined text-base text-[#D71921]">group</span>
+              <span>Candidate Pipeline</span>
+            </h3>
+            <span className="bg-slate-100 dark:bg-[#20252B] text-slate-700 dark:text-[#C5C9D0] text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-[#2D333B]">
+              {applicants.length} APPLICANTS
             </span>
           </div>
 
-          <div className="space-y-2.5 divide-y divide-surface-variant/30">
+          <div className="space-y-2.5">
             {applicants.map((candidate) => (
               <div
                 key={candidate.id}
-                className="pt-2.5 first:pt-0 flex items-center justify-between gap-3 hover:bg-surface-container-low dark:hover:bg-surface-container-lowest p-2 rounded-2xl transition-colors"
+                className="flex items-center justify-between gap-3 p-3 bg-slate-50 dark:bg-[#191D22] rounded-2xl border border-slate-200 dark:border-[#2D333B]"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-11 h-11 rounded-2xl overflow-hidden bg-surface-container shrink-0 border border-outline-variant/40 shadow-xs">
+                  <div className="w-11 h-11 rounded-2xl overflow-hidden bg-slate-100 dark:bg-[#14171A] shrink-0 border border-slate-200 dark:border-[#24292F]">
                     <img
                       src={candidate.avatar}
                       alt={candidate.name}
@@ -162,14 +126,14 @@ export default function RecruiterProfileScreen() {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate">
+                    <h4 className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider truncate">
                       {candidate.name}
                     </h4>
-                    <p className="text-[11px] text-primary font-semibold truncate">
+                    <p className="text-[11px] font-mono text-[#D71921] font-semibold truncate">
                       {candidate.role}
                     </p>
-                    <p className="text-[10px] text-secondary">
-                      {candidate.college} • <span className="text-emerald-600 dark:text-emerald-400 font-bold">{candidate.score}</span>
+                    <p className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E]">
+                      {candidate.college} • <span className="text-slate-800 dark:text-white font-bold">{candidate.score}</span>
                     </p>
                   </div>
                 </div>
@@ -177,9 +141,9 @@ export default function RecruiterProfileScreen() {
                 <button
                   type="button"
                   onClick={() => handleViewCandidate(candidate)}
-                  className="px-3.5 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1 cursor-pointer active:scale-95"
+                  className="px-3.5 py-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white rounded-xl text-xs font-mono font-bold transition-all shrink-0 flex items-center gap-1 cursor-pointer active:scale-95 shadow-none"
                 >
-                  <span>View</span>
+                  <span>VIEW</span>
                   <span className="material-symbols-outlined text-sm">chevron_right</span>
                 </button>
               </div>
@@ -191,37 +155,36 @@ export default function RecruiterProfileScreen() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div
             onClick={() => navigate('discover')}
-            className="p-4 bg-surface-container-low dark:bg-surface-container-lowest rounded-2xl border border-surface-variant/40 hover:border-primary/40 cursor-pointer transition-all space-y-1.5"
+            className="p-4 bg-white dark:bg-[#14171A] rounded-2xl border border-slate-200 dark:border-[#24292F] hover:border-[#D71921] cursor-pointer transition-all space-y-1.5 shadow-card dark:shadow-none"
           >
-            <div className="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-900 dark:text-white flex items-center justify-center">
               <span className="material-symbols-outlined text-lg">travel_explore</span>
             </div>
-            <h4 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
-              Discover Top Student Projects
+            <h4 className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+              Discover Student Projects
             </h4>
-            <p className="text-[10px] text-secondary">
+            <p className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E]">
               Browse submitted repositories, live apps, and open-source contributions.
             </p>
           </div>
 
           <div
             onClick={() => navigate('explore')}
-            className="p-4 bg-surface-container-low dark:bg-surface-container-lowest rounded-2xl border border-surface-variant/40 hover:border-primary/40 cursor-pointer transition-all space-y-1.5"
+            className="p-4 bg-white dark:bg-[#14171A] rounded-2xl border border-slate-200 dark:border-[#24292F] hover:border-[#D71921] cursor-pointer transition-all space-y-1.5 shadow-card dark:shadow-none"
           >
-            <div className="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-900 dark:text-white flex items-center justify-center">
               <span className="material-symbols-outlined text-lg">school</span>
             </div>
-            <h4 className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">
+            <h4 className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Explore Verified Talent
             </h4>
-            <p className="text-[10px] text-secondary">
+            <p className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E]">
               Filter students by algorithmic rankings, verified skill badges, and college.
             </p>
           </div>
         </div>
 
       </main>
-
     </div>
   );
 }

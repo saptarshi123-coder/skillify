@@ -74,30 +74,30 @@ export default function FindInternshipsScreen() {
       <Navbar title="Find Internships" showBack={true} />
 
       <main className="px-4 py-4 space-y-4 w-full">
-        {/* Header & Post Button */}
+        {/* Header Title */}
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="font-headline text-lg font-extrabold text-on-surface dark:text-inverse-on-surface">
+          <div className="space-y-1">
+            <h1 className="font-headline text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
               Find Internships
             </h1>
-            <p className="text-xs text-secondary dark:text-secondary-fixed-dim">
+            <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] leading-relaxed">
               Explore verified student internships & industry opportunities across India
             </p>
           </div>
           {isRecruiter && (
             <button
               onClick={() => navigate('list-internship')}
-              className="px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-xl shadow-sm hover:bg-primary-container transition-all flex items-center gap-1 shrink-0 cursor-pointer active:scale-95"
+              className="px-3.5 py-2 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl shadow-none transition-all flex items-center gap-1 shrink-0 cursor-pointer active:scale-95"
             >
               <span className="material-symbols-outlined text-sm">add_circle</span>
-              <span>Post</span>
+              <span>POST</span>
             </button>
           )}
         </div>
 
         {/* Search Bar */}
         <div className="relative">
-          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary text-lg">
+          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] text-lg">
             search
           </span>
           <input
@@ -105,12 +105,12 @@ export default function FindInternshipsScreen() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search roles, companies, skills, or city..."
-            className="w-full bg-surface-container-lowest dark:bg-surface-container-high border border-outline-variant/60 rounded-2xl py-2.5 pl-10 pr-10 text-xs outline-none focus:border-primary text-on-surface dark:text-inverse-on-surface shadow-sm"
+            className="w-full bg-white dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl py-2.5 pl-10 pr-10 text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] outline-none focus:border-[#D71921] shadow-xs dark:shadow-none"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-primary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] hover:text-slate-700 dark:hover:text-white"
             >
               <span className="material-symbols-outlined text-base">close</span>
             </button>
@@ -118,15 +118,15 @@ export default function FindInternshipsScreen() {
         </div>
 
         {/* Role Filter Chips */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1 hide-scrollbar">
+        <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-mono uppercase whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-surface-container-lowest dark:bg-surface-container-high text-secondary border border-outline-variant/50 hover:text-primary'
+                  ? 'bg-transparent border border-[#D71921] text-[#D71921] font-bold'
+                  : 'bg-white dark:bg-[#16181A] text-slate-600 dark:text-[#B0B4BA] border border-slate-200 dark:border-[#2C3036] hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {cat}
@@ -135,27 +135,27 @@ export default function FindInternshipsScreen() {
         </div>
 
         {/* Work Mode & Type Quick Filters */}
-        <div className="flex items-center justify-between text-xs text-secondary pt-1">
+        <div className="flex items-center justify-between text-xs text-slate-600 dark:text-[#8E959E] pt-1 font-mono">
           <span className="font-semibold text-[11px]">
             {filteredInternships.length} Opportunity{filteredInternships.length === 1 ? '' : 'ies'}
           </span>
           <div className="flex gap-1.5">
             <button
               onClick={() => setSelectedMode(selectedMode === 'online' ? 'all' : 'online')}
-              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-colors cursor-pointer ${
+              className={`px-2.5 py-1 rounded-xl text-[10px] font-bold border transition-colors cursor-pointer ${
                 selectedMode === 'online'
-                  ? 'bg-primary/10 border-primary text-primary'
-                  : 'border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-container-high text-secondary'
+                  ? 'border-[#D71921] text-[#D71921] bg-transparent'
+                  : 'border-slate-200 dark:border-[#2D333B] bg-white dark:bg-[#191D22] text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               🌐 Online
             </button>
             <button
               onClick={() => setSelectedComp(selectedComp === 'paid' ? 'all' : 'paid')}
-              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-colors cursor-pointer ${
+              className={`px-2.5 py-1 rounded-xl text-[10px] font-bold border transition-colors cursor-pointer ${
                 selectedComp === 'paid'
-                  ? 'bg-primary/10 border-primary text-primary'
-                  : 'border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-container-high text-secondary'
+                  ? 'border-[#D71921] text-[#D71921] bg-transparent'
+                  : 'border-slate-200 dark:border-[#2D333B] bg-white dark:bg-[#191D22] text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               💰 Paid Only
@@ -172,22 +172,22 @@ export default function FindInternshipsScreen() {
             return (
               <article
                 key={internship.id}
-                className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
+                className="bg-white dark:bg-[#14171A] rounded-3xl p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] hover:border-[#D71921] dark:hover:border-[#3A3A3A] transition-all space-y-4 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Company Row */}
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-secondary-container dark:bg-secondary-container/40 rounded-2xl flex items-center justify-center text-secondary dark:text-inverse-on-surface shadow-xs shrink-0">
+                      <div className="w-12 h-12 bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shrink-0">
                         <span className="material-symbols-outlined text-2xl">
                           {getCompanyIcon(internship.icon, internship.category)}
                         </span>
                       </div>
                       <div>
-                        <h2 className="font-headline text-sm font-bold text-on-surface dark:text-inverse-on-surface">
+                        <h2 className="font-headline text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                           {internship.role}
                         </h2>
-                        <p className="text-xs text-secondary dark:text-secondary-fixed-dim font-medium">
+                        <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E]">
                           {internship.company}
                         </p>
                       </div>
@@ -199,14 +199,13 @@ export default function FindInternshipsScreen() {
                       onClick={() => toggleSaveInternship(internship.id)}
                       className={`p-2 rounded-full transition-colors cursor-pointer ${
                         isSaved
-                          ? 'text-primary bg-primary/10'
-                          : 'text-secondary hover:text-primary hover:bg-black/5 dark:hover:bg-white/5'
+                          ? 'text-[#D71921] bg-[#D71921]/15'
+                          : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                       }`}
                       title={isSaved ? 'Remove from Bookmarks' : 'Save Internship'}
                     >
                       <span
                         className="material-symbols-outlined text-xl"
-                        style={isSaved ? { fontVariationSettings: '"FILL" 1' } : { fontVariationSettings: '"FILL" 0' }}
                       >
                         {isSaved ? 'bookmark' : 'bookmark_border'}
                       </span>
@@ -214,11 +213,11 @@ export default function FindInternshipsScreen() {
                   </div>
 
                   {/* Location & Details */}
-                  <div className="flex items-center text-xs text-secondary dark:text-secondary-fixed-dim mb-3 gap-1">
-                    <span className="material-symbols-outlined text-sm text-primary">location_on</span>
+                  <div className="flex items-center text-xs font-mono text-slate-500 dark:text-[#8E959E] mb-3 gap-1">
+                    <span className="material-symbols-outlined text-sm text-[#D71921]">location_on</span>
                     <span>{internship.location}</span>
                     {internship.duration && (
-                      <span className="text-[10px] text-secondary/80 ml-2">
+                      <span className="text-[10px] text-slate-400 dark:text-[#666666] ml-2">
                         • {internship.duration}
                       </span>
                     )}
@@ -226,17 +225,17 @@ export default function FindInternshipsScreen() {
 
                   {/* Description */}
                   {internship.description && (
-                    <p className="text-xs text-on-surface-variant dark:text-secondary-fixed-dim line-clamp-2 mb-3 leading-relaxed">
+                    <p className="text-xs font-mono text-slate-600 dark:text-[#A8AFB8] line-clamp-2 mb-3 leading-relaxed">
                       {internship.description}
                     </p>
                   )}
 
                   {/* Badges / Tags */}
                   <div className="flex flex-wrap gap-1.5 mb-2">
-                    <span className="bg-primary/10 text-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] text-slate-700 dark:text-[#C5C9D0] text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full">
                       {internship.compensation === 'unpaid' ? 'Unpaid' : 'Paid'}
                     </span>
-                    <span className="bg-primary/10 text-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="bg-slate-100 dark:bg-[#111315] border border-slate-300 dark:border-[#383E47] text-slate-700 dark:text-[#C5C9D0] text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full">
                       {internship.mode === 'offline' ? 'Offline' : 'Online'}
                     </span>
                     {(internship.tags || [])
@@ -245,7 +244,7 @@ export default function FindInternshipsScreen() {
                       .map((tag, idx) => (
                         <span
                           key={idx}
-                          className="bg-surface-container-high dark:bg-surface-container-highest text-secondary text-[10px] font-medium px-2 py-0.5 rounded-md"
+                          className="bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-800 dark:text-[#D0D4DC] text-[10px] font-mono px-2 py-0.5 rounded-lg"
                         >
                           {tag}
                         </span>
@@ -254,27 +253,27 @@ export default function FindInternshipsScreen() {
                 </div>
 
                 {/* Bottom Row: Stipend & Apply */}
-                <div className="pt-3 border-t border-surface-variant/40 flex items-center justify-between">
+                <div className="pt-3 border-t border-slate-100 dark:border-[#24292F] flex items-center justify-between">
                   <div>
-                    <p className="text-[10px] text-secondary dark:text-secondary-fixed-dim font-medium uppercase tracking-wider">
-                      Stipend
+                    <p className="text-[10px] font-mono text-slate-500 dark:text-[#666666] uppercase tracking-wider">
+                      STIPEND
                     </p>
-                    <p className="font-headline text-base font-extrabold text-primary dark:text-primary-fixed">
+                    <p className="font-headline text-base font-bold text-slate-900 dark:text-white">
                       {internship.stipend || '₹20,000/mo'}
                     </p>
                   </div>
 
                   {hasApplied ? (
-                    <div className="flex items-center gap-1 bg-emerald-600/15 text-emerald-700 dark:text-emerald-400 font-bold px-4 py-2 rounded-xl text-xs">
+                    <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#20252B] border border-slate-300 dark:border-[#383E47] text-slate-900 dark:text-white font-mono font-bold px-4 py-2 rounded-2xl text-xs">
                       <span className="material-symbols-outlined text-sm font-bold">check_circle</span>
-                      <span>Applied</span>
+                      <span>APPLIED</span>
                     </div>
                   ) : (
                     <button
                       onClick={() => handleApplyClick(internship)}
-                      className="bg-primary hover:bg-primary-container text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+                      className="bg-[#D71921] hover:bg-[#b0141b] text-white font-mono font-bold text-xs px-5 py-2.5 rounded-2xl shadow-none transition-all active:scale-95 cursor-pointer flex items-center gap-1"
                     >
-                      <span>Apply</span>
+                      <span>APPLY</span>
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </button>
                   )}

@@ -248,32 +248,30 @@ export default function AIChatScreen() {
 
   return (
     <div className="w-full min-h-screen pb-36 flex flex-col transition-colors relative">
-      <Navbar title="Skillie AI Chatbot" />
+      <Navbar title="SKILLE" />
 
       {/* Connection & Status Banner */}
-      <div className="bg-surface-container-high dark:bg-surface-container border-b border-surface-variant/40 px-3.5 py-2.5 flex items-center justify-between shadow-sm">
+      <div className="bg-white dark:bg-[#14171A] border-b border-slate-200 dark:border-[#24292F] px-4 py-3 flex items-center justify-between shadow-card dark:shadow-none transition-colors">
         <div className="flex items-center gap-2.5">
           <div className="relative">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-container text-white flex items-center justify-center shadow-md">
-              <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: '"FILL" 1' }}>
+            <div className="w-8 h-8 rounded-full bg-[#D71921] text-white flex items-center justify-center">
+              <span className="material-symbols-outlined text-lg">
                 smart_toy
               </span>
             </div>
-            <div className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-surface ${
-              chatbotStatus.online ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
-            }`} />
+            <div className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-black ${chatbotStatus.online ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface">Skillie AI</p>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full font-bold bg-primary/10 text-primary">
+              <p className="font-headline text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Skille</p>
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full font-bold bg-[#D71921]/15 text-[#D71921]">
                 {chatbotStatus.online ? 'Python v2.0' : 'Local NLP'}
               </span>
             </div>
-            <p className="text-[10px] text-secondary flex items-center gap-1">
+            <p className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E] flex items-center gap-1">
               <span>{getMoodEmoji(botMood.dominant_mood)} Mood: {botMood.dominant_mood || 'Helpful'}</span>
               <span>•</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+              <span className="text-slate-700 dark:text-[#C5C9D0] font-medium">
                 {chatbotStatus.online ? 'API Synced' : 'Ready'}
               </span>
             </p>
@@ -285,15 +283,15 @@ export default function AIChatScreen() {
           <button
             onClick={() => checkChatbotBackend(true)}
             title="Refresh Connection"
-            className="w-7 h-7 rounded-full bg-surface-container-lowest dark:bg-surface-container hover:bg-surface-variant flex items-center justify-center text-secondary hover:text-primary transition-all border border-outline-variant/30"
+            className="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#191D22] hover:bg-slate-200 dark:hover:bg-[#24292F] flex items-center justify-center text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white transition-all border border-slate-200 dark:border-[#2D333B]"
           >
             <span className="material-symbols-outlined text-sm">sync</span>
           </button>
           <button
             onClick={() => setShowSearch(!showSearch)}
             title="Search Messages"
-            className={`w-7 h-7 rounded-full flex items-center justify-center transition-all border border-outline-variant/30 ${
-              showSearch ? 'bg-primary text-white' : 'bg-surface-container-lowest dark:bg-surface-container text-secondary hover:text-primary'
+            className={`w-7 h-7 rounded-full flex items-center justify-center transition-all border border-slate-200 dark:border-[#2D333B] ${
+              showSearch ? 'bg-[#D71921] text-white' : 'bg-slate-100 dark:bg-[#191D22] text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <span className="material-symbols-outlined text-sm">search</span>
@@ -301,14 +299,14 @@ export default function AIChatScreen() {
           <button
             onClick={() => setShowStatsModal(true)}
             title="Bot Intelligence Stats"
-            className="w-7 h-7 rounded-full bg-surface-container-lowest dark:bg-surface-container hover:bg-surface-variant flex items-center justify-center text-secondary hover:text-primary transition-all border border-outline-variant/30"
+            className="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#191D22] hover:bg-slate-200 dark:hover:bg-[#24292F] flex items-center justify-center text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white transition-all border border-slate-200 dark:border-[#2D333B]"
           >
             <span className="material-symbols-outlined text-sm">insights</span>
           </button>
           <button
             onClick={clearAIChatHistory}
             title="Clear Chat"
-            className="w-7 h-7 rounded-full bg-surface-container-lowest dark:bg-surface-container hover:bg-red-50 dark:hover:bg-red-950/40 flex items-center justify-center text-secondary hover:text-red-500 transition-all border border-outline-variant/30"
+            className="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#191D22] hover:bg-red-50 dark:hover:bg-[#24292F] flex items-center justify-center text-slate-600 dark:text-[#8E959E] hover:text-[#D71921] transition-all border border-slate-200 dark:border-[#2D333B]"
           >
             <span className="material-symbols-outlined text-sm">delete_sweep</span>
           </button>
@@ -317,18 +315,18 @@ export default function AIChatScreen() {
 
       {/* Search Input Bar (Expandable) */}
       {showSearch && (
-        <div className="bg-surface-container-low dark:bg-surface-container-high px-4 py-2 border-b border-surface-variant/40 flex items-center gap-2">
-          <span className="material-symbols-outlined text-sm text-secondary">search</span>
+        <div className="bg-white dark:bg-[#191D22] px-4 py-2 border-b border-slate-200 dark:border-[#2D333B] flex items-center gap-2">
+          <span className="material-symbols-outlined text-sm text-slate-400 dark:text-[#8E959E]">search</span>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search conversation..."
-            className="flex-1 bg-transparent text-xs outline-none text-on-surface dark:text-inverse-on-surface"
+            className="flex-1 bg-transparent text-xs font-mono outline-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E]"
             autoFocus
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="text-secondary hover:text-primary">
+            <button onClick={() => setSearchQuery('')} className="text-slate-400 dark:text-[#8E959E] hover:text-slate-700 dark:hover:text-white">
               <span className="material-symbols-outlined text-sm">close</span>
             </button>
           )}
@@ -336,24 +334,24 @@ export default function AIChatScreen() {
       )}
 
       {/* Chat Messages Stream */}
-      <main className="px-3.5 py-4 space-y-4 flex-1 overflow-y-auto">
+      <main className="px-3.5 py-4 space-y-4 flex-1 overflow-y-auto font-mono">
         <div className="flex justify-center">
-          <span className="text-[10px] font-bold text-secondary bg-surface-container px-3 py-1 rounded-full shadow-xs">
+          <span className="text-[10px] font-mono text-slate-500 dark:text-[#8E959E] bg-white dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] px-3 py-1 rounded-full shadow-card dark:shadow-none">
             {chatbotStatus.online ? '⚡ Synced with Python NLP Backend' : '🧠 Standalone Local Intelligence Active'}
           </span>
         </div>
 
         {filteredMessages.length === 0 && (
           <div className="py-6 text-center space-y-4 max-w-sm mx-auto animate-fadeIn">
-            <div className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-primary to-primary-container text-white mx-auto flex items-center justify-center shadow-lg shadow-primary/25">
-              <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: '"FILL" 1' }}>smart_toy</span>
+            <div className="w-14 h-14 rounded-3xl bg-[#D71921] text-white mx-auto flex items-center justify-center">
+              <span className="material-symbols-outlined text-3xl">smart_toy</span>
             </div>
             <div className="space-y-1">
-              <h3 className="text-sm font-headline font-bold text-on-surface dark:text-inverse-on-surface">
-                Hi, I'm Skillie AI! 👋
+              <h3 className="text-sm font-headline font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                Hi, I'm Skille! 👋
               </h3>
-              <p className="text-xs text-secondary leading-relaxed">
-                Your AI coding tutor and freelancing assistant. Ask me anything about algorithms, code optimization, escrow payments, or quizzes!
+              <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] leading-relaxed">
+                Your AI coding tutor and career assistant. Ask me anything about algorithms, code optimization, internships, or quizzes!
               </p>
             </div>
 
@@ -368,19 +366,19 @@ export default function AIChatScreen() {
                 <button
                   key={idx}
                   onClick={() => handleSelectPrompt(p.title)}
-                  className="p-3 rounded-2xl bg-surface-container-lowest dark:bg-surface-container-high border border-surface-variant/50 hover:border-primary text-xs font-semibold text-on-surface dark:text-inverse-on-surface flex items-center justify-between transition-all hover:bg-primary/5 active:scale-[0.98] shadow-xs cursor-pointer"
+                  className="p-3 rounded-2xl bg-white dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] hover:border-[#D71921] text-xs font-mono font-semibold text-slate-900 dark:text-white flex items-center justify-between transition-all active:scale-[0.98] shadow-card dark:shadow-none cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="material-symbols-outlined text-sm text-primary">{p.icon}</span>
+                    <span className="material-symbols-outlined text-sm text-[#D71921]">{p.icon}</span>
                     <span>{p.title}</span>
                   </div>
-                  <span className="material-symbols-outlined text-xs text-secondary">arrow_forward</span>
+                  <span className="material-symbols-outlined text-xs text-slate-400 dark:text-[#8E959E]">arrow_forward</span>
                 </button>
               ))}
             </div>
 
             {/* 30-min auto-delete notice */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-variant/40 text-[10px] text-secondary font-medium">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] text-[10px] text-slate-500 dark:text-[#8E959E] font-mono">
               <span className="material-symbols-outlined text-xs text-amber-500">history_toggle_off</span>
               <span>Chat history automatically deletes after 30 minutes</span>
             </div>
@@ -395,11 +393,11 @@ export default function AIChatScreen() {
               className={`flex gap-2.5 ${isAI ? 'self-start mr-4' : 'self-end ml-6 flex-row-reverse'}`}
             >
               {/* Avatar */}
-              <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-xs overflow-hidden mt-0.5 shadow-sm ${
-                isAI ? 'bg-gradient-to-tr from-primary to-primary-container text-white' : 'bg-surface-variant ring-2 ring-primary/20'
+              <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-xs overflow-hidden mt-0.5 ${
+                isAI ? 'bg-[#D71921] text-white' : 'border border-slate-300 dark:border-white/20'
               }`}>
                 {isAI ? (
-                  <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: '"FILL" 1' }}>smart_toy</span>
+                  <span className="material-symbols-outlined text-base">smart_toy</span>
                 ) : (
                   <img src={userProfile.avatar} alt="User" className="w-full h-full object-cover" />
                 )}
@@ -407,44 +405,34 @@ export default function AIChatScreen() {
 
               {/* Message Bubble & Cards */}
               <div className="space-y-2 max-w-[84%]">
-                <div className={`rounded-2xl p-3.5 shadow-sm space-y-2 text-xs transition-all ${
+                <div className={`rounded-3xl p-4 text-xs font-mono transition-all ${
                   isAI
-                    ? 'bg-surface-container-lowest dark:bg-surface-container-high text-on-surface dark:text-inverse-on-surface border border-surface-variant/40 rounded-tl-xs'
-                    : 'bg-primary text-white rounded-tr-xs shadow-primary/20'
+                    ? 'bg-white dark:bg-[#14171A] text-slate-900 dark:text-white border border-slate-200 dark:border-[#24292F] shadow-card dark:shadow-none'
+                    : 'bg-[#D71921] text-white'
                 }`}>
                   {/* Text Content */}
-                  <div className="text-xs font-normal">
+                  <div className="text-xs font-normal leading-relaxed">
                     {renderFormattedText(msg.text, msg.id)}
                   </div>
 
-                  {/* Bot Metadata & Emotion Badges */}
+                  {/* Bot Metadata */}
                   {isAI && (
-                    <div className="pt-2 border-t border-surface-variant/30 flex flex-wrap items-center justify-between gap-1.5 text-[9px] text-secondary">
+                    <div className="pt-2 border-t border-slate-100 dark:border-[#24292F] flex flex-wrap items-center justify-between gap-1.5 text-[9px] text-slate-500 dark:text-[#8E959E]">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        {(() => {
-                          const badge = getEmotionBadge(msg);
-                          if (!badge) return null;
-                          return (
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold border shadow-2xs ${badge.color}`}>
-                              <span>{badge.emoji}</span>
-                              <span>{badge.label}</span>
-                            </span>
-                          );
-                        })()}
                         {msg.engine && (
-                          <span className="px-1.5 py-0.5 rounded bg-surface-container/60 text-secondary font-medium text-[8px]">
+                          <span className="px-1.5 py-0.5 rounded-lg bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] text-slate-600 dark:text-[#C5C9D0] font-mono text-[8px]">
                             {msg.engine.includes('Python') ? '⚡ Live NLP' : '🧠 Standalone'}
                           </span>
                         )}
                       </div>
-                      <span className="font-medium text-[9px] opacity-70">
+                      <span className="font-mono text-[9px] opacity-70">
                         {msg.timestamp}
                       </span>
                     </div>
                   )}
 
                   {!isAI && (
-                    <div className="text-[9px] text-right font-medium text-white/70">
+                    <div className="text-[9px] text-right font-mono text-white/70">
                       {msg.timestamp}
                     </div>
                   )}
@@ -459,7 +447,7 @@ export default function AIChatScreen() {
                         <button
                           key={actIdx}
                           onClick={() => handleActionClick(act)}
-                          className="px-2.5 py-1 rounded-full bg-surface-container-high hover:bg-primary hover:text-white text-secondary text-[10px] font-semibold transition-all border border-outline-variant/40 flex items-center gap-1 active:scale-95 shadow-2xs cursor-pointer"
+                          className="px-3 py-1 rounded-full bg-white dark:bg-[#14171A] hover:border-[#D71921] text-slate-700 dark:text-[#C5C9D0] hover:text-slate-900 dark:hover:text-white text-[10px] font-mono transition-all border border-slate-200 dark:border-[#24292F] flex items-center gap-1 active:scale-95 cursor-pointer"
                         >
                           <span>{label}</span>
                           <span className="material-symbols-outlined text-[11px]">arrow_forward</span>
@@ -471,10 +459,10 @@ export default function AIChatScreen() {
 
                 {/* Feedback Rating Bar */}
                 {isAI && (
-                  <div className="flex items-center gap-2 px-1 text-[10px] text-secondary">
+                  <div className="flex items-center gap-2 px-1 text-[10px] text-slate-500 dark:text-[#8E959E] font-mono">
                     {msg.feedbackRating ? (
                       <span className="text-amber-500 font-bold flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xs" style={{ fontVariationSettings: '"FILL" 1' }}>star</span>
+                        <span className="material-symbols-outlined text-xs">star</span>
                         Feedback Recorded ({msg.feedbackRating}/5)
                       </span>
                     ) : (
@@ -483,14 +471,14 @@ export default function AIChatScreen() {
                         <button
                           onClick={() => rateAIMessage(msg.id, 5)}
                           title="Great response"
-                          className="p-1 rounded hover:bg-surface-variant text-secondary hover:text-emerald-500 transition-colors"
+                          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-[#191D22] text-slate-500 dark:text-[#8E959E] hover:text-emerald-500 transition-colors"
                         >
                           <span className="material-symbols-outlined text-xs">thumb_up</span>
                         </button>
                         <button
                           onClick={() => rateAIMessage(msg.id, 2)}
                           title="Needs improvement"
-                          className="p-1 rounded hover:bg-surface-variant text-secondary hover:text-red-500 transition-colors"
+                          className="p-1 rounded hover:bg-slate-100 dark:hover:bg-[#191D22] text-slate-500 dark:text-[#8E959E] hover:text-red-500 transition-colors"
                         >
                           <span className="material-symbols-outlined text-xs">thumb_down</span>
                         </button>
@@ -505,18 +493,18 @@ export default function AIChatScreen() {
 
         {/* Live Streaming Response / Typing Indicator */}
         {isAITyping && (
-          <div className="flex gap-2.5 self-start mr-4">
-            <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs shrink-0 shadow-md">
+          <div className="flex gap-2.5 self-start mr-4 font-mono">
+            <div className="w-8 h-8 rounded-full bg-[#D71921] text-white flex items-center justify-center text-xs shrink-0">
               <span className="material-symbols-outlined text-base animate-spin">autorenew</span>
             </div>
             <div className="space-y-1.5 max-w-[84%]">
-              <div className="bg-surface-container-lowest dark:bg-surface-container-high rounded-2xl rounded-tl-xs p-3.5 shadow-sm border border-primary/30 text-xs text-on-surface dark:text-inverse-on-surface">
+              <div className="bg-white dark:bg-[#14171A] rounded-3xl p-4 border border-slate-200 dark:border-[#24292F] text-xs text-slate-900 dark:text-white shadow-card dark:shadow-none">
                 {streamingResponse ? (
                   <div>{renderFormattedText(streamingResponse, 'streaming')}</div>
                 ) : (
-                  <div className="flex items-center gap-2 text-secondary">
-                    <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-                    <p className="italic text-[11px]">{typingStatus}</p>
+                  <div className="flex items-center gap-2 text-slate-500 dark:text-[#8E959E]">
+                    <span className="w-2 h-2 rounded-full bg-[#D71921] animate-ping" />
+                    <p className="italic text-[11px] font-mono">{typingStatus}</p>
                   </div>
                 )}
               </div>
@@ -528,8 +516,8 @@ export default function AIChatScreen() {
       </main>
 
       {/* Floating Bottom Input & Suggestions Area */}
-      <div className="fixed bottom-14 left-0 right-0 max-w-md mx-auto p-3 bg-surface/95 dark:bg-inverse-surface/95 backdrop-blur-md border-t border-surface-variant/40 space-y-2 z-40 shadow-xl">
-        
+      <div className="fixed bottom-14 left-0 right-0 max-w-md mx-auto p-3 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-slate-200 dark:border-[#1A1D20] space-y-2 z-40 transition-colors">
+
         {/* Dynamic Contextual Quick Replies Chips */}
         <div className="flex gap-1.5 overflow-x-auto pb-0.5 hide-scrollbar">
           {quickReplies.map((prompt, idx) => (
@@ -537,7 +525,7 @@ export default function AIChatScreen() {
               key={idx}
               onClick={() => handleSelectPrompt(prompt)}
               disabled={isAITyping}
-              className="px-2.5 py-1 rounded-full bg-surface-container-lowest dark:bg-surface-container text-secondary hover:text-primary hover:border-primary text-[10px] font-semibold whitespace-nowrap border border-outline-variant/50 transition-all shrink-0 active:scale-95 shadow-xs disabled:opacity-50"
+              className="px-3 py-1 rounded-full bg-slate-100 dark:bg-[#14171A] text-slate-700 dark:text-[#C5C9D0] hover:text-slate-900 dark:hover:text-white text-[10px] font-mono whitespace-nowrap border border-slate-200 dark:border-[#24292F] transition-all shrink-0 active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               💡 {prompt}
             </button>
@@ -551,16 +539,16 @@ export default function AIChatScreen() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             disabled={isAITyping}
-            placeholder={isAITyping ? "Skillie is thinking..." : "Ask Skillie about code, escrow, jobs, tips..."}
-            className="flex-1 bg-surface-container-lowest dark:bg-surface-container-high border border-outline-variant/60 rounded-2xl py-2.5 px-3.5 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary text-on-surface dark:text-inverse-on-surface shadow-sm disabled:opacity-60"
+            placeholder={isAITyping ? "Skille is thinking..." : "Ask Skille about code, jobs, quizzes..."}
+            className="flex-1 bg-white dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-2xl py-2.5 px-3.5 text-xs font-mono outline-none focus:border-[#D71921] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] shadow-xs dark:shadow-none disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={!inputText.trim() || isAITyping}
-            className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all ${
+            className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all cursor-pointer ${
               inputText.trim() && !isAITyping
-                ? 'bg-primary text-white shadow-md active:scale-95 hover:bg-primary/90'
-                : 'bg-surface-variant text-secondary cursor-not-allowed opacity-50'
+                ? 'bg-[#D71921] hover:bg-[#b0141b] text-white active:scale-95 shadow-none'
+                : 'bg-slate-200 dark:bg-[#191D22] text-slate-400 dark:text-[#666666] cursor-not-allowed opacity-50'
             }`}
           >
             <span className="material-symbols-outlined text-lg">
@@ -572,21 +560,21 @@ export default function AIChatScreen() {
 
       {/* Intelligence & Mood Analytics Modal */}
       {showStatsModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn">
-          <div className="bg-surface dark:bg-surface-container-high rounded-3xl p-5 w-full max-w-sm border border-surface-variant/40 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-surface-variant/40 pb-3">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fadeIn font-mono">
+          <div className="bg-white dark:bg-[#14171A] rounded-3xl p-5 w-full max-w-sm border border-slate-200 dark:border-[#24292F] shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#24292F] pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#D71921]/15 text-[#D71921] flex items-center justify-center">
                   <span className="material-symbols-outlined text-lg">psychology</span>
                 </div>
                 <div>
-                  <h3 className="font-headline text-sm font-bold text-on-surface dark:text-inverse-on-surface">Skillie Brain & Mood</h3>
-                  <p className="text-[10px] text-secondary">Learning Engine Analytics</p>
+                  <h3 className="font-headline text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Skille Brain & Mood</h3>
+                  <p className="text-[10px] text-slate-500 dark:text-[#8E959E]">Learning Engine Analytics</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowStatsModal(false)}
-                className="w-7 h-7 rounded-full bg-surface-variant flex items-center justify-center text-secondary hover:text-primary"
+                className="w-7 h-7 rounded-full bg-slate-100 dark:bg-[#191D22] flex items-center justify-center text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white"
               >
                 <span className="material-symbols-outlined text-sm">close</span>
               </button>
@@ -594,42 +582,42 @@ export default function AIChatScreen() {
 
             {/* Engine Status Grid */}
             <div className="grid grid-cols-2 gap-2.5 text-xs">
-              <div className="p-3 rounded-2xl bg-surface-container-lowest dark:bg-surface-container border border-surface-variant/40 space-y-1">
-                <p className="text-[10px] text-secondary font-medium">Backend Status</p>
-                <p className="font-bold text-primary flex items-center gap-1">
+              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] space-y-1">
+                <p className="text-[10px] text-slate-500 dark:text-[#8E959E] font-medium">Backend Status</p>
+                <p className="font-bold text-[#D71921] flex items-center gap-1">
                   <span className={`w-2 h-2 rounded-full ${chatbotStatus.online ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                   {chatbotStatus.online ? 'Python API v2.0' : 'Local NLP'}
                 </p>
               </div>
-              <div className="p-3 rounded-2xl bg-surface-container-lowest dark:bg-surface-container border border-surface-variant/40 space-y-1">
-                <p className="text-[10px] text-secondary font-medium">Dominant Sentiment</p>
-                <p className="font-bold text-on-surface dark:text-inverse-on-surface capitalize">
+              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] space-y-1">
+                <p className="text-[10px] text-slate-500 dark:text-[#8E959E] font-medium">Dominant Sentiment</p>
+                <p className="font-bold text-slate-900 dark:text-white capitalize">
                   {getMoodEmoji(botMood.dominant_mood)} {botMood.dominant_mood || 'Positive'}
                 </p>
               </div>
             </div>
 
             {/* Total Messages & Training */}
-            <div className="p-3 rounded-2xl bg-surface-container-lowest dark:bg-surface-container border border-surface-variant/40 space-y-2">
+            <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] space-y-2">
               <div className="flex justify-between text-xs">
-                <span className="text-secondary">Stored Messages (SQLite):</span>
-                <span className="font-bold text-on-surface dark:text-inverse-on-surface">{chatMessages.length}</span>
+                <span className="text-slate-500 dark:text-[#8E959E]">Stored Messages:</span>
+                <span className="font-bold text-slate-900 dark:text-white">{chatMessages.length}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-secondary">Intent Recognition Patterns:</span>
-                <span className="font-bold text-primary">29 Intents / 500+ Patterns</span>
+                <span className="text-slate-500 dark:text-[#8E959E]">Intent Recognition:</span>
+                <span className="font-bold text-[#D71921]">29 Intents / 500+ Patterns</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-secondary">Humor & Joke Engine:</span>
+                <span className="text-slate-500 dark:text-[#8E959E]">Humor Engine:</span>
                 <span className="font-bold text-emerald-500">Active</span>
               </div>
             </div>
 
             <button
               onClick={() => setShowStatsModal(false)}
-              className="w-full py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-md active:scale-98 transition-transform"
+              className="w-full py-2.5 rounded-2xl bg-[#D71921] hover:bg-[#b0141b] text-white font-bold text-xs shadow-none active:scale-98 transition-transform cursor-pointer"
             >
-              Back to Chat
+              BACK TO CHAT
             </button>
           </div>
         </div>
