@@ -1,10 +1,24 @@
 # Skillify CV Generator
 
-A hosting-ready **pure-API backend** that turns a Skillify account's
-profile data — photo, contact, education, skills, projects, internships,
-certifications, achievements, languages, interests, soft skills — into a
-polished one-page **PDF CV**, returned to your app for preview and as a
-downloadable file. No web UI ships with this; your app is the interface.
+Production-grade, domain-aware, one-page PDF resume / CV generator for the **Skillify** platform.
+
+Turns a Skillify account's profile data (name, contact, education, skills, projects, internships, achievements, certificates) into an ATS-friendly, pixel-perfect single-page A4 PDF matching modern high-tier tech and design CV standards.
+
+---
+
+## Quick Start
+
+```bash
+# 1. Enter the cv_generator directory
+cd backend/cv_generator
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run the standalone API server
+python server.py
+# (or: uvicorn server:app --reload --port 8000)
+```
 
 ```
 App (APK) ──POST profile JSON (+photo)──▶ Backend ──▶ domain engine ──▶ PDF builder

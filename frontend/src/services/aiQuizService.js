@@ -1,3 +1,15 @@
+/**
+ * ============================================================================
+ * Skillify AI - Frontend AI Quiz Assessment Service
+ * ============================================================================
+ * Architectural Role:
+ * - Interfaces between Quiz UI components and the Python assessment engine
+ *   (backend/quiz_engine).
+ * - Provides local NLP question bank evaluation fallback with Levenshtein
+ *   distance & keyword matching matching nlp_checker.py 1:1.
+ * - Handles timed sessions, adaptive difficulty pacing, and badge verification.
+ */
+
 import pythonBank from '../data/aiQuestionBanks/python.json';
 import webdevBank from '../data/aiQuestionBanks/webdev.json';
 import appdevBank from '../data/aiQuestionBanks/appdev.json';
