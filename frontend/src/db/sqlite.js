@@ -1,3 +1,13 @@
+/**
+ * ============================================================================
+ * Skillify AI - Frontend SQLite Client & Persistence Service
+ * ============================================================================
+ * Architectural Role:
+ * - Implements a client-side SQLite relational store matching database/schema/schema.sql.
+ * - Stores users, skills, projects, certificates, chat_messages, and internships with
+ *   localStorage durability and query operations.
+ */
+
 import { INITIAL_INTERNSHIPS } from '../data/internshipsData';
 
 const DB_STORAGE_KEY = 'skillify_sqlite_data';
