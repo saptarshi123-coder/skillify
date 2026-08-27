@@ -1,40 +1,20 @@
-# Skillify AI - Database Layer 🗄️
+# Skillify AI - Database Layer
 
-The **Database** directory contains the canonical SQL schema definitions, database migrations, seed datasets, and AI question banks used across Skillify AI.
+This directory contains the database schemas, SQLite data access layer, seed data, and AI question banks used across the application.
 
----
+## Directory Structure
 
-## 📁 Directory Structure
-
-```
-database/
-├── schema/
-│   ├── schema.sql          # Formal SQLite table schemas (users, skills, projects, certificates, etc.)
-│   └── sqlite.js           # Reusable JavaScript SQLite client service with localStorage persistence
-├── question_banks/         # Canonical assessment question banks for skill testing
-│   ├── python.json         # Python programming assessment questions (MCQ, snippet, open-ended)
-│   ├── webdev.json         # Full-stack Web Development assessment questions
-│   └── appdev.json         # Mobile & Cross-platform App Development questions
-├── seed_data/              # Initial seed datasets for application bootstrap
-│   ├── studentsData.js     # Demo student profiles and leaderboard benchmarks
-│   ├── quizData.js         # Default subject curricula and question sets
-│   ├── communityProjects.js # Curated open-source projects for student contributions
-│   ├── chatbotIntents.json # AI conversational intents and NLP training patterns
-│   ├── learning_data.json  # Chatbot dynamic learning memory seed
-│   └── correction_log.json # NLP correction training logs
-└── README.md               # Database documentation
-```
-
----
-
-## 📊 Database Tables Overview
-
-| Table Name | Primary Key | Description |
-|---|---|---|
-| `users` | `id` (TEXT) | Student profiles, auth provider, level, XP, streak, skills progress |
-| `skills` | `id` (TEXT) | Skills mastered, verified badge status, quiz completion timestamps |
-| `projects` | `id` (TEXT) | Portfolio projects, repository URLs, tags, and review feedback |
-| `certificates` | `id` (TEXT) | Earned course and skill certificates with verification hash |
-| `chat_messages` | `id` (TEXT) | Historical chat messages exchanged with the AI chatbot assistant |
-| `internships` | `id` (TEXT) | Available internship opportunities, stipends, and deadlines |
-| `internship_applications` | `id` (TEXT) | Applications submitted by students with status tracking |
+- **`schema/`**
+  - `schema.sql`: Formal SQLite table schemas for `users`, `skills`, `projects`, `certificates`, and `chat_messages`.
+  - `sqlite.js`: Complete JavaScript SQLite client service with localStorage persistence, query execution, and migration utilities.
+- **`question_banks/`**
+  - `python.json`: Python assessment questions, code snippet tests, and evaluation keys.
+  - `webdev.json`: Web Development assessment questions.
+  - `appdev.json`: Mobile Application Development assessment questions.
+- **`seed_data/`**
+  - `studentsData.js`: Initial student profiles and leaderboard benchmarks.
+  - `quizData.js`: Default subject curricula and question sets.
+  - `communityProjects.js`: Community repository showcase projects.
+  - `chatbotIntents.json`: AI conversational intents and NLP patterns.
+  - `learning_data.json`: Chatbot dynamic learning memory.
+  - `correction_log.json`: NLP correction training logs.

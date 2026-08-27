@@ -1,12 +1,7 @@
 /**
- * ============================================================================
- * Skillify AI - Frontend CV Generator Client Service
- * ============================================================================
- * Architectural Role:
- * - Bridges student profile data, badges, certifications, and skills to the
- *   backend CV generation engine (backend/cv_generator & chatbot API).
- * - Formats profile payloads into normalized schemas matching schemas.py.
- * - Handles PDF binary streams, browser preview blobs, and native mobile downloads.
+ * cvGeneratorService.js
+ * Frontend client service for Skillify AI CV Generator.
+ * Connects the badges & profile credentials to the Python ReportLab & NLP domain engine.
  */
 
 const API_BASE = '/api/cv';

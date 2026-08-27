@@ -1,16 +1,6 @@
-/**
- * ============================================================================
- * Skillify AI - Frontend Chatbot Service
- * ============================================================================
- * Architectural Role:
- * - Connects the frontend UI to the AI Chatbot microservice (chatbot/app.py on :5001).
- * - Provides intelligent multi-tier fallback (Remote Tunnel -> Direct Localhost -> Vite Proxy -> Local NLP Engine).
- * - Handles conversational messages, SSE streaming, user learning feedback, and humorous typing states.
- */
-
 import intentsData from '../data/chatbotIntents.json';
 
-// Configuration: Chatbot microservice endpoints
+// Configuration
 const DEFAULT_NGROK_URL = 'https://script-ungloved-plutonium.ngrok-free.dev/api';
 const DIRECT_API_BASE = 'http://localhost:5001/api';
 const PROXY_API_BASE = '/api';
