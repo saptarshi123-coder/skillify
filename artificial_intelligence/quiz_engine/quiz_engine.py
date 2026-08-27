@@ -37,6 +37,10 @@ def normalize_skill(raw: str) -> str | None:
 
 
 def load_questions(skill: str) -> list[dict]:
+    """
+    Loads question banks for the specified skill.
+    Searches backend/quiz_engine/question_banks first, then falls back to database/question_banks.
+    """
     skill_lower = skill.lower().strip()
     filename = SKILL_FILES.get(skill_lower)
     if not filename:
@@ -45,10 +49,15 @@ def load_questions(skill: str) -> list[dict]:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     filepath = os.path.join(script_dir, "question_banks", filename)
 
+    # Fallback to database/question_banks if local question bank directory is moved
     if not os.path.exists(filepath):
-        raise FileNotFoundError(f"Question bank not found: {filepath}")
+        database_filepath = os.path.abspath(os.path.join(script_dir, "..", "..", "database", "question_banks", filename))
+        if os.path.exists(database_filepath):
+            filepath = database_filepath
+        else:
+            raise FileNotFoundError(f"Question bank not found in {filepath} or {database_filepath}")
 
-    with open(filepath, "r") as f:
+    with open(filepath, "r", encoding="utf-8") as f:
         questions = json.load(f)
 
     if len(questions) < QUIZ_SIZE:

@@ -10,10 +10,14 @@ from nlp_engine import NLPEngine
 from learning_engine import LearningEngine
 from humor_engine import HumorEngine
 
-# Import SkillQuizAPI from 'ai quiz test'
-quiz_test_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'ai quiz test', 'skill-quiz'))
-if quiz_test_path not in sys.path:
-    sys.path.insert(0, quiz_test_path)
+# ==============================================================================
+# Cross-Module Integrations: Quiz Engine & CV Generator from artificial_intelligence
+# ==============================================================================
+
+# 1. Connect to AI Quiz Engine module (artificial_intelligence/quiz_engine)
+quiz_engine_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'quiz_engine'))
+if quiz_engine_path not in sys.path:
+    sys.path.insert(0, quiz_engine_path)
 
 try:
     from api import SkillQuizAPI, quiz_api
@@ -26,8 +30,8 @@ except Exception as e:
         print(f"SkillQuizAPI fallback error: {e2}")
         quiz_api = None
 
-# Import Skillify AI CV Generator from 'CV Generator'
-cv_gen_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CV Generator'))
+# 2. Connect to AI CV Generator module (artificial_intelligence/cv_generator)
+cv_gen_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cv_generator'))
 if cv_gen_path not in sys.path:
     sys.path.insert(0, cv_gen_path)
 
