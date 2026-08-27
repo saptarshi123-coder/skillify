@@ -12,14 +12,14 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 233,
+    "total_messages": 232,
     "avg_conversation_length": 0,
     "top_intents": {
       "greeting": 51,
       "find_freelancer": 22,
       "fees_commission": 4,
       "joke": 13,
-      "unknown": 59,
+      "unknown": 58,
       "feedback": 19,
       "proposals_bids": 5,
       "goodbye": 5,
@@ -1364,15 +1364,6 @@
           "sentiment": "neutral"
         },
         "timestamp": 1787604397.963419
-      },
-      {
-        "step": 1,
-        "data": {
-          "intent": "unknown",
-          "confidence": 0,
-          "sentiment": "neutral"
-        },
-        "timestamp": 1787735216.1498249
       }
     ]
   },
@@ -1475,7 +1466,7 @@
     },
     "developer.tech@gmail.com": {
       "first_seen": 1787599972.5425234,
-      "total_messages": 4,
+      "total_messages": 3,
       "preferred_intents": [],
       "sentiment_history": []
     }
