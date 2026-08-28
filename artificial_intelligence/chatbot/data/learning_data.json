@@ -12,20 +12,20 @@
   },
   "conversation_stats": {
     "total_conversations": 0,
-    "total_messages": 233,
+    "total_messages": 252,
     "avg_conversation_length": 0,
     "top_intents": {
-      "greeting": 51,
+      "greeting": 54,
       "find_freelancer": 22,
       "fees_commission": 4,
-      "joke": 13,
-      "unknown": 59,
+      "joke": 17,
+      "unknown": 64,
       "feedback": 19,
       "proposals_bids": 5,
       "goodbye": 5,
       "notifications": 2,
-      "skills_badges": 1,
-      "payments": 14,
+      "skills_badges": 5,
+      "payments": 17,
       "withdraw_earnings": 1,
       "capabilities": 6,
       "post_job": 7,
@@ -287,51 +287,6 @@
     ],
     "test_user": [
       {
-        "step": 5,
-        "data": {
-          "intent": "unknown",
-          "confidence": 0,
-          "sentiment": "neutral"
-        },
-        "timestamp": 1787170578.055634
-      },
-      {
-        "step": 6,
-        "data": {
-          "intent": "feedback",
-          "confidence": 0.95,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787170578.06385
-      },
-      {
-        "step": 7,
-        "data": {
-          "intent": "post_job",
-          "confidence": 0.95,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787170578.072358
-      },
-      {
-        "step": 8,
-        "data": {
-          "intent": "find_freelancer",
-          "confidence": 0.95,
-          "sentiment": "negative"
-        },
-        "timestamp": 1787170578.084737
-      },
-      {
-        "step": 1,
-        "data": {
-          "intent": "find_freelancer",
-          "confidence": 1.0,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787170976.438625
-      },
-      {
         "step": 2,
         "data": {
           "intent": "unknown",
@@ -465,6 +420,51 @@
           "sentiment": "neutral"
         },
         "timestamp": 1787577538.4526992
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "joke",
+          "confidence": 0.95,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787864537.410387
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "joke",
+          "confidence": 0.95,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864539.4422822
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "payments",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787864541.497172
+      },
+      {
+        "step": 4,
+        "data": {
+          "intent": "skills_badges",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787864543.5578341
+      },
+      {
+        "step": 5,
+        "data": {
+          "intent": "skills_badges",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787864545.6111655
       }
     ],
     "test123": [
@@ -952,6 +952,15 @@
           "sentiment": "positive"
         },
         "timestamp": 1787342743.6745872
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "payments",
+          "confidence": 0.95,
+          "sentiment": "positive"
+        },
+        "timestamp": 1787864046.3153179
       }
     ],
     "guest@skillify.ai": [
@@ -975,33 +984,6 @@
       }
     ],
     "saptarshic341@gmail.com": [
-      {
-        "step": 1,
-        "data": {
-          "intent": "greeting",
-          "confidence": 0.75,
-          "sentiment": "neutral"
-        },
-        "timestamp": 1787347824.8337624
-      },
-      {
-        "step": 2,
-        "data": {
-          "intent": "feedback",
-          "confidence": 1.0,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787347837.0146654
-      },
-      {
-        "step": 1,
-        "data": {
-          "intent": "feedback",
-          "confidence": 1.0,
-          "sentiment": "positive"
-        },
-        "timestamp": 1787347859.1823397
-      },
       {
         "step": 1,
         "data": {
@@ -1109,6 +1091,78 @@
           "sentiment": "neutral"
         },
         "timestamp": 1787584999.950356
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864201.3940132
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864216.253106
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864222.5573697
+      },
+      {
+        "step": 4,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864234.8834321
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864616.363212
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864634.0610192
+      },
+      {
+        "step": 3,
+        "data": {
+          "intent": "joke",
+          "confidence": 0.95,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787864658.1851952
+      },
+      {
+        "step": 4,
+        "data": {
+          "intent": "greeting",
+          "confidence": 0.75,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864686.5042658
       }
     ],
     "test_u1": [
@@ -1374,6 +1428,55 @@
         },
         "timestamp": 1787735216.1498249
       }
+    ],
+    "alex_rivera": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "unknown",
+          "confidence": 0,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787864137.3981457
+      },
+      {
+        "step": 1,
+        "data": {
+          "intent": "skills_badges",
+          "confidence": 0.95,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864200.1498222
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "skills_badges",
+          "confidence": 0.95,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864205.5640483
+      }
+    ],
+    "tester": [
+      {
+        "step": 1,
+        "data": {
+          "intent": "joke",
+          "confidence": 0.95,
+          "sentiment": "negative"
+        },
+        "timestamp": 1787864444.1399863
+      },
+      {
+        "step": 2,
+        "data": {
+          "intent": "payments",
+          "confidence": 0.95,
+          "sentiment": "neutral"
+        },
+        "timestamp": 1787864449.5304203
+      }
     ]
   },
   "user_profiles": {
@@ -1397,7 +1500,7 @@
     },
     "test_user": {
       "first_seen": 1787168704.6119978,
-      "total_messages": 49,
+      "total_messages": 54,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1427,7 +1530,7 @@
     },
     "usr_test": {
       "first_seen": 1787342743.6710958,
-      "total_messages": 1,
+      "total_messages": 2,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1439,7 +1542,7 @@
     },
     "saptarshic341@gmail.com": {
       "first_seen": 1787347824.8287435,
-      "total_messages": 15,
+      "total_messages": 23,
       "preferred_intents": [],
       "sentiment_history": []
     },
@@ -1476,6 +1579,18 @@
     "developer.tech@gmail.com": {
       "first_seen": 1787599972.5425234,
       "total_messages": 4,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "alex_rivera": {
+      "first_seen": 1787864137.393838,
+      "total_messages": 3,
+      "preferred_intents": [],
+      "sentiment_history": []
+    },
+    "tester": {
+      "first_seen": 1787864444.134876,
+      "total_messages": 2,
       "preferred_intents": [],
       "sentiment_history": []
     }

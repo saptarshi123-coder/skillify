@@ -1,17 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import GoogleAuthModal from '../components/GoogleAuthModal';
-import LinkedInAuthModal from '../components/LinkedInAuthModal';
 
 export default function SignupScreen() {
-  const { signupWithEmail, loginWithLinkedIn, navigate, showToast } = useApp();
+  const { signupWithEmail, navigate, showToast } = useApp();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [avatar, setAvatar] = useState('https://lh3.googleusercontent.com/aida-public/AB6AXuBODQKML9QTCJYoZkx7q1l4hmZZjoUuKcRUiLQeXgTZup-R0Oh5yYulzUc5-5XS06ChjcpHA8SqM0lxiGKpxlH2U2zwkDv8_-GhQNOsgE6_O_z1FOnTg2hRfckqKeLz6c4NX1zhf5zdIFd9ACqR47xg8LP1Mbb52T15n3LJtX770FtO2mKmy9Gj1lsTxPdjJ1ZAx7wnkt5bwJkzLoTQIRhidZSi1LWLDbUhkaNXCfpx6Vfd7U3BWKk0IQ');
   const [agreed, setAgreed] = useState(true);
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
-  const [isLinkedInModalOpen, setIsLinkedInModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -159,11 +157,11 @@ export default function SignupScreen() {
           </div>
 
           {/* Social Buttons */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          <div className="pt-1">
             <button
               type="button"
               onClick={() => setIsGoogleModalOpen(true)}
-              className="py-2.5 px-3 bg-surface dark:bg-inverse-surface/40 hover:bg-surface-container border border-outline-variant/60 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+              className="w-full py-2.5 px-3 bg-surface dark:bg-inverse-surface/40 hover:bg-surface-container border border-outline-variant/60 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
             >
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
@@ -171,18 +169,7 @@ export default function SignupScreen() {
                 <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
                 <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
               </svg>
-              <span className="text-xs font-bold">Google</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsLinkedInModalOpen(true)}
-              className="py-2.5 px-3 bg-surface dark:bg-inverse-surface/40 hover:bg-surface-container border border-outline-variant/60 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
-            >
-              <svg className="w-4 h-4 shrink-0 fill-[#0A66C2]" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-              <span className="text-xs font-bold">LinkedIn</span>
+              <span className="text-xs font-bold">Sign up with Google</span>
             </button>
           </div>
 
@@ -270,11 +257,6 @@ export default function SignupScreen() {
         onClose={() => setIsGoogleModalOpen(false)}
       />
 
-      {/* LinkedIn OAuth Modal */}
-      <LinkedInAuthModal
-        isOpen={isLinkedInModalOpen}
-        onClose={() => setIsLinkedInModalOpen(false)}
-      />
     </div>
   );
 }

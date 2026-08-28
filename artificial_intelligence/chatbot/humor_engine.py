@@ -15,25 +15,34 @@ class HumorEngine:
     def _load_jokes(self):
         return {
             'tech': [
-                "Why do programmers prefer dark mode? Because light attracts bugs.",
-                "There are only 10 types of people in the world: those who understand binary and those who don't.",
-                "A SQL query walks into a bar, sees two tables and asks... 'Can I join you?'",
-                "Why did the developer go broke? Because he used up all his cache.",
-                "What's a programmer's favorite hangout place? Foo Bar.",
-                "How many programmers does it take to change a light bulb? None — that's a hardware problem.",
-                "Why do Java developers wear glasses? Because they don't C#.",
-                "What's a programmer's favorite tea? NullPointerException.",
-                "Why did the programmer quit his job? Because he didn't get arrays."
+                "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+                "There are only 10 types of people in the world: those who understand binary and those who don't. 🤖",
+                "A SQL query walks into a bar, sees two tables and asks... 'Can I join you?' 🍺",
+                "Why did the developer go broke? Because he used up all his cache! 💸",
+                "What's a programmer's favorite hangout place? Foo Bar. 🍸",
+                "How many programmers does it take to change a light bulb? None — that's a hardware problem! 💡",
+                "Why do Java developers wear glasses? Because they don't C#! 👓",
+                "What's a programmer's favorite tea? NullPointerException. ☕",
+                "Why did the programmer quit his job? Because he didn't get arrays! 📊",
+                "Why was the JavaScript developer sad? Because they didn't Node how to Express themselves! 😢",
+                "How do you comfort a JavaScript bug? You console.log it! 🪵",
+                "Why do Python programmers have low self-esteem? Because they're constantly comparing `self` to others! 🐍",
+                "A programmer puts two glasses on his nightstand: one full of water if he gets thirsty, and one empty if he doesn't. 🥛",
+                "Git commit message of the day: 'Fixed bug by creating three new ones. Job security achieved.' 🌿",
+                "Why did the C++ developer go to therapy? Too many unresolved pointer issues and memory leaks. 🧠",
+                "CSS in a nutshell: You style one button, and suddenly your header relocates to the neighbor's living room! 🎨",
+                "My code doesn't work: I don't know why. My code works: I REALLY don't know why! 🔮",
+                "There are 2 hardest problems in Computer Science: Cache invalidation, naming things, and off-by-one errors! 🔢"
             ],
             'freelancing': [
-                "Why did the freelancer bring a ladder to work? Because they wanted to reach new heights in their career.",
-                "What do you call a freelancer who finishes ahead of schedule? A rare species indeed.",
-                "I told my freelancer I needed a logo in 5 minutes. They said 'I'm on it!' ...It has been 3 months.",
-                "What's the difference between a freelancer and a magician? The magician only has to make a rabbit disappear — the freelancer has to make a budget disappear.",
-                "Why did the freelance designer break up with the font? Because they found someone more appealing.",
-                "How does a freelancer exercise? By doing proposal push-ups every morning.",
-                "What's a freelancer's favorite exercise? Deadline crunches!",
-                "Why did the freelancer cross the road? To get to the other gig."
+                "Why did the freelancer bring a ladder to work? To reach those high-ticket enterprise contracts! 🪜",
+                "What do you call a freelancer who finishes ahead of schedule? A mythical creature in the wild! 🦄",
+                "I told my client I needed 5 minutes. They said 'Take your time!' ...It's now 2026. ⏳",
+                "What's the difference between a freelancer and a magician? The magician only makes a rabbit disappear — the freelancer makes scope creep disappear! 🎩",
+                "Why did the freelance designer break up with the font? Because they found someone way more appealing! 🎨",
+                "How does a freelancer exercise? By doing proposal push-ups and deadline crunches every morning! 💪",
+                "What's a freelancer's favorite exercise? Deadline crunches! 🏋️",
+                "Why did the freelancer cross the road? To connect to the coffee shop's free high-speed Wi-Fi! ☕"
             ],
             'customer_service': [
                 "I told my boss I needed a raise because three companies were after me. He asked which ones. I said: gas, electric, and water.",
@@ -232,38 +241,35 @@ class HumorEngine:
             return random.choice(self.jokes['situational'][situation])
         return None
 
-    def add_humor_to_response(self, response, user_sentiment='neutral', humor_level=0.3):
+    def add_humor_to_response(self, response, user_sentiment='neutral', humor_level=0.85):
         if humor_level <= 0:
             return response
 
-        additions = []
-
         if user_sentiment == 'positive':
             additions = [
-                " Your enthusiasm is contagious! (Digitally speaking, of course.)",
-                " That's the kind of energy we love to see! Keep it up!",
-                " You're making my digital day brighter! What else can I help with?",
-                ""
+                " Your enthusiasm is contagious! (Digitally speaking, of course.) ⚡",
+                " That's the high-octane coding energy we love to see! 🚀",
+                " You're making my digital circuits light up brighter than RGB RAM! ✨",
+                " I like your style — smart questions get top-tier answers! 😎"
             ]
         elif user_sentiment == 'negative':
             additions = [
-                " I'm here to help make things right. Let's fix this together!",
-                " Your patience is appreciated. We'll get this sorted!",
-                " I understand your frustration. Let me help you find a solution!",
-                ""
+                " I'm in your corner to make this 100% right. Let's conquer this bug together! 🛠️",
+                " Take a deep breath — even Linus Torvalds had bad days. We'll get this sorted! 💪",
+                " I promise this won't take forever. Let's fix this in record time! 🤝"
             ]
         else:
             additions = [
-                " Is there anything else I can assist you with? I'm just getting warmed up!",
-                " What else can I help you with today? I'm here all day (literally).",
-                " Don't be shy - ask me anything! I promise I won't bite. (I'm a chatbot, I don't have teeth.)",
-                ""
+                " What else can I assist you with today? I'm fueled by virtual coffee! ☕",
+                " Keep the questions coming — I'm basically a compiler with a sense of humor! 💻",
+                " Ready for the next challenge whenever you are! 🎯",
+                " Don't be shy — ask me anything from Algorithms to Freelance Contracts! 🚀"
             ]
 
         if additions:
             addition = random.choice(additions)
-            if random.random() < humor_level:
-                response = response + addition
+            if random.random() < max(humor_level, 0.6):
+                response = response + "\n\n" + addition
 
         return response
 
@@ -276,11 +282,11 @@ class HumorEngine:
             if isinstance(msg, dict) and 'sentiment' in msg:
                 mood = msg['sentiment']
 
-        if mood == 'positive' and random.random() < 0.2:
+        if mood == 'positive' and random.random() < 0.5:
             return True
-        if mood == 'negative' and random.random() < 0.05:
+        if mood == 'neutral' and random.random() < 0.35:
             return True
-        if len(recent_messages) > 5 and random.random() < 0.1:
+        if len(recent_messages) >= 2 and random.random() < 0.4:
             return True
 
         return False
