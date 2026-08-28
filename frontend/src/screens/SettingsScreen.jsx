@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navigation/Navbar';
 import GoogleAuthModal from '../components/GoogleAuthModal';
-import LinkedInAuthModal from '../components/LinkedInAuthModal';
 
 export default function SettingsScreen() {
   const { darkMode, setDarkMode, navigate, showToast, userProfile, updateProfile, userRole, switchRole, logout } = useApp();
@@ -10,10 +9,8 @@ export default function SettingsScreen() {
   const [selectedLanguage, setSelectedLanguage] = useState('English (US)');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
-  const [isLinkedInModalOpen, setIsLinkedInModalOpen] = useState(false);
 
   const isGoogleConnected = userProfile.authProvider === 'google' && userProfile.email && !userProfile.email.includes('guest');
-  const isLinkedInConnected = userProfile.authProvider === 'linkedin';
 
   const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
 
@@ -22,10 +19,6 @@ export default function SettingsScreen() {
     showToast("Google account disconnected");
   };
 
-  const handleDisconnectLinkedIn = () => {
-    updateProfile({ authProvider: 'guest' });
-    showToast("LinkedIn account disconnected");
-  };
 
   return (
     <div className="w-full pb-24 transition-colors">
@@ -119,40 +112,6 @@ export default function SettingsScreen() {
             )}
           </div>
 
-          {/* LinkedIn Account */}
-          <div className="flex items-center justify-between py-1">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-[#0A66C2]/10 flex items-center justify-center text-[#0A66C2] shrink-0">
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </div>
-              <div className="min-w-0">
-                <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate">
-                  LinkedIn Account
-                </p>
-                <p className="text-[10px] text-secondary truncate">
-                  {isLinkedInConnected ? `Connected (${userProfile.name})` : "Not Connected"}
-                </p>
-              </div>
-            </div>
-
-            {isLinkedInConnected ? (
-              <button
-                onClick={handleDisconnectLinkedIn}
-                className="text-[11px] font-bold px-3 py-1.5 rounded-full transition-all shrink-0 bg-error/10 hover:bg-error/20 text-error cursor-pointer"
-              >
-                Disconnect
-              </button>
-            ) : (
-              <button
-                onClick={() => setIsLinkedInModalOpen(true)}
-                className="text-[11px] font-bold px-3.5 py-1.5 rounded-full transition-all shrink-0 bg-[#0A66C2] hover:bg-[#084e96] text-white cursor-pointer active:scale-95 shadow-xs"
-              >
-                Connect
-              </button>
-            )}
-          </div>
 
           {/* Change Password */}
           <div
@@ -328,11 +287,6 @@ export default function SettingsScreen() {
         onClose={() => setIsGoogleModalOpen(false)}
       />
 
-      {/* LinkedIn OAuth Modal */}
-      <LinkedInAuthModal
-        isOpen={isLinkedInModalOpen}
-        onClose={() => setIsLinkedInModalOpen(false)}
-      />
     </div>
   );
 }

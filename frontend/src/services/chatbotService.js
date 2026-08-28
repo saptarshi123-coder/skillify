@@ -11,16 +11,16 @@
 import intentsData from '../data/chatbotIntents.json';
 
 // Configuration: Chatbot microservice endpoints
-const DEFAULT_NGROK_URL = 'https://script-ungloved-plutonium.ngrok-free.dev/api';
-const DIRECT_API_BASE = 'http://localhost:5001/api';
-const PROXY_API_BASE = '/api';
+const DIRECT_API_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
+const DIRECT_LOOPBACK_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
+const PROXY_API_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
 
-// Configurable via Vite environment variable VITE_CHATBOT_API_URL or defaults to your ngrok tunnel
+// Configurable via Vite environment variable VITE_CHATBOT_API_URL if remote tunnel is deployed
 const NGROK_API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_CHATBOT_API_URL)
   ? `${import.meta.env.VITE_CHATBOT_API_URL.replace(/\/$/, '')}/api`
-  : DEFAULT_NGROK_URL;
+  : null;
 
-// Default headers for API calls (including ngrok-skip-browser-warning for ngrok free tier)
+// Default headers for API calls
 const API_HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': 'true'
@@ -111,6 +111,60 @@ const COMMON_TYPOS = {
 
 // Expanded Tech & Coding Knowledge Base
 const TECH_KNOWLEDGE = {
+  "internship": {
+    intent: "internships",
+    response: "### 💼 Finding & Applying for Internships on SKILLIFY\n\nSKILLIFY connects students directly with verified tech companies and recruiters:\n\n1. **Browse Listings:** Filter internships by category (Frontend, Backend, AI/ML, UI/UX, Mobile).\n2. **1-Click Apply:** Submit your tailored profile and verified skill score directly to recruiters.\n3. **Post Internships (Recruiter Mode):** Companies can switch to HR mode and list new internship openings with custom stipends and requirements.\n4. **Application Tracking:** Track your applied internships and interview statuses in real time.",
+    suggestedActions: [
+      { label: "🔍 Find Internships", screen: "find-internships" },
+      { label: "📄 Post an Internship", screen: "list-internship" },
+      { label: "📄 Build ATS Resume", prompt: "How do I generate an ATS resume?" }
+    ]
+  },
+  "internships": {
+    intent: "internships",
+    response: "### 💼 Finding & Applying for Internships on SKILLIFY\n\nSKILLIFY connects students directly with verified tech companies and recruiters:\n\n1. **Browse Listings:** Filter internships by category (Frontend, Backend, AI/ML, UI/UX, Mobile).\n2. **1-Click Apply:** Submit your tailored profile and verified skill score directly to recruiters.\n3. **Post Internships (Recruiter Mode):** Companies can switch to HR mode and list new internship openings with custom stipends and requirements.\n4. **Application Tracking:** Track your applied internships and interview statuses in real time.",
+    suggestedActions: [
+      { label: "🔍 Find Internships", screen: "find-internships" },
+      { label: "📄 Post an Internship", screen: "list-internship" },
+      { label: "📄 Build ATS Resume", prompt: "How do I generate an ATS resume?" }
+    ]
+  },
+  "quiz": {
+    intent: "skills_badges",
+    response: "### 🎓 Skillify AI-Graded Skill Assessments\n\nTest your real-world coding knowledge and earn verified certifications:\n\n- **Subjects Available:** Python, Web Development, Mobile App Dev, Data Structures & Algorithms, UI/UX Design, and Database Systems.\n- **Adaptive Grading:** 10 questions per quiz with timer and instant AI accuracy scoring.\n- **Certificates & XP:** Score 70%+ to unlock verifiable completion certificates and level-up your developer streak! 🔥",
+    suggestedActions: [
+      { label: "📝 Start a Quiz", screen: "quiz-select" },
+      { label: "🏆 View My Badges", screen: "badges" },
+      { label: "📊 View My Progress", screen: "profile" }
+    ]
+  },
+  "quizzes": {
+    intent: "skills_badges",
+    response: "### 🎓 Skillify AI-Graded Skill Assessments\n\nTest your real-world coding knowledge and earn verified certifications:\n\n- **Subjects Available:** Python, Web Development, Mobile App Dev, Data Structures & Algorithms, UI/UX Design, and Database Systems.\n- **Adaptive Grading:** 10 questions per quiz with timer and instant AI accuracy scoring.\n- **Certificates & XP:** Score 70%+ to unlock verifiable completion certificates and level-up your developer streak! 🔥",
+    suggestedActions: [
+      { label: "📝 Start a Quiz", screen: "quiz-select" },
+      { label: "🏆 View My Badges", screen: "badges" },
+      { label: "📊 View My Progress", screen: "profile" }
+    ]
+  },
+  "resume": {
+    intent: "cv_generator",
+    response: "### 📄 Automated ATS Resume & CV Synthesizer\n\nSkillify features a built-in AI CV generator engineered for applicant tracking systems (ATS):\n\n- **Domain Tailoring:** Choose specialized formats for *Fullstack*, *Machine Learning*, *DevOps*, or *Product Design*.\n- **Verified Badges:** Automatically includes your Skillify quiz badges and validated scores.\n- **Instant PDF Export:** Generates clean, recruiter-friendly PDF resumes in one click!",
+    suggestedActions: [
+      { label: "🚀 Generate ATS CV", screen: "profile" },
+      { label: "📝 Take Quiz to Boost Score", screen: "quiz-select" },
+      { label: "💼 Explore Internships", screen: "find-internships" }
+    ]
+  },
+  "cv": {
+    intent: "cv_generator",
+    response: "### 📄 Automated ATS Resume & CV Synthesizer\n\nSkillify features a built-in AI CV generator engineered for applicant tracking systems (ATS):\n\n- **Domain Tailoring:** Choose specialized formats for *Fullstack*, *Machine Learning*, *DevOps*, or *Product Design*.\n- **Verified Badges:** Automatically includes your Skillify quiz badges and validated scores.\n- **Instant PDF Export:** Generates clean, recruiter-friendly PDF resumes in one click!",
+    suggestedActions: [
+      { label: "🚀 Generate ATS CV", screen: "profile" },
+      { label: "📝 Take Quiz to Boost Score", screen: "quiz-select" },
+      { label: "💼 Explore Internships", screen: "find-internships" }
+    ]
+  },
   "binary search": {
     intent: "tech_dsa",
     response: "### 🔍 Binary Search Algorithm\n\nBinary Search repeatedly divides the search space in half on a sorted array:\n\n```python\ndef binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n```\n\n- **Time Complexity:** $O(\\log N)$\n- **Space Complexity:** $O(1)$ (Iterative)\n- **Rule:** The input collection must be sorted!",
@@ -135,12 +189,28 @@ const TECH_KNOWLEDGE = {
       { label: "📝 React Quiz", screen: "quiz-select" }
     ]
   },
+  "javascript": {
+    intent: "tech_frontend",
+    response: "### 💛 Modern JavaScript (ES2024+) Core Concepts\n\n- **Event Loop & Microtasks:** Promises & `queueMicrotask` execute before `setTimeout` macrotasks.\n- **Closures & Scope:** Functions retain access to their lexical scope even after execution context closes.\n- **Async/Await & Error Handling:** Always wrap asynchronous operations in `try...catch` or handle `.catch()`.\n- **Immutability:** Use spread operator `[...arr]`, `Object.freeze()`, or `structuredClone()` for deep copies.",
+    suggestedActions: [
+      { label: "📝 Take WebDev Quiz", screen: "quiz-select" },
+      { label: "📂 Discover Web Projects", screen: "discover" }
+    ]
+  },
   "python": {
     intent: "tech_python",
     response: "### 🐍 Python Pro-Tips & Architecture\n\n- **List Comprehensions:** `[x**2 for x in nums if x % 2 == 0]` is faster than manual loops.\n- **Generators & Yield:** Save memory when streaming large data using generator functions.\n- **Context Managers:** Always use `with open(...)` or `async with` for automatic resource cleanup.\n- **Type Hints:** Use `typing` (e.g. `def process(data: list[str]) -> bool:`) for robust IDE validation.",
     suggestedActions: [
       { label: "📝 Take Python AI Quiz", screen: "quiz-select" },
       { label: "🏆 View Python Badges", screen: "badges" }
+    ]
+  },
+  "java": {
+    intent: "tech_backend",
+    response: "### ☕ Modern Java (JDK 21 & 24) Highlights\n\n- **Virtual Threads (Project Loom):** High-throughput lightweight concurrency (`Executors.newVirtualThreadPerTaskExecutor()`).\n- **Record Classes:** Transparent immutable data carriers (`public record User(String name, int age) {}`).\n- **Pattern Matching for Switch:** Type-safe switch expressions with sealed interfaces.\n- **Multi-threaded REST Server:** Skillify's Java backend uses non-blocking HTTP handlers for microsecond latency.",
+    suggestedActions: [
+      { label: "📂 View Backend Repo", screen: "project-repo" },
+      { label: "📝 Take Coding Quiz", screen: "quiz-select" }
     ]
   },
   "pointer": {
@@ -174,15 +244,23 @@ const JOKES = [
   "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
   "There are only 10 types of people in the world: those who understand binary and those who don't. 🤖",
   "A SQL query walks into a bar, sees two tables and asks: 'Can I join you?' 🍺",
-  "Why did the developer go broke? Because he used up all his cache! 💰",
+  "Why did the developer go broke? Because he used up all his cache! 💸",
   "Why do Java developers wear glasses? Because they don't C#! 👓",
+  "Why was the JavaScript developer sad? Because they didn't Node how to Express themselves! 😢",
+  "How do you comfort a JavaScript bug? You console.log it! 🪵",
+  "Why do Python programmers have low self-esteem? Because they're constantly comparing `self` to others! 🐍",
+  "Git commit message of the day: 'Fixed bug by creating three new ones. Job security achieved.' 🌿",
+  "Why did the C++ developer go to therapy? Too many unresolved pointer issues and memory leaks! 🧠",
+  "CSS in a nutshell: You style one button, and suddenly your navbar moves into your neighbor's living room! 🎨",
   "What do you call a freelancer who finishes ahead of schedule? A rare species indeed! 🦄",
+  "Why did the freelancer bring a ladder to work? To reach those high-ticket enterprise contracts! 🪜",
   "How does a freelancer exercise? By doing proposal push-ups and deadline crunches every morning! 💪",
   "Why did the freelance designer break up with the font? Because they found someone more appealing! 🎨",
   "What's a programmer's favorite hangout place? Foo Bar! 🍸",
   "How many programmers does it take to change a light bulb? None — that's a hardware problem! 💡",
-  "Why did the scarecrow win an award? He was outstanding in his field! 🌾",
-  "I'm reading a book about anti-gravity. It's impossible to put down! 🚀"
+  "What's a programmer's favorite tea? NullPointerException! ☕",
+  "My code doesn't work: I don't know why. My code works: I REALLY don't know why! 🔮",
+  "There are 2 hardest problems in Computer Science: Cache invalidation, naming things, and off-by-one errors! 🔢"
 ];
 
 // Suggested Actions Map per Intent
@@ -269,6 +347,7 @@ const INTENT_ACTIONS = {
   ]
 };
 
+
 // Default Quick Replies
 const DEFAULT_QUICK_REPLIES = [
   "How does SKILLIFY work?",
@@ -342,13 +421,23 @@ class LocalNLPClient {
     }
 
     // 2. Jokes and Humor Queries
-    if (rawLower.includes('joke') || rawLower.includes('funny') || rawLower.includes('humor') || rawLower.includes('laugh') || rawLower.includes('pun')) {
+    if (rawLower.includes('joke') || rawLower.includes('funny') || rawLower.includes('humor') || rawLower.includes('humour') || rawLower.includes('laugh') || rawLower.includes('pun') || rawLower.includes('make me laugh')) {
       const randomJoke = this.jokes[Math.floor(Math.random() * this.jokes.length)];
+      const quips = [
+        `Here's one hot off my neural compiler! 😂\n\n**${randomJoke}**\n\n*Ba-dum tsss!* 🥁 10/10 delivery, right? Need another one or ready to crush some code?`,
+        `Get ready to chuckle (or groan into your keyboard)! 🎭\n\n**${randomJoke}**\n\nI crack myself up. What else can I help you conquer today?`,
+        `Enjoy this algorithmic comedy gold: ✨\n\n**${randomJoke}**\n\nHope that brought a smile to your screen! 😄`,
+        `You asked for humor, and I deliver faster than a 10Gbps fiber connection! 🚀\n\n**${randomJoke}**\n\nWhat's our next topic — more jokes or platform questions?`
+      ];
       return {
         intent: 'joke',
         confidence: 0.99,
-        response: randomJoke,
-        suggestedActions: INTENT_ACTIONS.joke,
+        response: quips[Math.floor(Math.random() * quips.length)],
+        suggestedActions: INTENT_ACTIONS.joke || [
+          { label: "😂 Tell Another Joke", prompt: "Tell me another joke!" },
+          { label: "🎯 Take a Skill Quiz", screen: "quiz-select" },
+          { label: "💼 Find Internships", screen: "find-internships" }
+        ],
         isTech: false
       };
     }
@@ -450,17 +539,18 @@ class ChatbotService {
 
     this.lastHealthCheck = now;
 
-    // Candidate backend endpoints in priority order (Ngrok remote tunnel -> direct localhost -> local proxy)
+    // Candidate backend endpoints in priority order (Local Proxy -> Direct Localhost -> Loopback -> Remote)
     const candidateEndpoints = [
-      NGROK_API_BASE,
+      PROXY_API_BASE,
       DIRECT_API_BASE,
-      PROXY_API_BASE
+      DIRECT_LOOPBACK_BASE,
+      NGROK_API_BASE
     ].filter(Boolean);
 
     for (const base of candidateEndpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        const timeoutId = setTimeout(() => controller.abort(), 1500);
 
         const res = await fetch(`${base}/health`, {
           signal: controller.signal,
@@ -494,6 +584,38 @@ class ChatbotService {
   async sendMessage(messageText, userId = this.activeUserId, onStreamChunk = null) {
     const health = await this.checkBackendHealth();
     const sentiment = this.localClient.detectSentiment(messageText);
+
+    // Always handle humor/joke queries locally — the Python backend doesn't support them
+    const rawLower = messageText.toLowerCase().trim();
+    const isHumorQuery = ['joke', 'funny', 'humor', 'humour', 'laugh', 'pun', 'make me laugh'].some(kw => rawLower.includes(kw));
+    if (isHumorQuery) {
+      const nlpResult = this.localClient.findBestIntent(messageText);
+      const fullText = nlpResult.response;
+      if (onStreamChunk) {
+        const words = fullText.split(' ');
+        let accumulated = '';
+        for (let i = 0; i < words.length; i++) {
+          accumulated += (i === 0 ? '' : ' ') + words[i];
+          onStreamChunk(accumulated);
+          if (i % 2 === 0) await new Promise(r => setTimeout(r, 20));
+        }
+      }
+      return {
+        text: fullText,
+        intent: 'joke',
+        confidence: 0.99,
+        sentiment,
+        emotion: { style_sentiment: 'positive', emotion_tags: ['happy'] },
+        responseType: 'local_nlp',
+        suggestedActions: nlpResult.suggestedActions || INTENT_ACTIONS.joke || [
+          { label: "😂 Tell Another Joke", prompt: "Tell me another joke!" },
+          { label: "🎯 Take a Skill Quiz", screen: "quiz-select" },
+          { label: "💼 Find Internships", screen: "find-internships" }
+        ],
+        engine: 'Skillify Humor Engine 🎭',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+    }
 
     // If Python Backend is online (via Ngrok tunnel, localhost, or dev proxy), call live API
     if (health.online && this.activeApiBase) {
@@ -537,8 +659,8 @@ class ChatbotService {
             });
 
             const isTunnel = this.activeApiBase.includes('ngrok');
-            const engineName = isTunnel 
-              ? `Python Server (Live Tunnel v${this.backendVersion})` 
+            const engineName = isTunnel
+              ? `Python Server (Live Tunnel v${this.backendVersion})`
               : `Python Server (v${this.backendVersion})`;
 
             return {
@@ -578,8 +700,8 @@ class ChatbotService {
       }
     }
 
-    const localEmotionTag = nlpResult.intent?.startsWith('emotional_') 
-      ? [nlpResult.intent.replace('emotional_', '')] 
+    const localEmotionTag = nlpResult.intent?.startsWith('emotional_')
+      ? [nlpResult.intent.replace('emotional_', '')]
       : (sentiment === 'positive' ? ['happy'] : sentiment === 'negative' ? ['frustrated'] : []);
 
     return {

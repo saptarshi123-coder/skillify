@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp, extractNameFromEmail } from '../context/AppContext';
 
 export default function GoogleAuthModal({ isOpen, onClose }) {
-  const { loginWithGoogle, showToast } = useApp();
+  const { loginWithGoogle, loginWithGooglePopup, showToast } = useApp();
   const [gmailInput, setGmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +12,15 @@ export default function GoogleAuthModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const derivedName = customName.trim() || (gmailInput.trim() ? extractNameFromEmail(gmailInput.trim()) : '');
+
+  const handleOfficialGooglePopup = async () => {
+    setIsAuthenticating(true);
+    const success = await loginWithGooglePopup();
+    setIsAuthenticating(false);
+    if (success) {
+      onClose();
+    }
+  };
 
   const handleSelectAccount = (accountData) => {
     setIsAuthenticating(true);
@@ -41,11 +50,6 @@ export default function GoogleAuthModal({ isOpen, onClose }) {
     });
   };
 
-  const demoAccounts = [
-    { email: "developer.tech@gmail.com" },
-    { email: "student.coder@gmail.com" },
-    { email: "guest.engineer@gmail.com" }
-  ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
@@ -72,7 +76,7 @@ export default function GoogleAuthModal({ isOpen, onClose }) {
               Sign in with Google
             </h3>
             <p className="text-[11px] text-secondary">
-              Enter your Gmail and password to sign in
+              Firebase Official OAuth or Instant Login
             </p>
           </div>
         </div>
@@ -81,10 +85,37 @@ export default function GoogleAuthModal({ isOpen, onClose }) {
           <div className="py-8 text-center space-y-3">
             <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
             <p className="text-xs font-bold text-primary">Authenticating with Google OAuth...</p>
-            <p className="text-[10px] text-secondary">Verifying credentials & loading profile</p>
+            <p className="text-[10px] text-secondary">Connecting with Firebase & verifying profile</p>
           </div>
         ) : (
           <div className="space-y-4">
+            {/* Primary Official Google OAuth 1-Click Popup Button */}
+            <button
+              type="button"
+              onClick={handleOfficialGooglePopup}
+              className="w-full py-3 px-4 bg-white dark:bg-inverse-surface/90 hover:bg-surface-container border-2 border-[#4285F4]/40 hover:border-[#4285F4] rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-sm hover:shadow-md cursor-pointer group"
+            >
+              <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <div className="text-left">
+                <span className="block text-xs font-bold text-on-surface dark:text-inverse-on-surface group-hover:text-primary transition-colors">
+                  1-Click Google OAuth Popup
+                </span>
+                <span className="block text-[10px] text-secondary">
+                  Official Firebase Authentication
+                </span>
+              </div>
+            </button>
+
+            <div className="flex items-center gap-2 my-2 opacity-70">
+              <div className="flex-1 h-px bg-outline-variant"></div>
+              <span className="text-[10px] font-semibold text-secondary uppercase tracking-wider">Or Enter Gmail</span>
+              <div className="flex-1 h-px bg-outline-variant"></div>
+            </div>
             {/* Direct Gmail Input Form */}
             <form onSubmit={handleGmailSubmit} className="space-y-3">
               <div className="space-y-1">
@@ -163,29 +194,6 @@ export default function GoogleAuthModal({ isOpen, onClose }) {
 
             {/* Quick 1-Tap Account Selector */}
             <div className="space-y-1.5">
-              {demoAccounts.map((acc, idx) => {
-                const name = extractNameFromEmail(acc.email);
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      setGmailInput(acc.email);
-                      setPassword("Skillify@2026");
-                      handleSelectAccount({ name, email: acc.email, password: "Skillify@2026" });
-                    }}
-                    className="p-2.5 rounded-xl border border-surface-variant/60 hover:border-primary hover:bg-surface-container/50 transition-all cursor-pointer flex items-center gap-2.5 active:scale-98"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">
-                      {name.charAt(0)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-headline text-xs font-bold truncate">{name}</p>
-                      <p className="text-[10px] text-secondary truncate">{acc.email}</p>
-                    </div>
-                    <span className="material-symbols-outlined text-xs text-secondary">chevron_right</span>
-                  </div>
-                );
-              })}
 
               {/* Guest Account */}
               <div

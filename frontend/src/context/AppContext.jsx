@@ -6,6 +6,8 @@ import { chatbotService } from '../services/chatbotService';
 import { aiQuizService, isAISupportedSkill, normalizeSkillKey } from '../services/aiQuizService';
 import {
   auth,
+  googleProvider,
+  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -204,16 +206,37 @@ export function AppProvider({ children }) {
         localStorage.setItem('skillify_auth', 'true');
         const email = user.email || "";
         const name = user.displayName || extractNameFromEmail(email);
+        const avatar = user.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
+        const isGoogle = user.providerData?.some(p => p.providerId === 'google.com');
+
+        const { user: dbUser, isNew } = sqliteDB.findOrCreateOAuthUser({
+          name: name,
+          email: email,
+          avatar: avatar,
+          major: "Computer Science Major",
+          college: "Tech Institute of Technology",
+          auth_provider: isGoogle ? "google" : "firebase"
+        });
+
+        const savedSkills = sqliteDB.getUserSkills(dbUser.id || dbUser.email);
+        const skillNames = savedSkills.map(s => s.skill_name || s);
+        if (skillNames.length > 0) {
+          setUserSelectedSkills(skillNames);
+        }
+
         setUserProfile(prev => ({
           ...prev,
+          ...dbUser,
           id: user.uid,
           email: email,
           name: name || prev.name,
-          authProvider: "firebase"
+          avatar: avatar || prev.avatar,
+          authProvider: isGoogle ? "google" : "firebase",
+          role: dbUser.role || prev.role || (isNew ? null : 'student'),
+          roleSelected: Boolean(dbUser.role_selected || prev.roleSelected),
+          hrProfileCompleted: Boolean(dbUser.hr_profile_completed || prev.hrProfileCompleted),
+          skills: skillNames.length > 0 ? skillNames : (dbUser.skills || prev.skills)
         }));
-      } else {
-        setIsAuthenticated(false);
-        localStorage.removeItem('skillify_auth');
       }
     });
 
@@ -403,8 +426,72 @@ export function AppProvider({ children }) {
     };
   }, [handleBackAction]);
 
-  // Authentication Handlers with SQLite Storage
-  const loginWithGoogle = (accountData = {}) => {
+  // Authentication Handlers with SQLite Storage & Firebase OAuth
+  const loginWithGooglePopup = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const email = user.email || "google.user@gmail.com";
+      const name = user.displayName || extractNameFromEmail(email);
+      const avatar = user.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
+
+      const { user: dbUser, isNew } = sqliteDB.findOrCreateOAuthUser({
+        name: name,
+        email: email,
+        avatar: avatar,
+        major: "Computer Science Major",
+        college: "Tech Institute of Technology",
+        auth_provider: "google"
+      });
+
+      const savedSkills = sqliteDB.getUserSkills(dbUser.id || dbUser.email);
+      const skillNames = savedSkills.map(s => s.skill_name || s);
+      if (skillNames.length > 0) {
+        setUserSelectedSkills(skillNames);
+      }
+
+      const mergedProfile = {
+        ...dbUser,
+        id: user.uid,
+        email: email,
+        name: name,
+        avatar: avatar,
+        honorsRoll: Boolean(dbUser.honors_roll),
+        lookingForInternships: Boolean(dbUser.looking_for_internships),
+        authProvider: "google",
+        role: dbUser.role || (isNew ? null : 'student'),
+        roleSelected: Boolean(dbUser.role_selected),
+        hrProfileCompleted: Boolean(dbUser.hr_profile_completed),
+        skills: skillNames.length > 0 ? skillNames : dbUser.skills
+      };
+      setUserProfile(mergedProfile);
+
+      setIsAuthenticated(true);
+      localStorage.setItem('skillify_auth', 'true');
+      showToast(`👋 Welcome, ${name}! Signed in via Google.`);
+      routeAfterAuth(mergedProfile);
+      return true;
+    } catch (error) {
+      console.error("Firebase Google Auth Error:", error);
+      if (error.code === 'auth/popup-closed-by-user') {
+        showToast("Google sign-in was cancelled.", "info");
+      } else if (error.code === 'auth/popup-blocked') {
+        showToast("Popup was blocked by your browser. Please allow popups.", "error");
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        // Handled silently
+      } else {
+        showToast(error.message || "Google sign-in failed. Please try again.", "error");
+      }
+      return false;
+    }
+  };
+
+  const loginWithGoogle = async (accountData = null) => {
+    // If called without account credentials or from a click event, trigger Firebase popup
+    if (!accountData || accountData.nativeEvent || typeof accountData !== 'object' || !accountData.email) {
+      return await loginWithGooglePopup();
+    }
+
     let email = accountData.email || "";
     let name = accountData.name || "";
 
@@ -1301,6 +1388,8 @@ export function AppProvider({ children }) {
       updateHRProfile,
       switchRole,
       loginWithGoogle,
+      loginWithGooglePopup,
+      signInWithGoogle: loginWithGooglePopup,
       loginWithLinkedIn,
       loginWithGitHub,
       loginWithEmail,

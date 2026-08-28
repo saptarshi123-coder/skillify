@@ -402,7 +402,7 @@ class ChatBot:
 
         knowledge_response = self._get_knowledge_response(intent, user_input)
         if knowledge_response:
-            response = knowledge_response
+            response = self.humor.add_humor_to_response(knowledge_response, sentiment, humor_level)
             response_type = "knowledge"
         elif confidence < 0.2 and not is_ending:
             response = self._handle_unknown(user_input, sentiment, humor_level)
@@ -901,6 +901,29 @@ class ChatBot:
             "User blocking is available from any profile page. 🔒 For safety concerns, also file a report so our team can investigate. Settings > Privacy is where you manage your blocked list."
         ]
         return self.humor.add_humor_to_response(random.choice(responses), 'neutral', humor_level)
+
+    def _handle_joke(self, user_input, humor_level=0.85):
+        text_lower = user_input.lower()
+        if any(w in text_lower for w in ['tech', 'code', 'coding', 'program', 'python', 'javascript', 'react', 'developer', 'bug']):
+            joke = self.humor.get_random_joke('tech')
+        elif any(w in text_lower for w in ['freelance', 'client', 'gig', 'bid', 'contract']):
+            joke = self.humor.get_random_joke('freelancing')
+        elif any(w in text_lower for w in ['service', 'support', 'help']):
+            joke = self.humor.get_random_joke('customer_service')
+        else:
+            joke = random.choice([
+                self.humor.get_random_joke('tech'),
+                self.humor.get_random_joke('freelancing'),
+                self.humor.get_random_joke('general')
+            ])
+
+        templates = [
+            f"Here's one hot off my neural compiler! 😂\n\n**{joke}**\n\n*Ba-dum tsss!* 🥁 10/10 delivery, right? Need another one or ready to crush some code?",
+            f"Get ready to chuckle (or groan into your keyboard)! 🎭\n\n**{joke}**\n\nI crack myself up. What else can I help you conquer today?",
+            f"Enjoy this algorithmic comedy gold: ✨\n\n**{joke}**\n\nHope that brought a smile to your screen! 😄",
+            f"You asked for humor, and I deliver faster than a 10Gbps fiber connection! 🚀\n\n**{joke}**\n\nWhat's our next topic — more jokes or platform questions?"
+        ]
+        return random.choice(templates)
 
     def _handle_emotional_sadness(self, user_input, humor_level):
         responses = [
