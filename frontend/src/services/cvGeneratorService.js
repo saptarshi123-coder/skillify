@@ -5,11 +5,46 @@
  * Architectural Role:
  * - Bridges student profile data, badges, certifications, and skills to the
  *   backend CV generation engine (backend/cv_generator & chatbot API).
+ * - Multi-tier fallback across Remote Ngrok (.env) -> Dev Proxy -> Localhost Flask (:5001) -> Localhost FastAPI (:8000).
  * - Formats profile payloads into normalized schemas matching schemas.py.
  * - Handles PDF binary streams, browser preview blobs, and native mobile downloads.
  */
 
-const API_BASE = '/api/cv';
+// 1. URL Normalizer: Ensures base URL has no trailing slash and ends with /api
+function normalizeApiBase(url) {
+  if (!url) return null;
+  let clean = url.trim().replace(/\/+$/, '');
+  if (!clean.endsWith('/api')) {
+    clean += '/api';
+  }
+  return clean;
+}
+
+// 2. Read Remote Tunnel URL from .env
+const REMOTE_ENV_URL = normalizeApiBase(
+  (typeof import.meta !== 'undefined' && (import.meta.env?.VITE_CV_API_URL || import.meta.env?.VITE_CHATBOT_API_URL)) ||
+  'https://profanity-manor-overeager.ngrok-free.dev'
+);
+
+// 3. Candidate Bases for Multi-Tier Discovery
+const CANDIDATE_CV_BASES = [
+  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/cv` : null,
+  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/v1/cv` : null,
+  '/api/cv',
+  '/api/v1/cv',
+  'http://localhost:5001/api/cv',
+  'http://127.0.0.1:5001/api/cv',
+  'http://localhost:8000/api/v1/cv',
+  'http://127.0.0.1:8000/api/v1/cv'
+].filter(Boolean);
+
+// Deduplicate candidate endpoints
+const DEDUPLICATED_CANDIDATES = [...new Set(CANDIDATE_CV_BASES)];
+
+const API_HEADERS = {
+  'Content-Type': 'application/json',
+  'ngrok-skip-browser-warning': 'true'
+};
 
 export const CV_DOMAINS = [
   {
@@ -105,12 +140,48 @@ export const CV_DOMAINS = [
 ];
 
 export const cvGeneratorService = {
+  activeApiBase: null,
+
+  /**
+   * Probes candidate endpoints to find the active CV backend.
+   */
+  async resolveActiveBase() {
+    if (this.activeApiBase) return this.activeApiBase;
+
+    for (const base of DEDUPLICATED_CANDIDATES) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+
+        const res = await fetch(`${base}/domains`, {
+          signal: controller.signal,
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          this.activeApiBase = base;
+          return base;
+        }
+      } catch (e) {
+        // Try next candidate
+      }
+    }
+
+    // Default fallback to first candidate if discovery fails
+    this.activeApiBase = DEDUPLICATED_CANDIDATES[0] || '/api/cv';
+    return this.activeApiBase;
+  },
+
   /**
    * Fetch domain listing from backend or return local catalogue.
    */
   async getDomains() {
     try {
-      const res = await fetch(`${API_BASE}/domains`);
+      const base = await this.resolveActiveBase();
+      const res = await fetch(`${base}/domains`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      });
       if (res.ok) {
         const json = await res.json();
         if (json.success && json.domains) {
@@ -249,7 +320,7 @@ export const cvGeneratorService = {
   },
 
   /**
-   * Calls /api/cv/generate and returns the PDF as a Blob + ObjectURL for preview.
+   * Calls /api/cv/generate (or /api/v1/cv/generate) and returns the PDF as a Blob + ObjectURL for preview.
    */
   async generateCV({
     targetDomain = 'SDE',
@@ -274,46 +345,65 @@ export const cvGeneratorService = {
       profile: formattedProfile
     };
 
-    const res = await fetch(`${API_BASE}/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+    let lastError = null;
+    const candidateBases = this.activeApiBase 
+      ? [this.activeApiBase, ...DEDUPLICATED_CANDIDATES.filter(b => b !== this.activeApiBase)]
+      : DEDUPLICATED_CANDIDATES;
 
-    if (!res.ok) {
-      let errDetail = 'Failed to generate CV';
+    for (const base of candidateBases) {
       try {
-        const errJson = await res.json();
-        errDetail = errJson.detail || errJson.error || errDetail;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout for PDF compilation
+
+        const res = await fetch(`${base}/generate`, {
+          method: 'POST',
+          headers: API_HEADERS,
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!res.ok) {
+          let errDetail = 'Failed to generate CV';
+          try {
+            const errJson = await res.json();
+            errDetail = errJson.detail || errJson.error || errDetail;
+          } catch (e) {
+            errDetail = `Server returned status ${res.status}: ${res.statusText}`;
+          }
+          lastError = new Error(errDetail);
+          continue; // Try next candidate
+        }
+
+        const pdfBlob = await res.blob();
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        // Extract filename from header if available
+        let filename = `${formattedProfile.full_name.replace(/\s+/g, '_')}_${targetDomain}_CV.pdf`;
+        const disposition = res.headers.get('Content-Disposition') || res.headers.get('content-disposition');
+        if (disposition && disposition.includes('filename=')) {
+          const match = disposition.match(/filename="?([^"]+)"?/);
+          if (match && match[1]) {
+            filename = match[1];
+          }
+        }
+
+        this.activeApiBase = base;
+
+        return {
+          success: true,
+          blob: pdfBlob,
+          url: pdfUrl,
+          filename: filename,
+          domain: targetDomain,
+          profile: formattedProfile
+        };
       } catch (e) {
-        errDetail = `Server returned status ${res.status}: ${res.statusText}`;
-      }
-      throw new Error(errDetail);
-    }
-
-    const pdfBlob = await res.blob();
-    const pdfUrl = URL.createObjectURL(pdfBlob);
-
-    // Extract filename from header if available
-    let filename = `${formattedProfile.full_name.replace(/\s+/g, '_')}_${targetDomain}_CV.pdf`;
-    const disposition = res.headers.get('Content-Disposition') || res.headers.get('content-disposition');
-    if (disposition && disposition.includes('filename=')) {
-      const match = disposition.match(/filename="?([^"]+)"?/);
-      if (match && match[1]) {
-        filename = match[1];
+        lastError = e;
       }
     }
 
-    return {
-      success: true,
-      blob: pdfBlob,
-      url: pdfUrl,
-      filename: filename,
-      domain: targetDomain,
-      profile: formattedProfile
-    };
+    throw lastError || new Error('All candidate CV Generator endpoints failed to respond.');
   },
 
   /**

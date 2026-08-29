@@ -10,17 +10,28 @@
 
 import intentsData from '../data/chatbotIntents.json';
 
-// Configuration: Chatbot microservice endpoints
-const DIRECT_API_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
-const DIRECT_LOOPBACK_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
-const PROXY_API_BASE = 'https://profanity-manor-overeager.ngrok-free.dev';
+// URL Normalizer: Ensures base URL has no trailing slash and ends with /api
+function normalizeApiBase(url) {
+  if (!url) return null;
+  let clean = url.trim().replace(/\/+$/, '');
+  if (!clean.endsWith('/api')) {
+    clean += '/api';
+  }
+  return clean;
+}
 
-// Configurable via Vite environment variable VITE_CHATBOT_API_URL if remote tunnel is deployed
-const NGROK_API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_CHATBOT_API_URL)
-  ? `${import.meta.env.VITE_CHATBOT_API_URL.replace(/\/$/, '')}/api`
-  : null;
+// 1. Primary Ngrok Remote Tunnel URL
+const REMOTE_NGROK_URL = normalizeApiBase(
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_CHATBOT_API_URL) ||
+  'https://profanity-manor-overeager.ngrok-free.dev'
+);
 
-// Default headers for API calls
+// 2. Local Fallback Bases
+const PROXY_API_BASE = '/api';
+const LOCALHOST_API_BASE = 'http://localhost:5001/api';
+const LOOPBACK_API_BASE = 'http://127.0.0.1:5001/api';
+
+// Required headers for ngrok free tier and JSON API
 const API_HEADERS = {
   'Content-Type': 'application/json',
   'ngrok-skip-browser-warning': 'true'
@@ -539,18 +550,21 @@ class ChatbotService {
 
     this.lastHealthCheck = now;
 
-    // Candidate backend endpoints in priority order (Local Proxy -> Direct Localhost -> Loopback -> Remote)
-    const candidateEndpoints = [
+    // Deduplicated candidate endpoints in priority order
+    const rawCandidates = [
+      REMOTE_NGROK_URL,
       PROXY_API_BASE,
-      DIRECT_API_BASE,
-      DIRECT_LOOPBACK_BASE,
-      NGROK_API_BASE
+      LOCALHOST_API_BASE,
+      LOOPBACK_API_BASE
     ].filter(Boolean);
+
+    // Remove duplicates
+    const candidateEndpoints = [...new Set(rawCandidates)];
 
     for (const base of candidateEndpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1500);
+        const timeoutId = setTimeout(() => controller.abort(), 4000); // 4s timeout for remote tunnels
 
         const res = await fetch(`${base}/health`, {
           signal: controller.signal,
@@ -568,7 +582,7 @@ class ChatbotService {
           }
         }
       } catch (e) {
-        // Continue to check next candidate endpoint
+        // Continue to next candidate
       }
     }
 
@@ -584,38 +598,6 @@ class ChatbotService {
   async sendMessage(messageText, userId = this.activeUserId, onStreamChunk = null) {
     const health = await this.checkBackendHealth();
     const sentiment = this.localClient.detectSentiment(messageText);
-
-    // Always handle humor/joke queries locally — the Python backend doesn't support them
-    const rawLower = messageText.toLowerCase().trim();
-    const isHumorQuery = ['joke', 'funny', 'humor', 'humour', 'laugh', 'pun', 'make me laugh'].some(kw => rawLower.includes(kw));
-    if (isHumorQuery) {
-      const nlpResult = this.localClient.findBestIntent(messageText);
-      const fullText = nlpResult.response;
-      if (onStreamChunk) {
-        const words = fullText.split(' ');
-        let accumulated = '';
-        for (let i = 0; i < words.length; i++) {
-          accumulated += (i === 0 ? '' : ' ') + words[i];
-          onStreamChunk(accumulated);
-          if (i % 2 === 0) await new Promise(r => setTimeout(r, 20));
-        }
-      }
-      return {
-        text: fullText,
-        intent: 'joke',
-        confidence: 0.99,
-        sentiment,
-        emotion: { style_sentiment: 'positive', emotion_tags: ['happy'] },
-        responseType: 'local_nlp',
-        suggestedActions: nlpResult.suggestedActions || INTENT_ACTIONS.joke || [
-          { label: "😂 Tell Another Joke", prompt: "Tell me another joke!" },
-          { label: "🎯 Take a Skill Quiz", screen: "quiz-select" },
-          { label: "💼 Find Internships", screen: "find-internships" }
-        ],
-        engine: 'Skillify Humor Engine 🎭',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-    }
 
     // If Python Backend is online (via Ngrok tunnel, localhost, or dev proxy), call live API
     if (health.online && this.activeApiBase) {

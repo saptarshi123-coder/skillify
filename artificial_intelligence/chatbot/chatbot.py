@@ -1021,7 +1021,7 @@ class ChatBot:
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     chatbot = ChatBot()
 
@@ -1066,6 +1066,7 @@ def create_app():
 </body>
 </html>'''
 
+    @app.route('/health', methods=['GET'])
     @app.route('/api/health', methods=['GET'])
     def health():
         return jsonify({
@@ -1077,6 +1078,7 @@ def create_app():
             'features': ['streaming', 'conversation_history', 'quick_replies', 'typing_indicator', 'emotion_detection', 'humor', 'typo_correction']
         })
 
+    @app.route('/chat', methods=['POST'])
     @app.route('/api/chat', methods=['POST'])
     def chat():
         data = request.get_json()
@@ -1129,6 +1131,7 @@ def create_app():
         except Exception as e:
             return jsonify({'success': False, 'error': str(e)}), 500
 
+    @app.route('/chat/stream', methods=['POST'])
     @app.route('/api/chat/stream', methods=['POST'])
     def chat_stream():
         data = request.get_json()
