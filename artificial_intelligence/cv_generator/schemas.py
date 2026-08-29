@@ -91,7 +91,7 @@ class Achievement(BaseModel):
 
 class LanguageEntryIn(BaseModel):
     name: str = Field(min_length=1, max_length=40)
-    level: str = Field(default="", max_length=20)
+    level: str = Field(default="", max_length=40)
 
 
 class ProfileRequest(BaseModel):

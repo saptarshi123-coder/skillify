@@ -67,8 +67,17 @@ def create_app() -> FastAPI:
 
     # --- Health probe for uptime monitors / hosting platforms ---
     @app.get("/health", tags=["meta"])
+    @app.get("/api/health", tags=["meta"])
+    @app.get("/api/v1/health", tags=["meta"])
     def health() -> JSONResponse:
         return JSONResponse({"status": "ok", "service": "skillify-cv-generator"})
+
+    # --- Domains probe alias ---
+    @app.get("/domains", tags=["meta"])
+    @app.get("/api/domains", tags=["meta"])
+    def domains() -> JSONResponse:
+        from main import list_cv_domains
+        return JSONResponse(list_cv_domains())
 
     # --- Root: tiny machine-readable index so you can verify the deploy ---
     @app.get("/", tags=["meta"], include_in_schema=False)

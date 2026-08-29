@@ -180,6 +180,28 @@ async def generate_cv_from_upload(
     return _pdf_response(pdf_bytes, request.profile.full_name, request.download, request.target_domain.value)
 
 
+@router.get("/cv/domains", tags=["meta"])
+@router.get("/domains", tags=["meta"])
+def list_cv_domains() -> dict:
+    """Return the list of supported CV target domains and metadata."""
+    domains_list = [
+        {"id": "SDE", "name": "Software Development (SDE)", "icon": "code", "desc": "Algorithms, Backend, Web & Mobile Engineering", "color": "from-blue-600 to-indigo-600"},
+        {"id": "AI/ML", "name": "AI & Machine Learning", "icon": "psychology", "desc": "Deep Learning, NLP, Computer Vision & MLOps", "color": "from-purple-600 to-pink-600"},
+        {"id": "Data Science", "name": "Data Science & Analytics", "icon": "analytics", "desc": "Statistics, SQL, Visualization & Predictive Models", "color": "from-emerald-600 to-teal-600"},
+        {"id": "UI/UX", "name": "UI/UX & Product Design", "icon": "palette", "desc": "Figma, Wireframing, User Research & Design Systems", "color": "from-pink-600 to-rose-600"},
+        {"id": "Engineering", "name": "Core Engineering & IoT", "icon": "precision_manufacturing", "desc": "Embedded Systems, Robotics & Applied Hardware", "color": "from-amber-600 to-orange-600"},
+        {"id": "Marketing", "name": "Growth & Digital Marketing", "icon": "campaign", "desc": "SEO, Content Strategy, Analytics & Campaigns", "color": "from-red-600 to-orange-600"},
+        {"id": "Writer", "name": "Technical & Content Writing", "icon": "edit_note", "desc": "Documentation, Storytelling, Research & Copywriting", "color": "from-cyan-600 to-blue-600"},
+        {"id": "Videography", "name": "Videography & Motion", "icon": "videocam", "desc": "Cinematography, Editing, Storyboarding & Motion Design", "color": "from-violet-600 to-purple-600"},
+        {"id": "Photography", "name": "Photography & Visual Arts", "icon": "photo_camera", "desc": "Photojournalism, Commercial, Portrait & Lighting", "color": "from-yellow-600 to-amber-600"}
+    ]
+    return {
+        "success": True,
+        "available": True,
+        "domains": domains_list
+    }
+
+
 @router.get("/cv/demo/profiles", tags=["demo"])
 def list_demo_dataset() -> dict:
     """

@@ -28,14 +28,14 @@ const REMOTE_ENV_URL = normalizeApiBase(
 
 // 3. Candidate Bases for Multi-Tier Discovery
 const CANDIDATE_CV_BASES = [
-  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/cv` : null,
   REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/v1/cv` : null,
-  '/api/cv',
+  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/cv` : null,
   '/api/v1/cv',
-  'http://localhost:5001/api/cv',
-  'http://127.0.0.1:5001/api/cv',
+  '/api/cv',
   'http://localhost:8000/api/v1/cv',
-  'http://127.0.0.1:8000/api/v1/cv'
+  'http://127.0.0.1:8000/api/v1/cv',
+  'http://localhost:5001/api/cv',
+  'http://127.0.0.1:5001/api/cv'
 ].filter(Boolean);
 
 // Deduplicate candidate endpoints
@@ -153,7 +153,8 @@ export const cvGeneratorService = {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3500);
 
-        const res = await fetch(`${base}/domains`, {
+        const healthUrl = `${base.replace(/\/api.*$/, '') || ''}/health`;
+        const res = await fetch(healthUrl, {
           signal: controller.signal,
           headers: { 'ngrok-skip-browser-warning': 'true' }
         });
@@ -169,7 +170,7 @@ export const cvGeneratorService = {
     }
 
     // Default fallback to first candidate if discovery fails
-    this.activeApiBase = DEDUPLICATED_CANDIDATES[0] || '/api/cv';
+    this.activeApiBase = DEDUPLICATED_CANDIDATES[0] || '/api/v1/cv';
     return this.activeApiBase;
   },
 
@@ -286,8 +287,8 @@ export const cvGeneratorService = {
     ];
 
     const languages = [
-      { name: 'English', level: 'Fluent / Professional' },
-      { name: 'Hindi', level: 'Native / Bilingual' }
+      { name: 'English', level: 'Professional' },
+      { name: 'Hindi', level: 'Native' }
     ];
 
     const interests = [
@@ -308,7 +309,10 @@ export const cvGeneratorService = {
       linkedin_url: customOverrides.linkedin || 'https://linkedin.com/in/student',
       github_url: customOverrides.github || 'https://github.com/student',
       portfolio_url: customOverrides.portfolio || 'https://skillify.ai',
-      photo_base64: userProfile.avatar?.startsWith('data:') ? userProfile.avatar : null,
+      photo_base64: (userProfile.avatar?.startsWith('data:image/png') ||
+                     userProfile.avatar?.startsWith('data:image/jpeg') ||
+                     userProfile.avatar?.startsWith('data:image/webp'))
+                    ? userProfile.avatar : null,
       skills: skillCategories,
       certifications: certList.slice(0, 5),
       achievements: badgeAchievements.slice(0, 5),
@@ -367,10 +371,24 @@ export const cvGeneratorService = {
           let errDetail = 'Failed to generate CV';
           try {
             const errJson = await res.json();
-            errDetail = errJson.detail || errJson.error || errDetail;
+            if (errJson.detail) {
+              if (Array.isArray(errJson.detail)) {
+                errDetail = errJson.detail.map(d => `${d.loc ? d.loc.join('.') + ': ' : ''}${d.msg}`).join(', ');
+              } else {
+                errDetail = typeof errJson.detail === 'object' ? JSON.stringify(errJson.detail) : errJson.detail;
+              }
+            } else if (errJson.error) {
+              errDetail = typeof errJson.error === 'object' ? JSON.stringify(errJson.error) : errJson.error;
+            }
           } catch (e) {
             errDetail = `Server returned status ${res.status}: ${res.statusText}`;
           }
+
+          // Do NOT fail over to dead local ports if the server explicitly rejected the payload with 4xx
+          if (res.status >= 400 && res.status < 500) {
+            throw new Error(`Validation Error (${res.status}): ${errDetail}`);
+          }
+
           lastError = new Error(errDetail);
           continue; // Try next candidate
         }
