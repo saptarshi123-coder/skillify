@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navigation/Navbar';
+import { useProctoring } from '../hooks/useProctoring';
 
 export default function ActiveQuizScreen() {
   const {
@@ -19,6 +20,45 @@ export default function ActiveQuizScreen() {
 
   const [timeLeft, setTimeLeft] = useState(600);
   const [textInput, setTextInput] = useState('');
+  const [violationAlert, setViolationAlert] = useState(null);
+  const [isPiPMinimized, setIsPiPMinimized] = useState(false);
+
+  // Live Proctoring & Face Authentication Hook
+  const {
+    videoRef,
+    hasPermission,
+    permissionStatus,
+    strikes,
+    maxStrikes,
+    faceStatus,
+    initMediaStream
+  } = useProctoring({
+    enabled: true,
+    intervalMs: 4000,
+    endpoint: '/api/proctor/verify-frame',
+    maxStrikes: 3,
+    onViolation: (violationRecord) => {
+      setViolationAlert({
+        strike: violationRecord.strike,
+        reason: violationRecord.reason,
+        timestamp: Date.now()
+      });
+    },
+    onMaxStrikesExceeded: (strikeCount) => {
+      alert(`⚠️ Proctoring Violation: Maximum strikes (${strikeCount}/3) exceeded. Your assessment is being automatically submitted for review.`);
+      submitQuiz();
+    }
+  });
+
+  // Auto-dismiss temporary violation alert banner after 6 seconds
+  useEffect(() => {
+    if (violationAlert) {
+      const timer = setTimeout(() => {
+        setViolationAlert(null);
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [violationAlert]);
 
   // Synchronize text input when switching questions
   useEffect(() => {
@@ -128,7 +168,7 @@ export default function ActiveQuizScreen() {
   };
 
   return (
-    <div className="w-full pb-20 transition-colors">
+    <div className="w-full pb-32 transition-colors relative">
       <Navbar
         title={`${activeSubject.name} Assessment`}
         showBack={true}
@@ -139,8 +179,33 @@ export default function ActiveQuizScreen() {
         }}
       />
 
-      <main className="px-4 py-4 space-y-4 w-full">
+      <main className="px-4 py-4 space-y-4 w-full max-w-4xl mx-auto">
         
+        {/* Violation Alert Banner */}
+        {violationAlert && (
+          <div className="bg-red-500/15 border border-red-500/40 text-red-700 dark:text-red-300 rounded-2xl p-3.5 flex items-center justify-between shadow-md animate-pulse">
+            <div className="flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-red-600 dark:text-red-400 text-xl shrink-0">
+                warning
+              </span>
+              <div>
+                <p className="text-xs font-bold font-mono tracking-wide">
+                  PROCTORING WARNING • STRIKE {violationAlert.strike}/{maxStrikes}
+                </p>
+                <p className="text-[11px] font-sans text-red-600 dark:text-red-300">
+                  {violationAlert.reason}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setViolationAlert(null)}
+              className="text-xs font-bold font-mono text-red-700 dark:text-red-300 hover:opacity-75 px-2 py-1"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
+
         {/* AI Engine Banner */}
         {isAI && (
           <div className="bg-gradient-to-r from-primary/15 via-primary-container/20 to-primary/10 border border-primary/30 rounded-2xl px-3.5 py-2 flex items-center justify-between shadow-sm">
@@ -278,6 +343,108 @@ export default function ActiveQuizScreen() {
 
         </div>
       </main>
+
+      {/* Picture-in-Picture (PiP) Live Proctoring Feed */}
+      <aside 
+        aria-label="Live Proctoring Video Preview"
+        className="fixed bottom-4 right-4 z-40 sm:bottom-6 sm:right-6 transition-all duration-300"
+      >
+        <div className={`bg-slate-950/95 dark:bg-[#14171A]/95 backdrop-blur-md rounded-2xl border ${
+          strikes > 0 ? 'border-red-500/70 shadow-red-500/20' : 'border-slate-700/60 dark:border-slate-800'
+        } shadow-2xl overflow-hidden transition-all duration-300 ${
+          isPiPMinimized ? 'w-48 h-12 p-2 flex items-center justify-between' : 'w-48 sm:w-56 p-2 space-y-2'
+        }`}>
+          
+          {/* Header Bar */}
+          <div className="flex items-center justify-between gap-1 w-full px-1">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="relative flex h-2 w-2">
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                  hasPermission ? (strikes > 0 ? 'bg-red-400' : 'bg-emerald-400') : 'bg-amber-400'
+                }`}></span>
+                <span className={`relative inline-flex rounded-full h-2 w-2 ${
+                  hasPermission ? (strikes > 0 ? 'bg-red-500' : 'bg-emerald-500') : 'bg-amber-500'
+                }`}></span>
+              </span>
+              <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider truncate">
+                AI Proctor
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              {/* Strike Badge */}
+              <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
+                strikes === 0
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  : 'bg-red-500/20 text-red-300 border border-red-500/40 animate-pulse'
+              }`}>
+                {strikes}/{maxStrikes} Strikes
+              </span>
+
+              {/* Minimize / Expand Button */}
+              <button
+                onClick={() => setIsPiPMinimized(!isPiPMinimized)}
+                className="text-slate-400 hover:text-white p-0.5 rounded transition-colors"
+                title={isPiPMinimized ? "Expand Preview" : "Minimize Preview"}
+              >
+                <span className="material-symbols-outlined text-sm leading-none">
+                  {isPiPMinimized ? 'open_in_full' : 'close_fullscreen'}
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Video Container (Expanded Mode) */}
+          {!isPiPMinimized && (
+            <div className="relative w-full aspect-4/3 bg-black rounded-xl overflow-hidden border border-slate-800">
+              {hasPermission ? (
+                <>
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover -scale-x-100"
+                  />
+                  {/* Real-time Status Overlay Badge */}
+                  <div className="absolute bottom-1.5 left-1.5 right-1.5 flex items-center justify-between px-2 py-1 bg-black/60 backdrop-blur-xs rounded-lg text-[9px] font-mono text-slate-200 border border-white/10">
+                    <span className="flex items-center gap-1">
+                      <span className={`w-1.5 h-1.5 rounded-full ${
+                        faceStatus === 'verified'
+                          ? 'bg-emerald-400'
+                          : faceStatus === 'violation'
+                          ? 'bg-red-400'
+                          : 'bg-amber-400 animate-pulse'
+                      }`}></span>
+                      <span>{faceStatus === 'verified' ? 'Face Verified' : faceStatus === 'violation' ? 'Anomaly Detected' : 'Monitoring'}</span>
+                    </span>
+                    <span className="material-symbols-outlined text-[11px] text-slate-400">
+                      videocam
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center space-y-1.5 bg-slate-900">
+                  <span className="material-symbols-outlined text-amber-400 text-xl">
+                    {permissionStatus === 'denied' ? 'videocam_off' : 'lock'}
+                  </span>
+                  <p className="text-[10px] font-mono text-slate-300 leading-tight">
+                    {permissionStatus === 'denied' ? 'Camera Blocked' : 'Camera Required'}
+                  </p>
+                  <button
+                    onClick={initMediaStream}
+                    className="text-[9px] font-mono font-bold bg-primary text-white px-2 py-1 rounded-md shadow-xs active:scale-95 transition-all"
+                  >
+                    Enable Camera
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+        </div>
+      </aside>
+
     </div>
   );
 }
