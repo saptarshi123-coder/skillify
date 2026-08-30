@@ -22,7 +22,9 @@ class SQLiteService {
       chat_messages: [],
       internships: [],
       saved_internship_ids: [],
-      internship_applications: []
+      internship_applications: [],
+      enrolled_course_ids: [],
+      course_transactions: []
     };
     this.isInitialized = false;
   }
@@ -79,6 +81,17 @@ class SQLiteService {
         }
         if (!this.tables.internship_applications) {
           this.tables.internship_applications = [];
+        }
+        if (!this.tables.enrolled_course_ids || !Array.isArray(this.tables.enrolled_course_ids)) {
+          try {
+            const savedCourses = localStorage.getItem('skillify_enrolled_courses');
+            this.tables.enrolled_course_ids = savedCourses ? JSON.parse(savedCourses) : ['course-python-zero'];
+          } catch {
+            this.tables.enrolled_course_ids = ['course-python-zero'];
+          }
+        }
+        if (!this.tables.course_transactions || !Array.isArray(this.tables.course_transactions)) {
+          this.tables.course_transactions = [];
         }
         this._persist();
       } else {
@@ -143,6 +156,7 @@ class SQLiteService {
     this.tables.internships = [...INITIAL_INTERNSHIPS];
     this.tables.saved_internship_ids = [];
     this.tables.internship_applications = [];
+    this.tables.enrolled_course_ids = ['course-python-zero'];
 
     this._persist();
   }
@@ -580,6 +594,56 @@ class SQLiteService {
   // SQL: SELECT * FROM internship_applications
   getAppliedInternships() {
     return [...(this.tables.internship_applications || [])];
+  }
+
+  // SQL: SELECT * FROM enrolled_course_ids
+  getEnrolledCourseIds() {
+    if (!this.tables.enrolled_course_ids) {
+      this.tables.enrolled_course_ids = ['course-python-zero'];
+    }
+    return [...this.tables.enrolled_course_ids];
+  }
+
+  // SQL: INSERT INTO enrolled_course_ids (course_id) VALUES (?)
+  addEnrollment(courseId, txnData = {}) {
+    if (!this.tables.enrolled_course_ids) {
+      this.tables.enrolled_course_ids = ['course-python-zero'];
+    }
+    if (!this.tables.course_transactions) {
+      this.tables.course_transactions = [];
+    }
+    if (!this.tables.enrolled_course_ids.includes(courseId)) {
+      this.tables.enrolled_course_ids.push(courseId);
+      if (txnData.utr) {
+        this.tables.course_transactions.push({
+          id: `txn_${Date.now()}`,
+          course_id: courseId,
+          utr: txnData.utr,
+          amount: txnData.amount || 0,
+          verified: true,
+          verified_at: new Date().toISOString()
+        });
+      }
+      this._persist();
+      try {
+        localStorage.setItem('skillify_enrolled_courses', JSON.stringify(this.tables.enrolled_course_ids));
+      } catch (e) {}
+    }
+    return [...this.tables.enrolled_course_ids];
+  }
+
+  // SQL: SELECT 1 FROM course_transactions WHERE utr = ?
+  isUtrUsed(utr) {
+    if (!this.tables.course_transactions) return false;
+    return this.tables.course_transactions.some(t => t.utr === utr);
+  }
+
+  // SQL: SELECT 1 FROM enrolled_course_ids WHERE course_id = ?
+  isCourseEnrolled(courseId) {
+    if (!this.tables.enrolled_course_ids) {
+      this.tables.enrolled_course_ids = ['course-python-zero'];
+    }
+    return this.tables.enrolled_course_ids.includes(courseId);
   }
 }
 

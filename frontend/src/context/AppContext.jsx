@@ -169,6 +169,18 @@ export function AppProvider({ children }) {
     return sqliteDB.getAppliedInternships();
   });
 
+  // Enrolled Courses in SQLite
+  const [enrolledCourseIds, setEnrolledCourseIds] = useState(() => {
+    try {
+      const fromDB = sqliteDB.getEnrolledCourseIds();
+      if (fromDB && fromDB.length > 0) return fromDB;
+      const saved = localStorage.getItem('skillify_enrolled_courses');
+      return saved ? JSON.parse(saved) : ['course-python-zero'];
+    } catch {
+      return ['course-python-zero'];
+    }
+  });
+
   // CV Generator Modal State
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
@@ -1298,6 +1310,18 @@ export function AppProvider({ children }) {
     showToast(isSaved ? "🔖 Internship saved to your bookmarks!" : "Removed internship from bookmarks.");
   };
 
+  // Course Enrollment Handler
+  const enrollInCourse = (courseId, courseTitle = '', txnData = {}) => {
+    if (!courseId) return;
+    const updated = sqliteDB.addEnrollment(courseId, txnData);
+    setEnrolledCourseIds(updated);
+    try {
+      localStorage.setItem('skillify_enrolled_courses', JSON.stringify(updated));
+    } catch (e) {}
+    showToast(courseTitle ? `🎉 Payment Verified! Enrolled in "${courseTitle}" successfully!` : "🎉 Course enrolled successfully!", "success");
+    return updated;
+  };
+
   // CV Generator Handlers
   const openCVGenerator = () => {
     setIsCVModalOpen(true);
@@ -1448,6 +1472,9 @@ export function AppProvider({ children }) {
       listNewInternship,
       applyToInternship,
       toggleSaveInternship,
+      // Courses & Enrollment
+      enrolledCourseIds,
+      enrollInCourse,
       // CV Generator
       isCVModalOpen,
       setIsCVModalOpen,
