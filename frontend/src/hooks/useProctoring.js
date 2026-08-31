@@ -17,6 +17,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
  * @param {number} [options.maxStrikes=3] Maximum allowable strikes before auto-submission
  * @param {Function} [options.onViolation] Callback triggered on each violation
  * @param {Function} [options.onMaxStrikesExceeded] Callback triggered when max strikes reached
+ * @param {Function} [options.onVideoOff] Callback triggered when camera is turned off or disconnected
  * 
  * @returns {Object} Proctoring state and controls
  */
@@ -26,7 +27,8 @@ export function useProctoring({
   endpoint = '/api/proctor/verify-frame',
   maxStrikes = 3,
   onViolation,
-  onMaxStrikesExceeded
+  onMaxStrikesExceeded,
+  onVideoOff
 } = {}) {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
@@ -58,8 +60,18 @@ export function useProctoring({
 
   // Request Camera and Microphone Media Stream
   const initMediaStream = useCallback(async () => {
+    // Check for Secure Context (HTTPS or Localhost) on mobile devices
+    if (typeof window !== 'undefined' && window.isSecureContext === false && window.location.hostname !== 'localhost') {
+      console.warn('Camera access blocked: Insecure HTTP Context detected on mobile.');
+      setViolationWarning('⚠️ Camera requires HTTPS when accessed on mobile devices. Please open via https://');
+      setPermissionStatus('unsupported');
+      setIsInitializing(false);
+      return null;
+    }
+
     if (typeof navigator === 'undefined' || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       setPermissionStatus('unsupported');
+      setViolationWarning('⚠️ Camera API unsupported on this browser or origin. Ensure HTTPS is enabled.');
       setIsInitializing(false);
       return null;
     }
@@ -67,29 +79,58 @@ export function useProctoring({
     setIsInitializing(true);
 
     try {
-      // Request video with user-facing camera and audio track
+      // Tiered Request: 1) Video with user-facing camera + Audio
       let stream = null;
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
+            facingMode: 'user',
             width: { ideal: 640 },
-            height: { ideal: 480 },
-            facingMode: 'user'
+            height: { ideal: 480 }
           },
           audio: true
         });
       } catch (errWithAudio) {
-        // Fallback to video-only if microphone is busy or not available
-        console.warn('Microphone permission skipped or failed, falling back to video only:', errWithAudio);
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            width: { ideal: 640 },
-            height: { ideal: 480 },
-            facingMode: 'user'
-          },
-          audio: false
-        });
+        // Tier 2: Video-only with user-facing camera
+        try {
+          console.warn('Microphone permission skipped or failed, falling back to video only:', errWithAudio);
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: 'user',
+              width: { ideal: 480 },
+              height: { ideal: 360 }
+            },
+            audio: false
+          });
+        } catch (errVideoConstraint) {
+          // Tier 3: Basic generic video fallback for strict mobile drivers
+          console.warn('Strict constraints failed, falling back to basic video:', errVideoConstraint);
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+          });
+        }
       }
+
+      // Attach video track monitoring to detect if user turns off camera
+      stream.getVideoTracks().forEach(track => {
+        track.onended = () => {
+          console.warn('Proctoring: Video track ended.');
+          setHasPermission(false);
+          setFaceStatus('offline');
+          setIsRecording(false);
+          if (typeof onVideoOff === 'function') {
+            onVideoOff('Camera video track was turned off or disconnected.');
+          }
+        };
+
+        track.onmute = () => {
+          console.warn('Proctoring: Video track was muted.');
+          if (typeof onVideoOff === 'function') {
+            onVideoOff('Camera video stream was muted.');
+          }
+        };
+      });
 
       streamRef.current = stream;
       setPermissionStatus('granted');
@@ -98,8 +139,12 @@ export function useProctoring({
       setIsRecording(true);
 
       if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play().catch(e => console.warn('Video autoplay warning:', e));
+        const vid = videoRef.current;
+        vid.srcObject = stream;
+        vid.setAttribute('playsinline', 'true');
+        vid.setAttribute('webkit-playsinline', 'true');
+        vid.muted = true;
+        vid.play().catch(e => console.warn('Video autoplay warning:', e));
       }
 
       return stream;
@@ -110,9 +155,12 @@ export function useProctoring({
       setIsInitializing(false);
       setIsRecording(false);
       setFaceStatus('offline');
+      if (typeof onVideoOff === 'function') {
+        onVideoOff('Camera permission denied or camera device unavailable.');
+      }
       return null;
     }
-  }, []);
+  }, [onVideoOff]);
 
   // Stop Media Stream Tracks
   const stopMediaStream = useCallback(() => {
@@ -163,8 +211,24 @@ export function useProctoring({
 
   // Send frame to proctoring API endpoint
   const sendVerificationFrame = useCallback(async () => {
-    if (isCapturingRef.current || !enabled || !hasPermission) {
+    if (isCapturingRef.current || !enabled) {
       return;
+    }
+
+    // Health check: Check if video track is active
+    if (!isInitializing) {
+      const activeStream = streamRef.current;
+      const videoTracks = activeStream ? activeStream.getVideoTracks() : [];
+      const hasActiveTrack = videoTracks.some(t => t.readyState === 'live' && t.enabled);
+
+      if (!hasActiveTrack || !hasPermission) {
+        console.warn('Proctoring: Active video track not found during frame check.');
+        setFaceStatus('offline');
+        if (typeof onVideoOff === 'function') {
+          onVideoOff('Camera feed was stopped or video track became inactive.');
+        }
+        return;
+      }
     }
 
     const base64Image = captureFrameBase64();

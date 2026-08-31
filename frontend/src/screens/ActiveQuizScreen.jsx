@@ -28,6 +28,7 @@ export default function ActiveQuizScreen() {
     videoRef,
     hasPermission,
     permissionStatus,
+    isInitializing,
     strikes,
     maxStrikes,
     faceStatus,
@@ -47,8 +48,23 @@ export default function ActiveQuizScreen() {
     onMaxStrikesExceeded: (strikeCount) => {
       alert(`⚠️ Proctoring Violation: Maximum strikes (${strikeCount}/3) exceeded. Your assessment is being automatically submitted for review.`);
       submitQuiz();
+    },
+    onVideoOff: (reason) => {
+      alert(`⚠️ Proctoring Security Violation: Camera feed was turned OFF (${reason}). Your assessment is being automatically submitted.`);
+      submitQuiz();
     }
   });
+
+  // Auto-submit quiz if camera access is permanently denied or revoked after initialization
+  useEffect(() => {
+    if (!isInitializing && (permissionStatus === 'denied' || (permissionStatus === 'unsupported' && !hasPermission))) {
+      const timer = setTimeout(() => {
+        alert('⚠️ Proctoring Required: Camera access is disabled or unavailable. Your assessment is being automatically submitted.');
+        submitQuiz();
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isInitializing, permissionStatus, hasPermission, submitQuiz]);
 
   // Auto-dismiss temporary violation alert banner after 6 seconds
   useEffect(() => {
