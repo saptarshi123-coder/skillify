@@ -11,6 +11,35 @@ export const COURSE_CATEGORIES = [
 
 export const COURSES_DATA = [
   {
+    id: "course-1rs-special",
+    title: "⚡ Full-Stack & AI Starter Bootcamp",
+    category: "Web Development",
+    instructor: "Skillify Master Team",
+    instructorRole: "Industry Tech Leads & Mentors",
+    rating: 4.9,
+    reviewsCount: "5.1k",
+    studentsEnrolled: "42,000+",
+    price: 1,
+    originalPrice: 999,
+    isFree: false,
+    badge: "₹1 Special Offer",
+    featured: false,
+    level: "All Levels",
+    duration: "12 Hours",
+    modulesCount: 8,
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80",
+    description: "Exclusive ₹1 Master Course! Build your foundation in modern web applications, Git workflows, generative AI coding assistants, and deploy a live project with certificate verification.",
+    skillsLearned: ["Web Fundamentals", "Full-Stack Setup", "Git & GitHub", "AI Prompting & Copilots", "Live Cloud Deployment"],
+    syllabus: [
+      { module: "Module 1", title: "Modern Web Architecture & Developer Tooling", duration: "2h 15m" },
+      { module: "Module 2", title: "JavaScript & React Core Foundations", duration: "3h 00m" },
+      { module: "Module 3", title: "Version Control, Git & GitHub Collaboration", duration: "2h 30m" },
+      { module: "Module 4", title: "AI-Assisted Coding, Testing & Refactoring", duration: "2h 15m" },
+      { module: "Module 5", title: "End-to-End Project Deployment & Certification", duration: "2h 00m" }
+    ],
+    certificateIncluded: true
+  },
+  {
     id: "course-featured-react",
     title: "Advanced React Patterns & Architecture",
     category: "Web Development",

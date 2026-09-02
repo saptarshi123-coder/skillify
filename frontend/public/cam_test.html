@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Camera Diagnostic Test</title>
+  <style>
+    body { font-family: monospace; background: #0f172a; color: #f8fafc; padding: 20px; }
+    video { width: 320px; height: 240px; background: #000; border: 2px solid #38bdf8; border-radius: 8px; }
+    button { padding: 8px 16px; margin: 4px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #0369a1; }
+    #log { background: #1e293b; padding: 12px; border-radius: 8px; margin-top: 16px; white-space: pre-wrap; font-size: 12px; max-height: 300px; overflow-y: auto; }
+    .row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h2>Camera Hardware & Stream Diagnostic</h2>
+  <div>
+    <button onclick="runTest()">1. List Cameras & Start Default</button>
+    <button onclick="testCamera(0)">Test Camera 1</button>
+    <button onclick="testCamera(1)">Test Camera 2</button>
+    <button onclick="stopAll()">Stop Camera</button>
+  </div>
+
+  <div class="row">
+    <div>
+      <h3>Live Preview:</h3>
+      <video id="vid" autoplay playsinline muted></video>
+      <div id="stats" style="margin-top: 8px; color: #38bdf8;"></div>
+    </div>
+    <div style="flex: 1; min-width: 300px;">
+      <h3>Debug Log:</h3>
+      <div id="log">Click "1. List Cameras & Start Default" to begin.</div>
+    </div>
+  </div>
+
+  <script>
+    let currentStream = null;
+    let availableDevices = [];
+    const vid = document.getElementById('vid');
+    const logEl = document.getElementById('log');
+    const statsEl = document.getElementById('stats');
+
+    function log(msg) {
+      logEl.textContent += '\n' + msg;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    vid.addEventListener('loadedmetadata', () => log(`[Event] loadedmetadata: ${vid.videoWidth}x${vid.videoHeight}`));
+    vid.addEventListener('canplay', () => log(`[Event] canplay: readyState=${vid.readyState}`));
+    vid.addEventListener('playing', () => log(`[Event] playing: readyState=${vid.readyState}`));
+    vid.addEventListener('error', (e) => log(`[Event] Video Error: ${e.message}`));
+
+    setInterval(() => {
+      if (vid.srcObject) {
+        statsEl.textContent = `Size: ${vid.videoWidth}x${vid.videoHeight} | State: ${vid.readyState} | Paused: ${vid.paused}`;
+      }
+    }, 500);
+
+    function stopAll() {
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop());
+        currentStream = null;
+      }
+      vid.srcObject = null;
+      log('Stopped stream.');
+    }
+
+    async function runTest() {
+      stopAll();
+      log('Requesting initial camera permissions...');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        log('Initial stream acquired: ' + stream.getVideoTracks()[0].label);
+        vid.srcObject = stream;
+        currentStream = stream;
+        await vid.play();
+
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        availableDevices = devices.filter(d => d.kind === 'videoinput');
+        log(`Found ${availableDevices.length} video cameras:`);
+        availableDevices.forEach((d, i) => {
+          log(`  [Camera ${i}] Label: "${d.label}" | ID: ${d.deviceId.slice(0, 12)}...`);
+        });
+      } catch (err) {
+        log('Error: ' + err.name + ' - ' + err.message);
+      }
+    }
+
+    async function testCamera(index) {
+      stopAll();
+      if (!availableDevices[index]) {
+        await runTest();
+      }
+      const dev = availableDevices[index];
+      if (!dev) {
+        log(`Camera ${index} not found!`);
+        return;
+      }
+      log(`Opening Camera ${index}: "${dev.label}" (ID: ${dev.deviceId.slice(0, 12)}...)...`);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { deviceId: { exact: dev.deviceId } }
+        });
+        currentStream = stream;
+        const track = stream.getVideoTracks()[0];
+        log(`Track active: ${track.label}, muted: ${track.muted}, readyState: ${track.readyState}`);
+        track.onmute = () => log('[Track Warning] Track was MUTED by system/driver!');
+        track.onunmute = () => log('[Track Info] Track was UNMUTED!');
+        vid.srcObject = stream;
+        await vid.play();
+        log('Stream attached to video element.');
+      } catch (err) {
+        log(`Fallback without exact... (${err.message})`);
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { deviceId: dev.deviceId }
+          });
+          currentStream = stream;
+          vid.srcObject = stream;
+          await vid.play();
+          log('Stream attached to video element via fallback.');
+        } catch (err2) {
+          log('Failed to open camera: ' + err2.name + ' - ' + err2.message);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

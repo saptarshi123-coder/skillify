@@ -201,11 +201,10 @@ export default function ExploreCoursesScreen() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer shrink-0 active:scale-95 ${
-                  isActive
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer shrink-0 active:scale-95 ${isActive
                     ? 'bg-[#D71921] text-white shadow-sm'
                     : 'bg-white dark:bg-[#191D22] text-slate-700 dark:text-[#C5C9D0] border border-slate-200 dark:border-[#2D333B] hover:bg-slate-50 dark:hover:bg-[#20252B]'
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -282,11 +281,10 @@ export default function ExploreCoursesScreen() {
                       e.stopPropagation();
                       handleEnroll(featuredCourse);
                     }}
-                    className={`px-4 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all shadow-none flex items-center gap-1.5 cursor-pointer active:scale-95 ${
-                      enrolledList.includes(featuredCourse.id)
+                    className={`px-4 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all shadow-none flex items-center gap-1.5 cursor-pointer active:scale-95 ${enrolledList.includes(featuredCourse.id)
                         ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                         : 'bg-[#D71921] hover:bg-[#b0141b] text-white'
-                    }`}
+                      }`}
                   >
                     <span>{enrolledList.includes(featuredCourse.id) ? 'Continue' : 'Join Course'}</span>
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -344,9 +342,8 @@ export default function ExploreCoursesScreen() {
                         />
                         {course.badge && (
                           <div
-                            className={`absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold text-white shadow-sm ${
-                              course.isFree ? 'bg-emerald-600' : 'bg-[#D71921]'
-                            }`}
+                            className={`absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold text-white shadow-sm ${course.isFree ? 'bg-emerald-600' : 'bg-[#D71921]'
+                              }`}
                           >
                             {course.badge}
                           </div>
@@ -397,7 +394,9 @@ export default function ExploreCoursesScreen() {
                           </span>
                         ) : (
                           <div className="flex items-baseline gap-1">
-                            <span className="font-headline text-xs font-bold text-slate-900 dark:text-white">
+                            <span className={`font-headline text-xs font-bold ${
+                              course.price === 1 ? 'text-emerald-600 dark:text-emerald-400 font-extrabold' : 'text-slate-900 dark:text-white'
+                            }`}>
                               ₹{course.price.toLocaleString()}
                             </span>
                             <span className="text-[10px] font-mono line-through text-slate-400">
@@ -415,10 +414,18 @@ export default function ExploreCoursesScreen() {
                         className={`text-xs font-mono font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer active:scale-95 ${
                           isEnrolled
                             ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                            : course.price === 1
+                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
                             : 'bg-[#D71921]/10 text-[#D71921] hover:bg-[#D71921] hover:text-white dark:bg-[#D71921]/20'
                         }`}
                       >
-                        {isEnrolled ? 'Resume' : course.isFree ? 'Start Learning' : 'Enroll'}
+                        {isEnrolled
+                          ? 'Resume'
+                          : course.isFree
+                          ? 'Start Learning'
+                          : course.price === 1
+                          ? 'Enroll ₹1'
+                          : 'Enroll'}
                       </button>
                     </div>
                   </div>
@@ -530,7 +537,9 @@ export default function ExploreCoursesScreen() {
                   <span className="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400">FREE</span>
                 ) : (
                   <div className="flex items-baseline gap-1.5">
-                    <span className="font-headline text-lg font-bold text-slate-900 dark:text-white">
+                    <span className={`font-headline text-lg font-bold ${
+                      selectedCourseModal.price === 1 ? 'text-emerald-600 dark:text-emerald-400 font-extrabold' : 'text-slate-900 dark:text-white'
+                    }`}>
                       ₹{selectedCourseModal.price.toLocaleString()}
                     </span>
                     <span className="text-xs font-mono line-through text-slate-400">
@@ -545,6 +554,8 @@ export default function ExploreCoursesScreen() {
                 className={`py-3 px-6 rounded-2xl text-xs font-mono font-bold transition-all shadow-none flex items-center gap-2 cursor-pointer active:scale-95 ${
                   enrolledList.includes(selectedCourseModal.id)
                     ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : selectedCourseModal.price === 1
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                     : 'bg-[#D71921] hover:bg-[#b0141b] text-white'
                 }`}
               >
@@ -553,6 +564,8 @@ export default function ExploreCoursesScreen() {
                     ? 'Resume Course'
                     : selectedCourseModal.isFree
                     ? 'Start Learning Free'
+                    : selectedCourseModal.price === 1
+                    ? 'Enroll for ₹1 via UPI'
                     : 'Enroll via UPI'}
                 </span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -566,7 +579,7 @@ export default function ExploreCoursesScreen() {
       {paymentModalCourse && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white dark:bg-[#14171A] rounded-t-3xl sm:rounded-3xl max-w-lg w-full border border-slate-200 dark:border-[#24292F] shadow-2xl p-5 space-y-4 max-h-[92vh] overflow-y-auto">
-            
+
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#24292F] pb-3">
               <div className="flex items-center gap-2.5">
@@ -625,11 +638,10 @@ export default function ExploreCoursesScreen() {
                   setPaymentTab('qr');
                   setVerificationError('');
                 }}
-                className={`flex-1 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                  paymentTab === 'qr'
+                className={`flex-1 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentTab === 'qr'
                     ? 'bg-white dark:bg-[#24292F] text-slate-900 dark:text-white shadow-xs font-bold'
                     : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-800'
-                }`}
+                  }`}
               >
                 <span className="material-symbols-outlined text-sm">qr_code_2</span>
                 <span>1. Scan QR (Desktop/Phone)</span>
@@ -639,11 +651,10 @@ export default function ExploreCoursesScreen() {
                   setPaymentTab('apps');
                   setVerificationError('');
                 }}
-                className={`flex-1 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                  paymentTab === 'apps'
+                className={`flex-1 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${paymentTab === 'apps'
                     ? 'bg-white dark:bg-[#24292F] text-slate-900 dark:text-white shadow-xs font-bold'
                     : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-800'
-                }`}
+                  }`}
               >
                 <span className="material-symbols-outlined text-sm">smartphone</span>
                 <span>1. UPI Apps (Mobile)</span>
@@ -685,11 +696,10 @@ export default function ExploreCoursesScreen() {
                   </div>
                   <button
                     onClick={handleCopyUpiId}
-                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold flex items-center gap-1 transition-all cursor-pointer active:scale-95 ${
-                      copiedUpi
+                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold flex items-center gap-1 transition-all cursor-pointer active:scale-95 ${copiedUpi
                         ? 'bg-emerald-600 text-white'
                         : 'bg-slate-200 dark:bg-[#24292F] text-slate-800 dark:text-white hover:bg-slate-300'
-                    }`}
+                      }`}
                   >
                     <span className="material-symbols-outlined text-xs">
                       {copiedUpi ? 'check' : 'content_copy'}
@@ -807,11 +817,10 @@ export default function ExploreCoursesScreen() {
                   <button
                     onClick={handleVerifyUtrPayment}
                     disabled={!utrNumber.trim()}
-                    className={`w-full py-3 rounded-xl text-xs font-mono font-bold transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95 ${
-                      utrNumber.trim()
+                    className={`w-full py-3 rounded-xl text-xs font-mono font-bold transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95 ${utrNumber.trim()
                         ? 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer'
                         : 'bg-slate-200 dark:bg-[#24292F] text-slate-400 dark:text-slate-600 cursor-not-allowed'
-                    }`}
+                      }`}
                   >
                     <span className="material-symbols-outlined text-sm">lock_open</span>
                     <span>Verify UTR & Unlock Course</span>

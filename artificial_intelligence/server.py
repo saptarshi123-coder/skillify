@@ -16,21 +16,21 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 cv_gen_dir = os.path.join(current_dir, "cv_generator")
 quiz_engine_dir = os.path.join(current_dir, "quiz_engine")
 
+# cv_generator must be placed FIRST in sys.path so its internal modules resolve properly
+if quiz_engine_dir not in sys.path:
+    sys.path.append(quiz_engine_dir)
 if cv_gen_dir not in sys.path:
     sys.path.insert(0, cv_gen_dir)
-if quiz_engine_dir not in sys.path:
-    sys.path.insert(0, quiz_engine_dir)
 
 try:
-    from cv_generator.server import create_app
-    app = create_app()
-except ImportError:
-    # Fallback to direct import if running inside backend/cv_generator
+    import server as cv_server
+    app = cv_server.create_app()
+except Exception as e1:
     try:
-        from server import create_app
+        from cv_generator.server import create_app
         app = create_app()
-    except Exception as e:
-        print(f"Notice: CV Generator server import fallback: {e}")
+    except Exception as e2:
+        print(f"Notice: CV Generator server import fallback: {e1} / {e2}")
         from fastapi import FastAPI
         app = FastAPI(title="Skillify AI Backend")
 

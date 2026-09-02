@@ -26,16 +26,16 @@ const REMOTE_ENV_URL = normalizeApiBase(
   'https://profanity-manor-overeager.ngrok-free.dev'
 );
 
-// 3. Candidate Bases for Multi-Tier Discovery
+// 3. Candidate Bases for Multi-Tier Discovery: Prioritize local proxy & localhost servers
 const CANDIDATE_CV_BASES = [
-  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/v1/cv` : null,
-  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/cv` : null,
-  '/api/v1/cv',
   '/api/cv',
+  '/api/v1/cv',
+  'http://localhost:5001/api/cv',
+  'http://127.0.0.1:5001/api/cv',
   'http://localhost:8000/api/v1/cv',
   'http://127.0.0.1:8000/api/v1/cv',
-  'http://localhost:5001/api/cv',
-  'http://127.0.0.1:5001/api/cv'
+  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/cv` : null,
+  REMOTE_ENV_URL ? `${REMOTE_ENV_URL}/v1/cv` : null
 ].filter(Boolean);
 
 // Deduplicate candidate endpoints
@@ -151,10 +151,11 @@ export const cvGeneratorService = {
     for (const base of DEDUPLICATED_CANDIDATES) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
 
-        const healthUrl = `${base.replace(/\/api.*$/, '') || ''}/health`;
-        const res = await fetch(healthUrl, {
+        // Probe domains endpoint directly to verify CV service readiness
+        const testUrl = `${base}/domains`;
+        const res = await fetch(testUrl, {
           signal: controller.signal,
           headers: { 'ngrok-skip-browser-warning': 'true' }
         });
