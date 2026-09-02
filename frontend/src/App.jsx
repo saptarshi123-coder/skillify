@@ -30,6 +30,11 @@ import SubmitProjectScreen from './screens/SubmitProjectScreen';
 import ProjectRepoScreen from './screens/ProjectRepoScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ExploreCoursesScreen from './screens/ExploreCoursesScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
+import InternshipApplicationMessageScreen from './screens/InternshipApplicationMessageScreen';
+import HRNotificationsScreen from './screens/HRNotificationsScreen';
+import StudentApplicantsScreen from './screens/StudentApplicantsScreen';
+import ChatScreen from './screens/ChatScreen';
 
 export default function App() {
   const { currentScreen } = useApp();
@@ -87,12 +92,22 @@ export default function App() {
         return <ProjectRepoScreen />;
       case 'settings':
         return <SettingsScreen />;
+      case 'notifications':
+        return <NotificationsScreen />;
+      case 'internship-application-message':
+        return <InternshipApplicationMessageScreen />;
+      case 'hr-notifications':
+        return <HRNotificationsScreen />;
+      case 'student-applicants':
+        return <StudentApplicantsScreen />;
+      case 'chat':
+        return <ChatScreen />;
       default:
         return <DashboardScreen />;
     }
   };
 
-  const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active'].includes(currentScreen);
+  const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active', 'internship-application-message', 'chat'].includes(currentScreen);
 
   return (
     <div className="min-h-screen bg-slate-900/5 dark:bg-[#0f1115] flex justify-center w-full transition-colors">

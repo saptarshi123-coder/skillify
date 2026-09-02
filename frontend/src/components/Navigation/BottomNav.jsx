@@ -41,6 +41,13 @@ export default function BottomNav() {
         icon: 'person',
         screen: 'recruiter-profile',
         activeScreens: ['recruiter-profile', 'complete-hr-profile', 'settings']
+      },
+      {
+        id: 'hr-notifications',
+        label: 'Inbox',
+        icon: 'notifications',
+        screen: 'hr-notifications',
+        activeScreens: ['hr-notifications', 'student-applicants']
       }
     ]
     : [
@@ -84,6 +91,13 @@ export default function BottomNav() {
         icon: 'person',
         screen: 'profile',
         activeScreens: ['profile', 'edit-profile', 'badges', 'settings']
+      },
+      {
+        id: 'notifications',
+        label: 'Inbox',
+        icon: 'notifications',
+        screen: 'notifications',
+        activeScreens: ['notifications', 'internship-application-message']
       }
     ];
 

@@ -193,6 +193,15 @@ export function AppProvider({ children }) {
   // Toast Notification
   const [toast, setToast] = useState({ show: false, message: '', type: 'info' });
 
+  // Active Chat Contact (for ChatScreen)
+  const [activeChatContact, setActiveChatContact] = useState(null);
+
+  // Open a chat with a contact object { id, name, subtitle, avatar, initials, online }
+  const openChat = (contact) => {
+    setActiveChatContact(contact);
+    navigate('chat');
+  };
+
   // Listen for direct deep links like #profile-std_2 or ?profile=sophia_chen
   useEffect(() => {
     try {
@@ -1487,6 +1496,9 @@ export function AppProvider({ children }) {
       isExitModalOpen,
       setIsExitModalOpen,
       confirmExitApp,
+      activeChatContact,
+      setActiveChatContact,
+      openChat,
       handleBackAction
     }}>
       {children}
