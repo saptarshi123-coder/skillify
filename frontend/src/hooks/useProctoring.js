@@ -36,6 +36,18 @@ export function useProctoring({
   const strikesRef = useRef(0);
   const isCapturingRef = useRef(false);
   const animFrameRef = useRef(null);
+
+  // Stabilize external callbacks to prevent infinite teardown loops on parent re-renders
+  const onViolationRef = useRef(onViolation);
+  const onMaxStrikesRef = useRef(onMaxStrikesExceeded);
+  const onVideoOffRef = useRef(onVideoOff);
+
+  useEffect(() => {
+    onViolationRef.current = onViolation;
+    onMaxStrikesRef.current = onMaxStrikesExceeded;
+    onVideoOffRef.current = onVideoOff;
+  });
+
   const [availableCameras, setAvailableCameras] = useState([]);
   const [currentCameraIndex, setCurrentCameraIndex] = useState(0);
   const [facingMode, setFacingMode] = useState('user'); // 'user' | 'environment'
@@ -62,6 +74,7 @@ export function useProctoring({
       canvasRef.current = document.createElement('canvas');
     }
   }, []);
+
 
   // Stop any active Media Stream or Animation Tracks
   const stopMediaStream = useCallback(() => {
@@ -100,15 +113,24 @@ export function useProctoring({
     if (video) {
       video.srcObject = stream;
       video.muted = true;
-      video.defaultMuted = true;
       video.playsInline = true;
       video.setAttribute('playsinline', 'true');
       video.setAttribute('webkit-playsinline', 'true');
       video.onloadedmetadata = () => {
         video.muted = true;
-        video.play().catch(e => console.warn('Play on metadata loaded:', e));
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(e => {
+            if (e.name !== 'AbortError') console.warn('Play on metadata loaded:', e);
+          });
+        }
       };
-      video.play().catch(e => console.warn('Direct video play:', e));
+      const directPromise = video.play();
+      if (directPromise !== undefined) {
+        directPromise.catch(e => {
+          if (e.name !== 'AbortError') console.warn('Direct video play:', e);
+        });
+      }
     }
   }, []);
 
@@ -217,7 +239,6 @@ export function useProctoring({
         if (video) {
           video.srcObject = stream;
           video.muted = true;
-          video.defaultMuted = true;
           video.playsInline = true;
           video.onloadedmetadata = () => {
             video.muted = true;
@@ -284,15 +305,16 @@ export function useProctoring({
       }
 
       let stream = null;
+      const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
 
       // Build video constraints (compatible with mobile portrait & desktop without OverconstrainedError)
       const constraints = targetDeviceId
-        ? { video: { deviceId: targetDeviceId } }
+        ? { video: { deviceId: { exact: targetDeviceId } } }
         : {
             video: {
               facingMode: activeFacingMode,
-              width: { ideal: 1280 },
-              height: { ideal: 720 }
+              width: isMobile ? { ideal: 720 } : { ideal: 1280 },
+              height: isMobile ? { ideal: 1280 } : { ideal: 720 }
             }
           };
 
@@ -323,8 +345,8 @@ export function useProctoring({
           setHasPermission(false);
           setFaceStatus('offline');
           setIsRecording(false);
-          if (typeof onVideoOff === 'function') {
-            onVideoOff('Camera video track was turned off or disconnected.');
+          if (typeof onVideoOffRef.current === 'function') {
+            onVideoOffRef.current('Camera video track was turned off or disconnected.');
           }
         };
       });
@@ -363,7 +385,7 @@ export function useProctoring({
       setFaceStatus('offline');
       return null;
     }
-  }, [stopMediaStream, attachStreamToVideo, updateAvailableCameras, startSimulatedStream, onVideoOff, facingMode]);
+  }, [stopMediaStream, attachStreamToVideo, updateAvailableCameras, startSimulatedStream, facingMode]);
 
   // Switch between available camera devices or flip front/back on mobile
   const switchCamera = useCallback(async (explicitDeviceId = null) => {
@@ -450,8 +472,8 @@ export function useProctoring({
       if (!hasActiveTrack || !hasPermission) {
         console.warn('Proctoring: Active video track not found during frame check.');
         setFaceStatus('offline');
-        if (typeof onVideoOff === 'function') {
-          onVideoOff('Camera feed was stopped or video track became inactive.');
+        if (typeof onVideoOffRef.current === 'function') {
+          onVideoOffRef.current('Camera feed was stopped or video track became inactive.');
         }
         return;
       }
@@ -508,12 +530,12 @@ export function useProctoring({
 
           setViolations(prev => [violationRecord, ...prev]);
 
-          if (typeof onViolation === 'function') {
-            onViolation(violationRecord);
+          if (typeof onViolationRef.current === 'function') {
+            onViolationRef.current(violationRecord);
           }
 
-          if (newStrikeCount >= maxStrikes && typeof onMaxStrikesExceeded === 'function') {
-            onMaxStrikesExceeded(newStrikeCount, violationRecord);
+          if (newStrikeCount >= maxStrikes && typeof onMaxStrikesRef.current === 'function') {
+            onMaxStrikesRef.current(newStrikeCount, violationRecord);
           }
         } else {
           // Frame verified successfully
@@ -529,7 +551,7 @@ export function useProctoring({
     } finally {
       isCapturingRef.current = false;
     }
-  }, [enabled, hasPermission, captureFrameBase64, endpoint, maxStrikes, onViolation, onMaxStrikesExceeded]);
+  }, [enabled, hasPermission, captureFrameBase64, endpoint, maxStrikes]);
 
   // Initialize camera on mount and cleanup on unmount
   useEffect(() => {
@@ -545,19 +567,24 @@ export function useProctoring({
   // Attach video stream if videoRef is mounted later and ensure it plays
   useEffect(() => {
     const video = videoRef.current;
-    if (video && streamRef.current) {
-      if (video.srcObject !== streamRef.current) {
-        video.srcObject = streamRef.current;
+    const stream = streamRef.current;
+    if (video && stream) {
+      if (video.srcObject !== stream) {
+        video.srcObject = stream;
         video.muted = true;
-        video.defaultMuted = true;
         video.playsInline = true;
       }
       if (video.paused) {
         video.muted = true;
-        video.play().catch(e => console.warn('Autoplay unpause check:', e));
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch(e => {
+            if (e.name !== 'AbortError') console.warn('Autoplay unpause check:', e);
+          });
+        }
       }
     }
-  });
+  }, [hasPermission, isRecording, isSimulated]);
 
   // Periodic Frame Verification Loop
   useEffect(() => {

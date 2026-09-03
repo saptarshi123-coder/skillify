@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '../context/AppContext';
 import Navbar from '../components/Navigation/Navbar';
 import { useProctoring } from '../hooks/useProctoring';
@@ -24,6 +24,35 @@ export default function ActiveQuizScreen() {
   const [isPiPMinimized, setIsPiPMinimized] = useState(false);
   const previewCanvasRef = useRef(null);
 
+  const submitQuizRef = useRef(submitQuiz);
+  useEffect(() => {
+    submitQuizRef.current = submitQuiz;
+  }, [submitQuiz]);
+
+  // Memoized Callback Handlers for Proctoring Subsystem
+  const handleViolation = useCallback((violationRecord) => {
+    setViolationAlert({
+      strike: violationRecord.strike,
+      reason: violationRecord.reason,
+      timestamp: Date.now()
+    });
+  }, []);
+
+  const handleMaxStrikes = useCallback((strikeCount) => {
+    alert(`⚠️ Proctoring Violation: Maximum strikes (${strikeCount}/3) exceeded. Your assessment is being automatically submitted for review.`);
+    if (typeof submitQuizRef.current === 'function') {
+      submitQuizRef.current();
+    }
+  }, []);
+
+  const handleVideoOff = useCallback((reason) => {
+    setViolationAlert(prev => ({
+      strike: (prev?.strike || 0) + 1,
+      reason: `Camera feed interrupted (${reason}). Please keep camera on or switch to virtual feed.`,
+      timestamp: Date.now()
+    }));
+  }, []);
+
   // Live Proctoring & Face Authentication Hook
   const {
     videoRef,
@@ -48,25 +77,9 @@ export default function ActiveQuizScreen() {
     intervalMs: 4000,
     endpoint: '/api/proctor/verify-frame',
     maxStrikes: 3,
-    onViolation: (violationRecord) => {
-      setViolationAlert({
-        strike: violationRecord.strike,
-        reason: violationRecord.reason,
-        timestamp: Date.now()
-      });
-    },
-    onMaxStrikesExceeded: (strikeCount) => {
-      alert(`⚠️ Proctoring Violation: Maximum strikes (${strikeCount}/3) exceeded. Your assessment is being automatically submitted for review.`);
-      submitQuiz();
-    },
-    onVideoOff: (reason) => {
-      // Only warn on mid-test camera drop, do not abruptly submit
-      setViolationAlert({
-        strike: strikes + 1,
-        reason: `Camera feed interrupted (${reason}). Please keep camera on or switch to virtual feed.`,
-        timestamp: Date.now()
-      });
-    }
+    onViolation: handleViolation,
+    onMaxStrikesExceeded: handleMaxStrikes,
+    onVideoOff: handleVideoOff
   });
 
   // Direct 2D Canvas Renderer: Bypasses Chrome GPU Compositor black screen bugs
@@ -113,7 +126,9 @@ export default function ActiveQuizScreen() {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          submitQuiz();
+          if (typeof submitQuizRef.current === 'function') {
+            submitQuizRef.current();
+          }
           return 0;
         }
         return prev - 1;
@@ -121,7 +136,7 @@ export default function ActiveQuizScreen() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [submitQuiz]);
+  }, []);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -495,213 +510,212 @@ export default function ActiveQuizScreen() {
             </div>
           </div>
 
-          {/* Video Container (Expanded Mode) */}
-          {!isPiPMinimized && (
-            <div 
-              onClick={() => {
-                if (!isSimulated) {
-                  switchCamera();
-                }
+          {/* Video Container - Always Mounted to prevent unmounting and stream interruptions */}
+          <div 
+            onClick={() => {
+              if (!isSimulated) {
+                switchCamera();
+              }
+            }}
+            title="Click video to switch camera device"
+            className={`relative w-full aspect-4/3 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 cursor-pointer group ${
+              isPiPMinimized ? 'hidden' : 'block'
+            }`}
+          >
+            {/* Camera Video Element - Always Mounted to avoid DOM recreation black screen */}
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              webkit-playsinline="true"
+              muted
+              onLoadedMetadata={(e) => {
+                e.target.muted = true;
+                e.target.play().catch(() => {});
               }}
-              title="Click video to switch camera device"
-              className="relative w-full aspect-4/3 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 cursor-pointer group"
-            >
-              {/* Camera Video Element - Always Mounted to avoid DOM recreation black screen */}
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                webkit-playsinline="true"
-                muted
-                defaultMuted
-                onLoadedMetadata={(e) => {
-                  e.target.muted = true;
-                  e.target.play().catch(() => {});
-                }}
-                onCanPlay={(e) => {
-                  e.target.muted = true;
-                  e.target.play().catch(() => {});
-                }}
-                className={`w-full h-full object-cover -scale-x-100 ${
-                  hasPermission ? 'block' : 'hidden'
-                }`}
-              />
+              onCanPlay={(e) => {
+                e.target.muted = true;
+                e.target.play().catch(() => {});
+              }}
+              className={`w-full h-full object-cover -scale-x-100 ${
+                hasPermission ? 'block' : 'hidden'
+              }`}
+            />
 
-              {/* Direct 2D Canvas Mirror (guarantees pixel rendering even if Chrome GPU video decoder blanks) */}
-              <canvas
-                ref={previewCanvasRef}
-                className={`absolute inset-0 w-full h-full object-cover -scale-x-100 pointer-events-none ${
-                  hasPermission && !isSimulated ? 'block' : 'hidden'
-                }`}
-              />
+            {/* Direct 2D Canvas Mirror (guarantees pixel rendering even if Chrome GPU video decoder blanks) */}
+            <canvas
+              ref={previewCanvasRef}
+              className={`absolute inset-0 w-full h-full object-cover -scale-x-100 pointer-events-none ${
+                hasPermission && !isSimulated ? 'block' : 'hidden'
+              }`}
+            />
 
-              {hasPermission ? (
-                <>
-                  {/* Quick Camera Switcher Floating Button */}
-                  {!isSimulated && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        switchCamera();
-                      }}
-                      className="absolute top-2 left-2 z-10 text-[9px] font-mono font-bold px-2 py-1 bg-sky-950/95 hover:bg-sky-900 text-sky-200 rounded-lg border border-sky-400/50 active:scale-95 transition-all shadow-lg flex items-center gap-1 cursor-pointer backdrop-blur-xs"
-                      title="Switch or flip camera"
-                    >
-                      <span className="material-symbols-outlined text-xs text-sky-400">flip_camera_ios</span>
-                      <span>Switch Camera</span>
-                    </button>
-                  )}
+            {hasPermission ? (
+              <>
+                {/* Quick Camera Switcher Floating Button */}
+                {!isSimulated && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      switchCamera();
+                    }}
+                    className="absolute top-2 left-2 z-10 text-[9px] font-mono font-bold px-2 py-1 bg-sky-950/95 hover:bg-sky-900 text-sky-200 rounded-lg border border-sky-400/50 active:scale-95 transition-all shadow-lg flex items-center gap-1 cursor-pointer backdrop-blur-xs"
+                    title="Switch or flip camera"
+                  >
+                    <span className="material-symbols-outlined text-xs text-sky-400">flip_camera_ios</span>
+                    <span>Switch Camera</span>
+                  </button>
+                )}
 
-                  {/* Black Screen Warning / Privacy Shutter Alert */}
-                  {isBlackScreen && !isSimulated && (
-                    <div 
-                      onClick={(e) => e.stopPropagation()} 
-                      className="absolute inset-0 bg-black/90 backdrop-blur-xs flex flex-col items-center justify-center p-3 text-center space-y-1.5 z-20"
-                    >
-                      <span className="material-symbols-outlined text-amber-400 text-2xl animate-pulse">
-                        visibility_off
-                      </span>
-                      <p className="text-[10px] font-mono font-bold text-amber-300 leading-tight">
-                        Black Feed Detected
-                      </p>
-                      <p className="text-[9px] font-mono text-slate-300 leading-tight">
-                        • Slide open physical privacy shutter above screen<br/>
-                        • Press F8 / Fn+F8 (Lenovo Camera toggle)
-                      </p>
-                      <div className="flex flex-col gap-1 w-full pt-1">
-                        {availableCameras.length > 1 && (
-                          <button
-                            onClick={switchCamera}
-                            className="text-[9px] font-mono font-bold bg-sky-600 hover:bg-sky-500 text-white px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
-                          >
-                            <span className="material-symbols-outlined text-xs">flip_camera_ios</span>
-                            <span>Switch to Camera {currentCameraIndex === 0 ? 2 : 1}</span>
-                          </button>
-                        )}
-                        <button
-                          onClick={startSimulatedStream}
-                          className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer"
-                        >
-                          Use Virtual Proctor Feed
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Live Status Overlay Badge */}
-                  <div className="absolute bottom-1.5 left-1.5 right-1.5 flex items-center justify-between px-2 py-1 bg-black/75 backdrop-blur-xs rounded-lg text-[9px] font-mono text-slate-200 border border-white/10">
-                    <span className="flex items-center gap-1.5 truncate">
-                      <span className={`w-2 h-2 rounded-full ${
-                        isSimulated
-                          ? 'bg-sky-400 animate-pulse'
-                          : faceStatus === 'verified'
-                          ? 'bg-emerald-400'
-                          : faceStatus === 'violation'
-                          ? 'bg-red-400'
-                          : 'bg-amber-400 animate-pulse'
-                      }`}></span>
-                      <span className="truncate">
-                        {isSimulated
-                          ? 'Virtual Feed'
-                          : faceStatus === 'verified'
-                          ? 'Webcam Live'
-                          : faceStatus === 'violation'
-                          ? 'Anomaly Detected'
-                          : 'Monitoring'}
-                      </span>
+                {/* Black Screen Warning / Privacy Shutter Alert */}
+                {isBlackScreen && !isSimulated && (
+                  <div 
+                    onClick={(e) => e.stopPropagation()} 
+                    className="absolute inset-0 bg-black/90 backdrop-blur-xs flex flex-col items-center justify-center p-3 text-center space-y-1.5 z-20"
+                  >
+                    <span className="material-symbols-outlined text-amber-400 text-2xl animate-pulse">
+                      visibility_off
                     </span>
-
-                    <div className="flex items-center gap-1 shrink-0">
-                      {!isSimulated && (
-                        availableCameras.length > 1 ? (
-                          <select
-                            value={availableCameras[currentCameraIndex]?.deviceId || ''}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={(e) => {
-                              e.stopPropagation();
-                              switchCamera(e.target.value);
-                            }}
-                            className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 px-1 py-0.5 rounded border border-sky-400/40 outline-hidden max-w-[115px] truncate cursor-pointer"
-                            title="Select Camera Device"
-                          >
-                            {availableCameras.map((cam, idx) => (
-                              <option key={cam.deviceId || idx} value={cam.deviceId} className="bg-slate-900 text-white">
-                                {cam.label ? (cam.label.length > 18 ? cam.label.slice(0, 18) + '…' : cam.label) : `Camera ${idx + 1}`}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              switchCamera();
-                            }}
-                            className="text-[9px] font-mono font-bold px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded border border-sky-400/30 active:scale-95 transition-all cursor-pointer flex items-center gap-0.5"
-                            title="Switch Front/Back Camera"
-                          >
-                            <span className="material-symbols-outlined text-[10px]">flip_camera_ios</span>
-                            <span>Flip</span>
-                          </button>
-                        )
+                    <p className="text-[10px] font-mono font-bold text-amber-300 leading-tight">
+                      Black Feed Detected
+                    </p>
+                    <p className="text-[9px] font-mono text-slate-300 leading-tight">
+                      • Slide open physical privacy shutter above screen<br/>
+                      • Press F8 / Fn+F8 (Lenovo Camera toggle)
+                    </p>
+                    <div className="flex flex-col gap-1 w-full pt-1">
+                      {availableCameras.length > 1 && (
+                        <button
+                          onClick={switchCamera}
+                          className="text-[9px] font-mono font-bold bg-sky-600 hover:bg-sky-500 text-white px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
+                        >
+                          <span className="material-symbols-outlined text-xs">flip_camera_ios</span>
+                          <span>Switch to Camera {currentCameraIndex === 0 ? 2 : 1}</span>
+                        </button>
                       )}
+                      <button
+                        onClick={startSimulatedStream}
+                        className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer"
+                      >
+                        Use Virtual Proctor Feed
+                      </button>
+                    </div>
+                  </div>
+                )}
 
-                      {isSimulated ? (
+                {/* Live Status Overlay Badge */}
+                <div className="absolute bottom-1.5 left-1.5 right-1.5 flex items-center justify-between px-2 py-1 bg-black/75 backdrop-blur-xs rounded-lg text-[9px] font-mono text-slate-200 border border-white/10">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <span className={`w-2 h-2 rounded-full ${
+                      isSimulated
+                        ? 'bg-sky-400 animate-pulse'
+                        : faceStatus === 'verified'
+                        ? 'bg-emerald-400'
+                        : faceStatus === 'violation'
+                        ? 'bg-red-400'
+                        : 'bg-amber-400 animate-pulse'
+                    }`}></span>
+                    <span className="truncate">
+                      {isSimulated
+                        ? 'Virtual Feed'
+                        : faceStatus === 'verified'
+                        ? 'Webcam Live'
+                        : faceStatus === 'violation'
+                        ? 'Anomaly Detected'
+                        : 'Monitoring'}
+                    </span>
+                  </span>
+
+                  <div className="flex items-center gap-1 shrink-0">
+                    {!isSimulated && (
+                      availableCameras.length > 1 ? (
+                        <select
+                          value={availableCameras[currentCameraIndex]?.deviceId || ''}
+                          onClick={(e) => e.stopPropagation()}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            switchCamera(e.target.value);
+                          }}
+                          className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 px-1 py-0.5 rounded border border-sky-400/40 outline-hidden max-w-[115px] truncate cursor-pointer"
+                          title="Select Camera Device"
+                        >
+                          {availableCameras.map((cam, idx) => (
+                            <option key={cam.deviceId || idx} value={cam.deviceId} className="bg-slate-900 text-white">
+                              {cam.label ? (cam.label.length > 18 ? cam.label.slice(0, 18) + '…' : cam.label) : `Camera ${idx + 1}`}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            enableCamera();
+                            switchCamera();
                           }}
-                          className="text-[9px] font-mono font-bold text-sky-400 hover:text-sky-300 underline cursor-pointer"
-                          title="Turn on physical camera"
+                          className="text-[9px] font-mono font-bold px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded border border-sky-400/30 active:scale-95 transition-all cursor-pointer flex items-center gap-0.5"
+                          title="Switch Front/Back Camera"
                         >
-                          Enable Cam
+                          <span className="material-symbols-outlined text-[10px]">flip_camera_ios</span>
+                          <span>Flip</span>
                         </button>
-                      ) : (
-                        <span className="material-symbols-outlined text-[11px] text-emerald-400">
-                          videocam
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                /* Camera Inactive / Permission Required Overlay */
-                <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center space-y-1.5 bg-slate-900">
-                  <span className="material-symbols-outlined text-amber-400 text-xl">
-                    {permissionStatus === 'denied' ? 'videocam_off' : 'lock'}
-                  </span>
-                  <p className="text-[10px] font-mono text-slate-300 leading-tight">
-                    {permissionStatus === 'denied' ? 'Camera Not Detected or Blocked' : 'Camera Required'}
-                  </p>
-                  <p className="text-[9px] font-mono text-slate-400 leading-tight">
-                    Check physical privacy shutter or Chrome permissions
-                  </p>
-                  <div className="flex flex-col gap-1 w-full pt-1">
-                    <button
-                      onClick={() => enableCamera()}
-                      className="text-[9px] font-mono font-bold bg-primary text-white px-2 py-1 rounded-md shadow-xs active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
-                    >
-                      <span className="material-symbols-outlined text-xs">videocam</span>
-                      <span>Enable Camera</span>
-                    </button>
-                    <button
-                      onClick={() => switchCamera()}
-                      className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
-                    >
-                      <span className="material-symbols-outlined text-xs">flip_camera_ios</span>
-                      <span>Switch Camera</span>
-                    </button>
-                    <button
-                      onClick={startSimulatedStream}
-                      className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer"
-                    >
-                      Use Virtual Feed
-                    </button>
+                      )
+                    )}
+
+                    {isSimulated ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          enableCamera();
+                        }}
+                        className="text-[9px] font-mono font-bold text-sky-400 hover:text-sky-300 underline cursor-pointer"
+                        title="Turn on physical camera"
+                      >
+                        Enable Cam
+                      </button>
+                    ) : (
+                      <span className="material-symbols-outlined text-[11px] text-emerald-400">
+                        videocam
+                      </span>
+                    )}
                   </div>
                 </div>
-              )}
-            </div>
-          )}
+              </>
+            ) : (
+              /* Camera Inactive / Permission Required Overlay */
+              <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center space-y-1.5 bg-slate-900">
+                <span className="material-symbols-outlined text-amber-400 text-xl">
+                  {permissionStatus === 'denied' ? 'videocam_off' : 'lock'}
+                </span>
+                <p className="text-[10px] font-mono text-slate-300 leading-tight">
+                  {permissionStatus === 'denied' ? 'Camera Not Detected or Blocked' : 'Camera Required'}
+                </p>
+                <p className="text-[9px] font-mono text-slate-400 leading-tight">
+                  Check physical privacy shutter or Chrome permissions
+                </p>
+                <div className="flex flex-col gap-1 w-full pt-1">
+                  <button
+                    onClick={() => enableCamera()}
+                    className="text-[9px] font-mono font-bold bg-primary text-white px-2 py-1 rounded-md shadow-xs active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-xs">videocam</span>
+                    <span>Enable Camera</span>
+                  </button>
+                  <button
+                    onClick={() => switchCamera()}
+                    className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-xs">flip_camera_ios</span>
+                    <span>Switch Camera</span>
+                  </button>
+                  <button
+                    onClick={startSimulatedStream}
+                    className="text-[9px] font-mono font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded-md active:scale-95 transition-all cursor-pointer"
+                  >
+                    Use Virtual Feed
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
         </div>
       </aside>

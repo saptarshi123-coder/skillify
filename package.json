@@ -2,25 +2,14 @@
   "name": "skillify-ai-workspace",
   "private": true,
   "version": "1.0.0",
-  "description": "Skillify AI - Multi-Language Architecture (Frontend: React, Backend: Java, AI: Python, Database: SQLite)",
+  "description": "Skillify AI - React Frontend with Remote AI Server & SQLite",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
-    "dev:all": "concurrently -k -n \"JAVA_BACKEND,AI_CHATBOT,FRONTEND\" -c \"yellow,cyan,green\" \"npm run backend\" \"npm run chatbot\" \"npm run dev\"",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "backend": "backend\\run.bat",
-    "backend:build": "backend\\build.bat",
-    "chatbot": "python artificial_intelligence/chatbot/app.py",
-    "ai": "python artificial_intelligence/chatbot/app.py",
-    "ai:cv": "python artificial_intelligence/server.py",
-    "ai:quiz": "python artificial_intelligence/quiz_engine/quiz_engine.py",
-    "quiz:api": "python artificial_intelligence/quiz_engine/api.py",
     "android:sync": "npm --prefix frontend run android:sync",
     "android:open": "npm --prefix frontend run android:open",
     "android:build": "npm --prefix frontend run android:build",
     "android:build:release": "npm --prefix frontend run android:build:release"
-  },
-  "devDependencies": {
-    "concurrently": "^10.0.5"
   }
 }
