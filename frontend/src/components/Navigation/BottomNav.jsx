@@ -109,28 +109,33 @@ export default function BottomNav() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-      <nav className="w-full max-w-md bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-slate-200 dark:border-[#1A1D20] py-1 px-1 flex justify-around items-center pointer-events-auto transition-colors">
+    <div className="fixed bottom-3 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none">
+      {/* 
+        TIP: To change navbar width, adjust `max-w-[365px]` (or `w-[90%]`) below. 
+        e.g., `max-w-[340px]` (more compact) or `max-w-[400px]` (wider).
+      */}
+      <nav className="bottom-nav w-[92%] max-w-[365px] bg-white/50 dark:bg-black/50 backdrop-blur-xl border border-slate-200/80 dark:border-white/15 rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-2xl dark:shadow-black/70 py-1.5 px-1 flex justify-around items-center pointer-events-auto transition-all duration-300">
         {navItems.map((item) => {
           const active = isItemActive(item);
           return (
             <button
               key={item.id}
               onClick={() => navigate(item.screen)}
-              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1.5 px-2 rounded-xl flex-1 cursor-pointer ${active
-                  ? 'text-[#D71921] dark:text-white'
-                  : 'text-slate-500 dark:text-[#6E7681] hover:text-slate-900 dark:hover:text-white'
-                }`}
+              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1 px-1 rounded-xl flex-1 cursor-pointer active:scale-95 ${
+                active
+                  ? 'text-[#D71921] dark:text-white font-bold'
+                  : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
+              }`}
             >
-              {/* Nothing OS Active Red Dash Indicator on Top */}
+              {/* Nothing OS Active Red Accent Indicator on Top */}
               {active && (
-                <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-7 h-0.5 bg-[#D71921] rounded-full" />
+                <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#D71921] rounded-full shadow-[0_0_8px_#D71921]" />
               )}
 
-              <span className="material-symbols-outlined text-xl">
+              <span className={`material-symbols-outlined text-lg transition-transform ${active ? 'scale-105' : ''}`}>
                 {item.icon}
               </span>
-              <span className="text-[10px] font-mono tracking-tight leading-tight mt-0.5">
+              <span className="text-[9.5px] font-mono tracking-tight leading-tight mt-0.5">
                 {item.label}
               </span>
             </button>

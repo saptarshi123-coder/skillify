@@ -228,10 +228,17 @@ html.dark .bg-background {
   background-color: #000000 !important;
 }
 
-/* Header & Nav in Dark Mode: Pitch Black (#000000) */
-html.dark header,
-html.dark nav {
-  background-color: rgba(0, 0, 0, 0.95) !important;
+/* Header & Nav in Dark Mode: Translucent Pitch Black Tint */
+html.dark header {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.dark nav.bottom-nav {
+  background-color: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 html.dark .bg-surface-container-lowest {
