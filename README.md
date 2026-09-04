@@ -87,9 +87,10 @@ npm run build
 | `npm run build` | Compile optimized production bundle to `frontend/dist/` |
 | `npm run preview` | Preview production build locally |
 | `npm run android:sync` | Sync frontend production build with Capacitor Android |
-| `npm run android:open` | Open Android project in Android Studio |
-| `npm run android:build` | Build Android Debug APK (`gradlew assembleDebug`) |
-| `npm run android:build:release` | Build Android Release APK (`gradlew assembleRelease`) |
+| `npm run android:open` | Open Android project in Android Studio (Capacitor CLI) |
+| `npm run android:studio` | Sync assets & open Android Studio directly in the background |
+| `npm run android:build` | Build Android Debug APK (`./gradlew assembleDebug`) |
+| `npm run android:build:release` | Build Android Release APK (`./gradlew assembleRelease`) |
 
 ---
 

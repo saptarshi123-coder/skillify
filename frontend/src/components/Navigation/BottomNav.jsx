@@ -36,13 +36,6 @@ export default function BottomNav() {
         screen: 'ai-chat'
       },
       {
-        id: 'recruiter-profile',
-        label: 'Profile',
-        icon: 'person',
-        screen: 'recruiter-profile',
-        activeScreens: ['recruiter-profile', 'complete-hr-profile', 'settings']
-      },
-      {
         id: 'hr-notifications',
         label: 'Inbox',
         icon: 'notifications',
@@ -70,27 +63,13 @@ export default function BottomNav() {
         label: 'Learning',
         icon: 'menu_book',
         screen: 'dashboard',
-        activeScreens: ['dashboard', 'courses', 'explore-courses']
-      },
-      {
-        id: 'quiz',
-        label: 'Quizzes',
-        icon: 'quiz',
-        screen: 'quiz-select',
-        activeScreens: ['quiz-select', 'quiz-active', 'quiz-results']
+        activeScreens: ['dashboard', 'courses', 'explore-courses', 'quiz-select', 'quiz-active', 'quiz-results']
       },
       {
         id: 'ai-chat',
         label: 'Skille',
         icon: 'smart_toy',
         screen: 'ai-chat'
-      },
-      {
-        id: 'profile',
-        label: 'Profile',
-        icon: 'person',
-        screen: 'profile',
-        activeScreens: ['profile', 'edit-profile', 'badges', 'settings']
       },
       {
         id: 'notifications',
@@ -110,18 +89,14 @@ export default function BottomNav() {
 
   return (
     <div className="fixed bottom-3 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none">
-      {/* 
-        TIP: To change navbar width, adjust `max-w-[365px]` (or `w-[90%]`) below. 
-        e.g., `max-w-[340px]` (more compact) or `max-w-[400px]` (wider).
-      */}
-      <nav className="bottom-nav w-[92%] max-w-[365px] bg-white/50 dark:bg-black/50 backdrop-blur-xl border border-slate-200/80 dark:border-white/15 rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-900/5 dark:shadow-2xl dark:shadow-black/70 py-1.5 px-1 flex justify-around items-center pointer-events-auto transition-all duration-300">
+      <nav className="bottom-nav w-[92%] max-w-[365px] bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-slate-200/80 dark:border-white/15 rounded-full shadow-2xl shadow-slate-900/10 dark:shadow-2xl dark:shadow-black/80 py-2 px-2 flex justify-around items-center pointer-events-auto transition-all duration-300">
         {navItems.map((item) => {
           const active = isItemActive(item);
           return (
             <button
               key={item.id}
               onClick={() => navigate(item.screen)}
-              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1 px-1 rounded-xl flex-1 cursor-pointer active:scale-95 ${
+              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1 px-1.5 rounded-full flex-1 cursor-pointer active:scale-95 ${
                 active
                   ? 'text-[#D71921] dark:text-white font-bold'
                   : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
