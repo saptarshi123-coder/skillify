@@ -182,7 +182,7 @@ export const firestoreLearningService = {
       courseTitle: courseTitle || courseId,
       duration: 25,
       score: progressPercent >= 100 ? 100 : null,
-      title: progressPercent >= 100 
+      title: progressPercent >= 100
         ? `Completed Course: ${courseTitle || courseId} (100%)`
         : `Completed ${lastAccessedLesson || `Lesson ${completed}`}`
     });
@@ -254,7 +254,7 @@ export const firestoreLearningService = {
    * Returns an unsubscribe function to cleanly detach listeners
    */
   subscribeLearningData(uid, { onEnrollments, onProgress, onActivities, onCertificates, onError }) {
-    if (!uid) return () => {};
+    if (!uid) return () => { };
 
     const unsubscribers = [];
 

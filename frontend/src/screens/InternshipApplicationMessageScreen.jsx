@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import { QUIZ_SUBJECTS } from '../data/quizData';
+import Navbar from '../components/Navigation/Navbar';
 
 export default function InternshipApplicationMessageScreen() {
   const { goBack, userProfile, startQuiz } = useApp();
@@ -14,114 +15,105 @@ export default function InternshipApplicationMessageScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fff8f3] text-[#1f1b16] flex flex-col pb-28">
-      {/* Mobile Top App Bar */}
-      <header className="w-full top-0 sticky bg-[#fff8f3] flex justify-between items-center px-4 py-4 max-w-screen-xl mx-auto z-40 border-b border-[#eae1d9]">
-        <button
-          onClick={goBack}
-          className="text-[#6f0001] hover:text-[#9a0002] transition-colors flex items-center justify-center p-2 rounded-full hover:bg-[#eae1d9]"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <h1 className="font-bold text-xl text-[#6f0001]" style={{ fontFamily: 'Sora, sans-serif' }}>
-          Message
-        </h1>
-        <div className="w-10" />
-      </header>
+    <div className="w-full min-h-screen bg-background dark:bg-black text-on-surface dark:text-white flex flex-col pb-28 transition-colors">
+      {/* Top Navbar with Dark Mode Converter */}
+      <Navbar title="APPLICATION" showBack onBack={goBack} />
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-2xl mx-auto px-4 py-6 flex flex-col gap-6">
+      <main className="flex-1 w-full max-w-2xl mx-auto px-4 py-6 space-y-6">
         {/* Message Header */}
-        <section className="flex flex-col gap-4">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-[#9a0002] text-white flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>work</span>
+        <section className="space-y-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-[#D71921] border border-[#D71921] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+              <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>work</span>
             </div>
-            <div className="flex-1 flex flex-col min-w-0">
+            <div className="flex-1 min-w-0">
               <div className="flex justify-between items-start gap-2">
-                <h2 className="text-xl font-semibold text-[#1f1b16] truncate" style={{ fontFamily: 'Sora, sans-serif' }}>
+                <h2 className="font-headline text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
                   Skillify Careers
                 </h2>
-                <span className="text-xs text-[#635d5a] flex-shrink-0 pt-1" style={{ fontFamily: 'Geist, sans-serif' }}>
+                <span className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] flex-shrink-0 pt-0.5">
                   10:42 AM
                 </span>
               </div>
-              <p className="text-sm text-[#635d5a] truncate" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+              <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] truncate">
                 careers@skillify.academic
               </p>
             </div>
           </div>
-          <div className="w-full h-px bg-[#eae1d9]" />
-          <h3 className="text-xl font-bold text-[#1f1b16]" style={{ fontFamily: 'Sora, sans-serif' }}>
+
+          <div className="w-full h-px bg-slate-200 dark:bg-[#24292F]" />
+
+          <h3 className="font-headline text-lg sm:text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wide">
             Internship Application Received
           </h3>
         </section>
 
         {/* Message Body */}
-        <section className="flex flex-col gap-4 text-base leading-relaxed" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+        <section className="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
           <p>Dear {userProfile?.name?.split(' ')[0] || 'Alex'},</p>
           <p>
-            We have received your application for the <strong>Frontend Intern</strong> role. Thank you for your interest in joining the Skillify Academic team. We are currently reviewing your qualifications and experience.
+            We have received your application for the <strong className="text-slate-900 dark:text-white font-semibold">Frontend Intern</strong> role. Thank you for your interest in joining the Skillify Academic team. We are currently reviewing your qualifications and experience.
           </p>
           <p>
             To move forward in the selection process, please complete the required skill assessment quiz below. This assessment has been assigned by our HR team and will help us evaluate your foundational knowledge relevant to the role.
           </p>
 
           {/* Assessment Card — shows the HR-assigned quiz details */}
-          <div className="bg-white border border-[#e4beb8]/50 rounded-xl p-4 flex flex-col gap-4 shadow-sm">
+          <div className="bg-white dark:bg-[#14171A] border border-slate-200 dark:border-[#24292F] rounded-2xl md:rounded-3xl p-5 space-y-4 shadow-card dark:shadow-none">
             {/* Quiz info */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#6f0001]/10 text-[#6f0001] flex items-center justify-center flex-shrink-0">
-                <span className="material-symbols-outlined">{assignedQuiz.symbol || 'quiz'}</span>
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-[#D71921]/10 dark:bg-[#D71921]/20 border border-[#D71921]/30 text-[#D71921] dark:text-[#FF8B8D] flex items-center justify-center flex-shrink-0">
+                <span className="material-symbols-outlined text-2xl">{assignedQuiz.symbol || 'quiz'}</span>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="text-sm font-bold text-[#1f1b16]" style={{ fontFamily: 'Geist, sans-serif' }}>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                     {assignedQuiz.name} Skills Assessment
                   </h4>
                   {assignedQuiz.isAI && (
-                    <span className="text-[9px] font-mono font-bold bg-[#9a0002] text-white px-2 py-0.5 rounded-full">
+                    <span className="text-[9px] font-mono font-bold bg-[#D71921] text-white px-2 py-0.5 rounded-full">
                       AI Engine
                     </span>
                   )}
                 </div>
                 <div className="flex items-center gap-3 mt-0.5">
-                  <p className="text-xs text-[#635d5a]" style={{ fontFamily: 'Geist, sans-serif' }}>
+                  <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E]">
                     {assignedQuiz.level} · {assignedQuiz.duration} · {assignedQuiz.totalQuestions} Questions
                   </p>
                 </div>
               </div>
-              <span className="text-xs font-bold text-[#6f0001] bg-[#6f0001]/10 px-2.5 py-1 rounded-full flex-shrink-0" style={{ fontFamily: 'Geist, sans-serif' }}>
+              <span className="text-xs font-mono font-bold text-[#D71921] dark:text-[#FF8B8D] bg-[#D71921]/10 dark:bg-[#D71921]/20 border border-[#D71921]/30 px-2.5 py-1 rounded-full flex-shrink-0">
                 +{assignedQuiz.xpReward} XP
               </span>
             </div>
 
             {/* Assigned by HR badge */}
-            <div className="flex items-center gap-2 bg-[#f5ece4] rounded-lg px-3 py-2">
-              <span className="material-symbols-outlined text-[#6f0001]" style={{ fontSize: '16px' }}>verified_user</span>
-              <p className="text-xs text-[#5b403c]" style={{ fontFamily: 'Geist, sans-serif' }}>
-                Assigned by <strong>HR · Skillify Careers</strong> — required to proceed
+            <div className="flex items-center gap-2.5 bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-xl px-3.5 py-2.5">
+              <span className="material-symbols-outlined text-[#D71921] dark:text-[#FF8B8D]" style={{ fontSize: '18px' }}>verified_user</span>
+              <p className="text-xs text-slate-600 dark:text-[#8E959E] font-mono">
+                Assigned by <strong className="text-slate-900 dark:text-white font-semibold">HR · Skillify Careers</strong> — required to proceed
               </p>
             </div>
 
             {/* Take Quiz button — goes straight to the quiz */}
             <button
               onClick={handleTakeQuiz}
-              className="w-full bg-[#9a0002] text-white text-sm font-semibold py-3 px-6 rounded-lg hover:bg-[#6f0001] hover:-translate-y-0.5 active:scale-95 transition-all shadow-md flex items-center justify-center gap-2"
-              style={{ fontFamily: 'Geist, sans-serif' }}
+              className="w-full bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold py-3 px-6 rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>play_arrow</span>
-              Start Quiz Now
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>arrow_forward</span>
+              <span className="material-symbols-outlined text-lg">play_arrow</span>
+              START QUIZ NOW
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
             </button>
           </div>
 
-          <p className="mt-2">
+          <p className="pt-2 text-slate-600 dark:text-[#8E959E]">
             Best regards,<br />
-            <span className="font-semibold">The Skillify Careers Team</span>
+            <span className="text-slate-900 dark:text-white font-semibold">The Skillify Careers Team</span>
           </p>
         </section>
       </main>
     </div>
   );
 }
+

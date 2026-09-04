@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import Navbar from '../components/Navigation/Navbar';
 
 export default function HRNotificationsScreen() {
   const { navigate, userProfile, openChat } = useApp();
@@ -13,8 +14,8 @@ export default function HRNotificationsScreen() {
       time: '5m ago',
       message: (
         <>
-          <strong className="text-[#1f1b16] font-medium">Alex Rivera</strong> has just applied for the{' '}
-          <strong className="text-[#1f1b16] font-medium">Frontend Intern</strong> role.
+          <strong className="text-slate-900 dark:text-white font-semibold">Alex Rivera</strong> has just applied for the{' '}
+          <strong className="text-slate-900 dark:text-white font-semibold">Frontend Intern</strong> role.
         </>
       ),
       unread: true
@@ -26,7 +27,7 @@ export default function HRNotificationsScreen() {
       time: '2h ago',
       message: (
         <>
-          Your <strong className="text-[#1f1b16] font-medium">Python Developer</strong> listing is reaching its 30-day limit.
+          Your <strong className="text-slate-900 dark:text-white font-semibold">Python Developer</strong> listing is reaching its 30-day limit.
         </>
       ),
       unread: false
@@ -38,8 +39,8 @@ export default function HRNotificationsScreen() {
       time: 'Yesterday',
       message: (
         <>
-          <strong className="text-[#1f1b16] font-medium">Sarah Jenkins</strong> submitted a project for the{' '}
-          <strong className="text-[#1f1b16] font-medium">UI/UX Intern</strong> role.
+          <strong className="text-slate-900 dark:text-white font-semibold">Sarah Jenkins</strong> submitted a project for the{' '}
+          <strong className="text-slate-900 dark:text-white font-semibold">UI/UX Intern</strong> role.
         </>
       ),
       unread: false
@@ -77,71 +78,53 @@ export default function HRNotificationsScreen() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fff8f3] text-[#1f1b16] flex flex-col pb-24">
-      {/* Top App Bar */}
-      <header className="fixed top-0 w-full z-50 bg-[#fff8f3] shadow-[0px_2px_8px_rgba(154,0,2,0.04)]">
-        <div className="flex items-center justify-between px-4 h-16 w-full max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-[#e4beb8]/50">
-              <img
-                alt="HR Recruiter Profile"
-                className="w-full h-full object-cover"
-                src={userProfile?.avatar || 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80'}
-              />
-            </div>
-            <h1 className="font-bold text-xl text-[#6f0001]" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Skillify Academic
-            </h1>
-          </div>
-          <button
-            onClick={() => navigate('settings')}
-            className="text-[#6f0001] hover:bg-[#6f0001]/5 transition-colors active:scale-95 duration-200 p-2 rounded-full"
-          >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>settings</span>
-          </button>
-        </div>
-      </header>
+    <div className="w-full pb-24 transition-colors">
+      <Navbar title="INBOX" />
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pt-[80px] pb-[88px] px-4 flex flex-col gap-6">
+      <main className="px-4 py-4 space-y-4 w-full">
         {/* Quick Action: View Applicants */}
         <div
-          className="bg-white rounded-xl p-4 shadow-[0px_2px_8px_rgba(154,0,2,0.04)] border border-[#eae1d9] flex items-center justify-between cursor-pointer hover:-translate-y-0.5 transition-transform"
+          className="bg-white dark:bg-[#14171A] rounded-2xl p-4 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] flex items-center justify-between cursor-pointer hover:border-slate-300 dark:hover:border-[#323842] hover:-translate-y-0.5 transition-all group"
           onClick={() => navigate('student-applicants')}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#6f0001]/10 text-[#6f0001] flex items-center justify-center">
+            <div className="w-11 h-11 rounded-2xl bg-[#D71921]/10 dark:bg-[#D71921]/20 border border-[#D71921]/30 text-[#D71921] dark:text-[#FF8B8D] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D71921] group-hover:text-white transition-colors">
               <span className="material-symbols-outlined">groups</span>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#1f1b16]" style={{ fontFamily: 'Geist, sans-serif' }}>View All Applicants</h3>
-              <p className="text-xs text-[#5b403c]" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>42 total · 3 new today</p>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#D71921] dark:group-hover:text-[#FF8B8D] transition-colors">
+                View All Applicants
+              </h3>
+              <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E]">
+                42 total candidates · 3 new today
+              </p>
             </div>
           </div>
-          <span className="material-symbols-outlined text-[#6f0001]">chevron_right</span>
+          <span className="material-symbols-outlined text-slate-400 dark:text-[#8E959E] group-hover:text-[#D71921] dark:group-hover:text-white transition-colors">
+            chevron_right
+          </span>
         </div>
 
         {/* Segmented Control */}
-        <div className="bg-[#f5ece4] p-1 rounded-full flex gap-1 shadow-[0px_2px_8px_rgba(154,0,2,0.04)] w-full max-w-[300px] mx-auto">
+        <div className="flex w-full bg-slate-200/70 dark:bg-[#191D22] border border-slate-300/60 dark:border-[#2D333B] rounded-2xl p-1 shadow-xs dark:shadow-none">
           <button
-            className={`flex-1 py-2 rounded-full text-sm font-semibold transition-all ${
+            className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all capitalize ${
               activeTab === 'notifications'
-                ? 'bg-white text-[#6f0001] shadow-sm'
-                : 'text-[#5b403c] hover:bg-[#fbf2ea]'
+                ? 'bg-white dark:bg-[#2D333B] text-[#D71921] dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
             }`}
             onClick={() => setActiveTab('notifications')}
-            style={{ fontFamily: 'Geist, sans-serif' }}
           >
             Notifications
           </button>
           <button
-            className={`flex-1 py-2 rounded-full text-sm font-semibold transition-all ${
+            className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all capitalize ${
               activeTab === 'messages'
-                ? 'bg-white text-[#6f0001] shadow-sm'
-                : 'text-[#5b403c] hover:bg-[#fbf2ea]'
+                ? 'bg-white dark:bg-[#2D333B] text-[#D71921] dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
             }`}
             onClick={() => setActiveTab('messages')}
-            style={{ fontFamily: 'Geist, sans-serif' }}
           >
             Messages
           </button>
@@ -149,31 +132,40 @@ export default function HRNotificationsScreen() {
 
         {/* Notifications List */}
         {activeTab === 'notifications' && (
-          <div className="flex flex-col gap-4">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="font-headline text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                Recruiter Alerts
+              </h2>
+              <span className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E]">
+                {notifications.length} alerts
+              </span>
+            </div>
+
             {notifications.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-xl p-4 shadow-[0px_2px_8px_rgba(154,0,2,0.04)] flex gap-4 items-start border border-[#eae1d9] relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer"
+                className="bg-white dark:bg-[#14171A] rounded-2xl p-4 shadow-card dark:shadow-none flex gap-3.5 items-start border border-slate-200 dark:border-[#24292F] relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer hover:border-slate-300 dark:hover:border-[#323842]"
               >
-                <div className="w-10 h-10 rounded-full bg-[#6f0001]/10 flex items-center justify-center flex-shrink-0 text-[#6f0001]">
+                <div className="w-10 h-10 rounded-xl bg-[#D71921]/10 dark:bg-[#D71921]/20 border border-[#D71921]/30 flex items-center justify-center flex-shrink-0 text-[#D71921] dark:text-[#FF8B8D]">
                   <span className="material-symbols-outlined">{item.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-baseline mb-1">
-                    <h3 className="text-sm font-semibold text-[#1f1b16] truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
+                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white truncate">
                       {item.title}
                     </h3>
-                    <span className="text-xs text-[#5b403c] flex-shrink-0 ml-2" style={{ fontFamily: 'Geist, sans-serif' }}>
+                    <span className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] flex-shrink-0 ml-2">
                       {item.time}
                     </span>
                   </div>
-                  <p className="text-sm text-[#5b403c] leading-tight" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-[#8E959E] leading-relaxed">
                     {item.message}
                   </p>
                 </div>
                 {/* Unread indicator */}
                 {item.unread && (
-                  <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#6f0001]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#D71921] shadow-[0_0_8px_#D71921] flex-shrink-0 ml-1" />
                 )}
               </div>
             ))}
@@ -182,40 +174,58 @@ export default function HRNotificationsScreen() {
 
         {/* Messages List */}
         {activeTab === 'messages' && (
-          <div className="flex flex-col gap-4">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="font-headline text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                Candidate Messages
+              </h2>
+              <span className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E]">
+                {messages.length} conversations
+              </span>
+            </div>
+
             {messages.map((item) => (
               <div
                 key={item.id}
                 onClick={() => openChat({ id: item.id, name: item.name, subtitle: item.subtitle, avatar: item.avatar || null, initials: item.initials || item.name?.charAt(0), online: false })}
-                className="bg-white rounded-xl p-4 shadow-[0px_2px_8px_rgba(154,0,2,0.04)] flex gap-4 items-center border border-[#eae1d9] cursor-pointer hover:-translate-y-0.5 transition-transform group"
+                className="bg-white dark:bg-[#14171A] rounded-2xl p-4 shadow-card dark:shadow-none flex gap-3.5 items-center border border-slate-200 dark:border-[#24292F] cursor-pointer hover:border-slate-300 dark:hover:border-[#323842] hover:-translate-y-0.5 transition-all group"
               >
                 {item.avatar ? (
                   <img
-                    className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                    className="w-12 h-12 rounded-2xl object-cover border border-slate-200 dark:border-[#2D333B] flex-shrink-0"
                     src={item.avatar}
                     alt={item.name}
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#9a0002] text-[#ffa294] flex items-center justify-center flex-shrink-0 font-bold text-base" style={{ fontFamily: 'Sora, sans-serif' }}>
+                  <div className="w-12 h-12 rounded-2xl bg-[#D71921] border border-[#D71921] text-white flex items-center justify-center flex-shrink-0 font-headline font-bold text-base">
                     {item.initials}
                   </div>
                 )}
                 <div className="flex-grow min-w-0">
                   <div className="flex justify-between items-baseline mb-0.5">
-                    <h3 className={`text-sm ${item.unread ? 'font-bold' : 'font-semibold'} text-[#1f1b16] truncate`} style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                    <h3 className={`text-sm ${item.unread ? 'font-bold' : 'font-semibold'} text-slate-900 dark:text-white group-hover:text-[#D71921] dark:group-hover:text-[#FF8B8D] transition-colors truncate`}>
                       {item.name}
                     </h3>
-                    <span className="text-xs text-[#5b403c] flex-shrink-0 ml-2" style={{ fontFamily: 'Geist, sans-serif' }}>
+                    <span className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] flex-shrink-0 ml-2">
                       {item.time}
                     </span>
                   </div>
-                  <p className="text-sm text-[#5b403c] line-clamp-1" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                  <p className="text-xs text-[#D71921] dark:text-[#FF8B8D] font-mono font-semibold mb-0.5">
+                    {item.subtitle}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-[#8E959E] line-clamp-1">
                     {item.preview}
                   </p>
                 </div>
-                {item.unread && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#6f0001] flex-shrink-0 ml-1" />
-                )}
+                {/* Unread dot + chevron */}
+                <div className="flex flex-col items-end justify-between flex-shrink-0">
+                  {item.unread ? (
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#D71921] shadow-[0_0_8px_#D71921]" />
+                  ) : <div className="w-2.5 h-2.5" />}
+                  <span className="material-symbols-outlined text-slate-400 dark:text-[#8E959E] text-[18px] group-hover:text-[#D71921] dark:group-hover:text-white transition-colors">
+                    chevron_right
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -224,3 +234,4 @@ export default function HRNotificationsScreen() {
     </div>
   );
 }
+

@@ -337,7 +337,7 @@ export function AppProvider({ children }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     try {
       window.history.pushState({ screen: screenName }, '');
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const goBack = useCallback(() => {
@@ -410,7 +410,7 @@ export function AppProvider({ children }) {
     setIsExitModalOpen(false);
     try {
       window.close();
-    } catch (e) {}
+    } catch (e) { }
   };
 
   // Register Native Capacitor Android Back Button & Mobile Browser popstate
@@ -435,7 +435,7 @@ export function AppProvider({ children }) {
       handleBackAction();
       try {
         window.history.pushState(null, '', window.location.href);
-      } catch (err) {}
+      } catch (err) { }
     };
     window.addEventListener('popstate', handlePopState);
 
@@ -615,7 +615,7 @@ export function AppProvider({ children }) {
   const loginWithGitHub = (accountData = {}) => {
     const name = accountData.name || "OpenSource Contributor";
     const email = accountData.email || "developer@github.com";
-    
+
     const { user, isNew } = sqliteDB.findOrCreateOAuthUser({
       name: name,
       email: email,
@@ -1219,8 +1219,8 @@ export function AppProvider({ children }) {
     if (!studentOrProfile) {
       setSelectedPublicProfile(userProfile);
     } else if (typeof studentOrProfile === 'string') {
-      const found = STUDENTS_DATA.find(s => 
-        s.id === studentOrProfile || 
+      const found = STUDENTS_DATA.find(s =>
+        s.id === studentOrProfile ||
         s.username === studentOrProfile ||
         s.name?.toLowerCase() === studentOrProfile.toLowerCase()
       );
@@ -1235,7 +1235,7 @@ export function AppProvider({ children }) {
     const prof = profile || selectedPublicProfile || userProfile;
     const identifier = prof.username || prof.id || 'me';
     const profileUrl = `${window.location.origin}/#profile-${identifier}`;
-    
+
     let copied = false;
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1326,7 +1326,7 @@ export function AppProvider({ children }) {
     setEnrolledCourseIds(updated);
     try {
       localStorage.setItem('skillify_enrolled_courses', JSON.stringify(updated));
-    } catch (e) {}
+    } catch (e) { }
     showToast(courseTitle ? `🎉 Payment Verified! Enrolled in "${courseTitle}" successfully!` : "🎉 Course enrolled successfully!", "success");
     return updated;
   };

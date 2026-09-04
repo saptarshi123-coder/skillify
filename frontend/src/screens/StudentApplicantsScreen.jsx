@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { STUDENTS_DATA } from '../data/studentsData';
+import Navbar from '../components/Navigation/Navbar';
 
 export default function StudentApplicantsScreen() {
   const { navigate, goBack, openPublicProfile } = useApp();
@@ -80,8 +81,8 @@ export default function StudentApplicantsScreen() {
       role: 'Frontend Intern',
       score: 98,
       rankColor: 'from-yellow-400 to-yellow-600',
-      rankBg: 'bg-yellow-100',
-      rankText: 'text-yellow-800',
+      rankBg: 'bg-yellow-100 dark:bg-yellow-950/60',
+      rankText: 'text-yellow-800 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800/40',
       avatar: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=400&q=80',
       skills: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Redux']
     },
@@ -93,8 +94,8 @@ export default function StudentApplicantsScreen() {
       role: 'Backend Intern',
       score: 95,
       rankColor: 'from-gray-300 to-gray-500',
-      rankBg: 'bg-gray-100',
-      rankText: 'text-gray-700',
+      rankBg: 'bg-slate-100 dark:bg-slate-800',
+      rankText: 'text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
       skills: ['Python', 'FastAPI', 'PostgreSQL', 'Docker', 'Cybersecurity']
     },
@@ -106,8 +107,8 @@ export default function StudentApplicantsScreen() {
       role: 'UI/UX Intern',
       score: 92,
       rankColor: 'from-orange-300 to-orange-500',
-      rankBg: 'bg-orange-100',
-      rankText: 'text-orange-800',
+      rankBg: 'bg-orange-100 dark:bg-orange-950/60',
+      rankText: 'text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800/40',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
       skills: ['Figma', 'UI/UX Design', 'Design Systems', 'Prototyping', 'CSS3']
     }
@@ -121,8 +122,8 @@ export default function StudentApplicantsScreen() {
       email: 'sarah.j@university.edu',
       role: 'Data Science Intern',
       status: 'New',
-      statusColor: 'bg-[#eae1d9] text-[#5b403c]',
-      dotColor: 'bg-[#635d5a]',
+      statusColor: 'bg-slate-100 dark:bg-[#262A30] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-[#323842]',
+      dotColor: 'bg-slate-500 dark:bg-slate-400',
       score: 89,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
       skills: ['Python', 'Pandas', 'Scikit-learn', 'SQL', 'Data Visualization']
@@ -133,8 +134,8 @@ export default function StudentApplicantsScreen() {
       email: 'm.chen@tech.edu',
       role: 'Frontend Intern',
       status: 'Reviewed',
-      statusColor: 'bg-[#6f0001]/10 text-[#6f0001]',
-      dotColor: 'bg-[#6f0001]',
+      statusColor: 'bg-[#D71921]/10 dark:bg-[#D71921]/20 text-[#D71921] dark:text-[#FF8B8D] border border-[#D71921]/30',
+      dotColor: 'bg-[#D71921]',
       score: 91,
       initials: 'MC',
       skills: ['JavaScript', 'React', 'HTML5/CSS3', 'REST APIs', 'Git']
@@ -145,7 +146,7 @@ export default function StudentApplicantsScreen() {
       email: 'david.o@college.edu',
       role: 'Backend Intern',
       status: 'Shortlisted',
-      statusColor: 'bg-green-100 text-green-800',
+      statusColor: 'bg-green-100 dark:bg-green-950/60 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800/40',
       dotColor: 'bg-green-600',
       score: 94,
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
@@ -161,63 +162,49 @@ export default function StudentApplicantsScreen() {
   );
 
   return (
-    <div className="min-h-screen bg-[#fff8f3] text-[#1f1b16] flex flex-col pb-24">
-      {/* Mobile Header */}
-      <header className="w-full top-0 sticky bg-[#fff8f3] shadow-[0_1px_0_0_rgba(154,0,2,0.04)] z-40">
-        <div className="flex items-center justify-between px-4 h-16 w-full max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={goBack}
-              className="p-2 -ml-2 rounded-full hover:bg-[#f0e7df] transition-colors active:scale-95 text-[#5b403c]"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-            <h1 className="font-semibold text-xl text-[#6f0001]" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Applicants
-            </h1>
-          </div>
-        </div>
-      </header>
+    <div className="w-full min-h-screen bg-background dark:bg-black text-on-surface dark:text-white flex flex-col pb-24 transition-colors">
+      {/* Top Navbar with Dark Mode Converter */}
+      <Navbar title="APPLICANTS" showBack onBack={goBack} />
 
-      <main className="flex-1 w-full max-w-screen-xl mx-auto px-4 py-6">
+      <main className="flex-1 w-full max-w-screen-xl mx-auto px-4 py-4 space-y-6">
         {/* Top Candidates */}
-        <section className="mb-6">
-          <h2 className="text-2xl font-bold text-[#1f1b16] mb-4 flex items-center gap-2" style={{ fontFamily: 'Sora, sans-serif' }}>
-            <span className="material-symbols-outlined text-[#6f0001] text-3xl">workspace_premium</span>
+        <section className="space-y-3">
+          <h2 className="font-headline text-lg sm:text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#D71921] dark:text-[#FF8B8D] text-2xl">workspace_premium</span>
             Top Candidates
           </h2>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3.5">
             {topCandidates.map((candidate) => (
               <div
                 key={candidate.id}
-                className="bg-white rounded-xl p-5 shadow-sm border border-[#e4beb8]/30 flex items-center gap-4 relative overflow-hidden hover:-translate-y-1 transition-transform duration-300 cursor-pointer group"
+                className="bg-white dark:bg-[#14171A] rounded-2xl md:rounded-3xl p-4 sm:p-5 shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] flex items-center gap-3.5 relative overflow-hidden hover:border-slate-300 dark:hover:border-[#323842] hover:-translate-y-0.5 transition-all cursor-pointer group"
                 onClick={() => handleSelectCandidate(candidate)}
               >
                 {/* Rank color stripe */}
                 <div className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${candidate.rankColor}`} />
-                <div className="pl-2 flex items-center gap-4 flex-1 min-w-0">
+                <div className="pl-2 flex items-center gap-3.5 flex-1 min-w-0">
                   <img
-                    className="w-14 h-14 rounded-full object-cover border-4 border-[#f5ece4] flex-shrink-0"
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-slate-200 dark:border-[#2D333B] flex-shrink-0"
                     src={candidate.avatar}
                     alt={candidate.name}
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-lg text-[#1f1b16] truncate group-hover:text-[#6f0001] transition-colors" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <h3 className="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate group-hover:text-[#D71921] dark:group-hover:text-[#FF8B8D] transition-colors">
                       {candidate.name}
                     </h3>
-                    <p className="text-sm text-[#5b403c] truncate" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                    <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] truncate">
                       {candidate.role}
                     </p>
                   </div>
-                  <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                    <span className={`${candidate.rankBg} ${candidate.rankText} text-xs px-2 py-1 rounded-full flex items-center gap-1`} style={{ fontFamily: 'Geist, sans-serif' }}>
-                      <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>military_tech</span>
+                  <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+                    <span className={`${candidate.rankBg} ${candidate.rankText} text-[10px] font-mono font-bold px-2 py-0.5 rounded-full flex items-center gap-1`}>
+                      <span className="material-symbols-outlined text-[13px]">military_tech</span>
                       Rank {candidate.rank}
                     </span>
-                    <div className="bg-[#6f0001]/10 rounded-lg px-3 py-1 flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[#6f0001]" style={{ fontSize: '16px' }}>speed</span>
-                      <span className="text-xs font-bold text-[#6f0001]" style={{ fontFamily: 'Geist, sans-serif' }}>
-                        Score: {candidate.score}/100
+                    <div className="bg-[#D71921]/10 dark:bg-[#D71921]/20 border border-[#D71921]/30 rounded-xl px-2.5 py-1 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[#D71921] dark:text-[#FF8B8D] text-sm">speed</span>
+                      <span className="text-[11px] font-mono font-bold text-[#D71921] dark:text-[#FF8B8D]">
+                        {candidate.score}/100
                       </span>
                     </div>
                   </div>
@@ -228,28 +215,27 @@ export default function StudentApplicantsScreen() {
         </section>
 
         {/* All Applicants */}
-        <section>
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-            <h2 className="text-2xl font-bold text-[#1f1b16] flex items-center gap-2" style={{ fontFamily: 'Sora, sans-serif' }}>
-              <span className="material-symbols-outlined text-[#6f0001]">groups</span>
+        <section className="space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h2 className="font-headline text-lg sm:text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#D71921] dark:text-[#FF8B8D]">groups</span>
               All Applicants
             </h2>
             <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#5b403c]" style={{ fontSize: '20px' }}>search</span>
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#8E959E] text-lg">search</span>
               <input
-                className="pl-10 pr-4 py-2 rounded-full border border-[#e4beb8] bg-white focus:ring-2 focus:ring-[#6f0001] focus:border-[#6f0001] text-sm outline-none w-48"
+                className="pl-9 pr-3 py-1.5 rounded-full border border-slate-200 dark:border-[#2D333B] bg-white dark:bg-[#191D22] focus:border-[#D71921] text-xs font-mono text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#8E959E] outline-none w-44 sm:w-52"
                 placeholder="Search candidates..."
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}
               />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-[0_4px_16px_rgba(154,0,2,0.03)] border border-[#e4beb8]/30 overflow-hidden">
+          <div className="bg-white dark:bg-[#14171A] rounded-2xl md:rounded-3xl shadow-card dark:shadow-none border border-slate-200 dark:border-[#24292F] overflow-hidden">
             {/* Desktop Table Header */}
-            <div className="hidden sm:grid grid-cols-12 gap-4 p-4 border-b border-[#eae1d9] bg-[#f5ece4]/50 text-xs font-bold text-[#5b403c]" style={{ fontFamily: 'Geist, sans-serif' }}>
+            <div className="hidden sm:grid grid-cols-12 gap-4 p-4 border-b border-slate-200 dark:border-[#24292F] bg-slate-100/70 dark:bg-[#191D22] text-xs font-mono font-bold text-slate-600 dark:text-[#8E959E]">
               <div className="col-span-5">Candidate</div>
               <div className="col-span-3">Role Applied</div>
               <div className="col-span-2">Status</div>
@@ -262,36 +248,36 @@ export default function StudentApplicantsScreen() {
                 <div
                   key={applicant.id}
                   onClick={() => handleSelectCandidate(applicant)}
-                  className={`grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 items-center ${idx !== filteredApplicants.length - 1 ? 'border-b border-[#eae1d9]' : ''} hover:bg-[#fbf2ea] transition-colors cursor-pointer group`}
+                  className={`grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 items-center ${idx !== filteredApplicants.length - 1 ? 'border-b border-slate-200 dark:border-[#24292F]' : ''} hover:bg-slate-50 dark:hover:bg-[#191D22] transition-colors cursor-pointer group`}
                 >
                   <div className="col-span-1 sm:col-span-5 flex items-center gap-3">
                     {applicant.avatar ? (
                       <img
-                        className="w-11 h-11 rounded-full object-cover flex-shrink-0 border border-[#eae1d9]"
+                        className="w-10 h-10 rounded-2xl object-cover flex-shrink-0 border border-slate-200 dark:border-[#2D333B]"
                         src={applicant.avatar}
                         alt={applicant.name}
                       />
                     ) : (
-                      <div className="w-11 h-11 rounded-full bg-[#9a0002] text-[#ffa294] flex items-center justify-center flex-shrink-0 font-bold text-sm" style={{ fontFamily: 'Sora, sans-serif' }}>
+                      <div className="w-10 h-10 rounded-2xl bg-[#D71921] text-white flex items-center justify-center flex-shrink-0 font-headline font-bold text-xs">
                         {applicant.initials}
                       </div>
                     )}
                     <div className="min-w-0">
-                      <h4 className="text-sm font-bold text-[#1f1b16] group-hover:text-[#6f0001] transition-colors truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#D71921] dark:group-hover:text-[#FF8B8D] transition-colors truncate">
                         {applicant.name}
                       </h4>
-                      <p className="text-xs text-[#5b403c] truncate" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                      <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] truncate">
                         {applicant.email}
                       </p>
                     </div>
                   </div>
                   <div className="col-span-1 sm:col-span-3">
-                    <p className="text-sm text-[#1f1b16] font-medium" style={{ fontFamily: 'Hanken Grotesk, sans-serif' }}>
+                    <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium">
                       {applicant.role}
                     </p>
                   </div>
                   <div className="col-span-1 sm:col-span-2 flex items-center">
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${applicant.statusColor} text-xs font-semibold`} style={{ fontFamily: 'Geist, sans-serif' }}>
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full ${applicant.statusColor} text-[11px] font-mono font-bold`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${applicant.dotColor}`} />
                       {applicant.status}
                     </span>
@@ -302,22 +288,20 @@ export default function StudentApplicantsScreen() {
                         e.stopPropagation();
                         handleSelectCandidate(applicant);
                       }}
-                      className="text-[#6f0001] font-semibold text-sm flex items-center gap-1 hover:underline transition-all"
-                      style={{ fontFamily: 'Geist, sans-serif' }}
+                      className="text-[#D71921] dark:text-[#FF8B8D] font-mono font-bold text-xs flex items-center gap-0.5 hover:underline transition-all"
                     >
-                      Review <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>chevron_right</span>
+                      Review <span className="material-symbols-outlined text-base">chevron_right</span>
                     </button>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="p-4 border-t border-[#eae1d9] text-center">
+            <div className="p-3.5 border-t border-slate-200 dark:border-[#24292F] text-center">
               <button
-                className="text-[#6f0001] text-sm font-bold hover:underline decoration-2 underline-offset-4"
-                style={{ fontFamily: 'Geist, sans-serif' }}
+                className="text-[#D71921] dark:text-[#FF8B8D] text-xs font-mono font-bold hover:underline decoration-2 underline-offset-4 cursor-pointer"
               >
-                View All 42 Applicants
+                VIEW ALL 42 APPLICANTS
               </button>
             </div>
           </div>
@@ -326,3 +310,4 @@ export default function StudentApplicantsScreen() {
     </div>
   );
 }
+
