@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "385726791717",
+    "project_id": "skillify-27986",
+    "storage_bucket": "skillify-27986.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385726791717:android:4d42d9ca871124d834bfcc",
+        "android_client_info": {
+          "package_name": "com.skillify.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385726791717-qvkpiurpiik3csb2mdjv5df8hpv65f40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skillify.ai",
+            "certificate_hash": "7a50f70143c4e14b19170bfc81731b3beb3d075b"
+          }
+        },
+        {
+          "client_id": "385726791717-9dn9hfdlj147bp21a57jjeso6q18q3bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBneeu1p_K2grrGuFGiX4tIfuVx5iRPhNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385726791717-9dn9hfdlj147bp21a57jjeso6q18q3bm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

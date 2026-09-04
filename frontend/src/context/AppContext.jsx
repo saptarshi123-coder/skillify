@@ -7,12 +7,15 @@ import { aiQuizService, isAISupportedSkill, normalizeSkillKey } from '../service
 import {
   auth,
   googleProvider,
+  GoogleAuthProvider,
   signInWithPopup,
+  signInWithCredential,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged
 } from '../services/firebase';
+import { Capacitor } from '@capacitor/core';
 import confetti from 'canvas-confetti';
 
 const AppContext = createContext();
@@ -447,11 +450,36 @@ export function AppProvider({ children }) {
     };
   }, [handleBackAction]);
 
-  // Authentication Handlers with SQLite Storage & Firebase OAuth
+  // Authentication Handlers with SQLite Storage & Firebase OAuth (Hybrid Web + Native Capacitor)
   const loginWithGooglePopup = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+      let user = null;
+
+      if (Capacitor.isNativePlatform()) {
+        const { FirebaseAuthentication } = await import('@capacitor-firebase/authentication');
+        const result = await FirebaseAuthentication.signInWithGoogle();
+
+        if (result.credential?.idToken) {
+          const credential = GoogleAuthProvider.credential(result.credential.idToken);
+          const userCredential = await signInWithCredential(auth, credential);
+          user = userCredential.user;
+        } else if (result.user) {
+          user = {
+            uid: result.user.uid,
+            email: result.user.email,
+            displayName: result.user.displayName,
+            photoURL: result.user.photoUrl || result.user.photoURL
+          };
+        }
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        user = result.user;
+      }
+
+      if (!user) {
+        throw new Error("Could not retrieve user details from Google sign-in.");
+      }
+
       const email = user.email || "google.user@gmail.com";
       const name = user.displayName || extractNameFromEmail(email);
       const avatar = user.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
@@ -494,12 +522,16 @@ export function AppProvider({ children }) {
       return true;
     } catch (error) {
       console.error("Firebase Google Auth Error:", error);
-      if (error.code === 'auth/popup-closed-by-user') {
+      if (error.code === 'auth/popup-closed-by-user' || error.message?.includes('closed') || error.message?.includes('cancelled')) {
         showToast("Google sign-in was cancelled.", "info");
       } else if (error.code === 'auth/popup-blocked') {
         showToast("Popup was blocked by your browser. Please allow popups.", "error");
       } else if (error.code === 'auth/cancelled-popup-request') {
         // Handled silently
+      } else if (error.code === 'auth/unauthorized-domain') {
+        showToast("This domain is not authorized in Firebase Console.", "error");
+      } else if (error.code === 'auth/operation-not-allowed') {
+        showToast("Google sign-in provider is disabled in Firebase Console.", "error");
       } else {
         showToast(error.message || "Google sign-in failed. Please try again.", "error");
       }
