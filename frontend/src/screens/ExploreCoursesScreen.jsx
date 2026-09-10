@@ -200,17 +200,73 @@ export default function ExploreCoursesScreen() {
             return (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer shrink-0 active:scale-95 ${isActive
+                onClick={() => {
+                  if (cat === 'Company Based Courses') {
+                    navigate('company-based-courses');
+                  } else {
+                    setSelectedCategory(cat);
+                  }
+                }}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer shrink-0 active:scale-95 flex items-center gap-1.5 ${isActive
                     ? 'bg-[#D71921] text-white shadow-sm'
                     : 'bg-white dark:bg-[#191D22] text-slate-700 dark:text-[#C5C9D0] border border-slate-200 dark:border-[#2D333B] hover:bg-slate-50 dark:hover:bg-[#20252B]'
                   }`}
               >
-                {cat}
+                {cat === 'Company Based Courses' && <span className="material-symbols-outlined text-sm">business</span>}
+                <span>{cat}</span>
               </button>
             );
           })}
         </div>
+
+        {/* Quick Action Banners: Live Schedule & Company Based Tracks */}
+        {!searchQuery && selectedCategory === 'All' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Live Courses Banner */}
+            <div className="bg-gradient-to-r from-red-950/80 via-slate-900 to-red-900/60 p-4 rounded-3xl border border-red-500/30 text-white flex flex-col justify-between space-y-3 relative overflow-hidden shadow-lg">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-red-600 text-white px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                  LIVE NOW
+                </span>
+                <span className="text-xs text-red-200 font-mono">Interactive Sessions</span>
+              </div>
+              <div>
+                <h3 className="font-headline text-sm font-bold text-white">Live Lectures & Masterclasses</h3>
+                <p className="text-[11px] font-mono text-slate-300 mt-1">Join top architects for real-time DP, System Design & Fullstack Q&A.</p>
+              </div>
+              <button
+                onClick={() => navigate('live-lectures')}
+                className="w-full py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95 shadow-md"
+              >
+                <span>View Live Schedule</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+
+            {/* Company Based Courses Banner */}
+            <div className="bg-gradient-to-r from-amber-950/80 via-slate-900 to-amber-900/60 p-4 rounded-3xl border border-amber-500/30 text-white flex flex-col justify-between space-y-3 relative overflow-hidden shadow-lg">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500 text-black px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="material-symbols-outlined text-xs">verified</span>
+                  Targeted Prep
+                </span>
+                <span className="text-xs text-amber-200 font-mono">Google, Amazon, Meta & more</span>
+              </div>
+              <div>
+                <h3 className="font-headline text-sm font-bold text-white">Company Based Courses</h3>
+                <p className="text-[11px] font-mono text-slate-300 mt-1">Certified learning tracks & benchmark assessments by tech giants.</p>
+              </div>
+              <button
+                onClick={() => navigate('company-based-courses')}
+                className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-black text-xs font-mono font-bold rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer active:scale-95 shadow-md"
+              >
+                <span>Browse Companies</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Featured Course Section (Shows if search is empty and All / Web Dev selected) */}
         {!searchQuery && (selectedCategory === 'All' || selectedCategory === 'Web Development') && (

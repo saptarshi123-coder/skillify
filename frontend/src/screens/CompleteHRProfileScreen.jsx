@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export default function CompleteHRProfileScreen() {
-  const { userProfile, updateHRProfile, goBack, showToast } = useApp();
+  const { userProfile, updateHRProfile, goBack, showToast, navigate } = useApp();
 
   const [formData, setFormData] = useState({
     fullName: userProfile.name || '',
@@ -236,8 +236,17 @@ export default function CompleteHRProfileScreen() {
 
           </div>
 
-          {/* Action Submission Button */}
-          <div className="pt-4 border-t border-surface-variant/40 flex justify-end gap-3">
+          {/* Action Submission Buttons */}
+          <div className="pt-4 border-t border-surface-variant/40 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <button
+              type="button"
+              onClick={() => navigate('hr-identity-verification')}
+              className="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-headline text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-sm">verified_user</span>
+              <span>Verify ID & Legitimacy</span>
+            </button>
+
             <button
               type="submit"
               disabled={isSubmitting}

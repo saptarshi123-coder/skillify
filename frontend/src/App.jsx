@@ -35,6 +35,10 @@ import InternshipApplicationMessageScreen from './screens/InternshipApplicationM
 import HRNotificationsScreen from './screens/HRNotificationsScreen';
 import StudentApplicantsScreen from './screens/StudentApplicantsScreen';
 import ChatScreen from './screens/ChatScreen';
+import CompanyBasedCoursesScreen from './screens/CompanyBasedCoursesScreen';
+import LiveLecturesScreen from './screens/LiveLecturesScreen';
+import CompanyBasedQuizScreen from './screens/CompanyBasedQuizScreen';
+import HRIdentityVerificationScreen from './screens/HRIdentityVerificationScreen';
 
 export default function App() {
   const { currentScreen } = useApp();
@@ -60,6 +64,10 @@ export default function App() {
       case 'courses':
       case 'explore-courses':
         return <ExploreCoursesScreen />;
+      case 'company-based-courses':
+        return <CompanyBasedCoursesScreen />;
+      case 'live-lectures':
+        return <LiveLecturesScreen />;
       case 'discover':
         return <DiscoverScreen />;
       case 'find-internship':
@@ -74,6 +82,8 @@ export default function App() {
         return <AIChatScreen />;
       case 'quiz-select':
         return <QuizSelectScreen />;
+      case 'company-based-quiz':
+        return <CompanyBasedQuizScreen />;
       case 'quiz-active':
         return <ActiveQuizScreen />;
       case 'quiz-results':
@@ -102,12 +112,14 @@ export default function App() {
         return <StudentApplicantsScreen />;
       case 'chat':
         return <ChatScreen />;
+      case 'hr-identity-verification':
+        return <HRIdentityVerificationScreen />;
       default:
         return <DashboardScreen />;
     }
   };
 
-  const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active', 'internship-application-message', 'chat'].includes(currentScreen);
+  const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active', 'internship-application-message', 'chat', 'hr-identity-verification'].includes(currentScreen);
 
   return (
     <div className="min-h-screen bg-slate-900/5 dark:bg-[#0f1115] flex justify-center w-full transition-colors">

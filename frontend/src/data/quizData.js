@@ -575,6 +575,182 @@ export const QUIZ_SUBJECTS = {
         }
       ]
     }
+  ],
+  company: [
+    {
+      id: "google-sde",
+      name: "Google Coding & System Diagnostic",
+      icon: "code",
+      symbol: "terminal",
+      company: "Google",
+      tag: "SDE & Algorithmic Problem Solving",
+      isAI: true,
+      description: "Advanced DP, Graph Theory, Topological Sort, Red-Black Trees & Scalable Distributed Caching.",
+      level: "Hard • L3/L4 SDE",
+      duration: "30 Mins",
+      totalQuestions: 15,
+      xpReward: 250,
+      badgeName: "Google SDE Ready",
+      badgeIcon: "terminal",
+      certTitle: "Google SDE & Algorithmic Problem Solving Assessment",
+      passRate: "92%",
+      candidatesCount: "18k",
+      rating: "4.9",
+      questions: [
+        {
+          id: 1,
+          question: "In topological sorting of a Directed Acyclic Graph (DAG), what does Kahn's algorithm use to keep track of vertices ready for processing?",
+          category: "Graph Algorithms",
+          options: ["In-degrees of vertices using a Queue", "Out-degrees of vertices using a Stack", "Disjoint Set Union (DSU) ranks", "Floyd-Warshall distance matrix"],
+          correctIndex: 0,
+          explanation: "Kahn's algorithm computes in-degrees of all vertices and pushes vertices with in-degree 0 into a queue."
+        },
+        {
+          id: 2,
+          question: "What is the worst-case space complexity of a Trie storing N strings of average length L?",
+          category: "Advanced Data Structures",
+          options: ["O(N * L * Σ) where Σ is alphabet size", "O(N + L)", "O(N log L)", "O(1)"],
+          correctIndex: 0,
+          explanation: "In the worst case where no strings share prefixes, Trie space complexity is O(N * L * Σ)."
+        },
+        {
+          id: 3,
+          question: "How does Consistent Hashing minimize key remapping when nodes are added or removed in distributed caches?",
+          category: "System Design",
+          options: ["By mapping both servers and keys to a continuous hash ring", "By using round-robin DNS routing", "By storing a centralized master table on every node", "By encrypting cache keys with SHA-256"],
+          correctIndex: 0,
+          explanation: "Consistent hashing maps nodes and keys to a ring structure so adding/removing a node only remaps K/N keys on average."
+        }
+      ]
+    },
+    {
+      id: "amazon-sde",
+      name: "Leadership Principles & System Architecture",
+      icon: "cloud",
+      symbol: "cloud",
+      company: "Amazon",
+      tag: "Customer Obsession & Distributed Systems",
+      isAI: true,
+      description: "Customer Obsession scenarios, OOP Principles, AWS Baseline & Distributed Cache strategies.",
+      level: "Intermediate • SDE I",
+      duration: "25 Mins",
+      totalQuestions: 20,
+      xpReward: 200,
+      badgeName: "Amazon SDE Ready",
+      badgeIcon: "cloud",
+      certTitle: "Amazon Leadership & Cloud Architecture Assessment",
+      passRate: "87%",
+      candidatesCount: "24k",
+      rating: "4.8",
+      questions: [
+        {
+          id: 1,
+          question: "According to Amazon's 'Customer Obsession' Leadership Principle, what should drive engineering decisions?",
+          category: "Leadership Principles",
+          options: ["Working backwards from customer needs and building trust", "Adopting trendy technologies regardless of user impact", "Minimizing hardware cost above user experience", "Prioritizing speed over software reliability"],
+          correctIndex: 0,
+          explanation: "Leaders start with the customer and work backwards, working vigorously to earn and keep customer trust."
+        },
+        {
+          id: 2,
+          question: "In AWS DynamoDB, how do Global Secondary Indexes (GSIs) differ from Local Secondary Indexes (LSIs)?",
+          category: "Cloud Database Architecture",
+          options: ["GSIs can have a partition key and sort key different from the base table", "LSIs can be created at any time after table creation", "GSIs share the throughput of the base table", "LSIs support cross-region replication automatically"],
+          correctIndex: 0,
+          explanation: "GSIs can be created at any time with a partition key and sort key different from the base table's primary key."
+        }
+      ]
+    },
+    {
+      id: "nvidia-ai",
+      name: "CUDA, Parallel Computing & C++ Hardware",
+      icon: "memory",
+      symbol: "memory",
+      company: "NVIDIA",
+      tag: "GPU Kernels & SIMD Primitives",
+      isAI: true,
+      description: "GPU Thread hierarchies, memory coalescence, pointer arithmetic, shared memory & SIMD primitives.",
+      level: "Hard • AI Kernel Engineer",
+      duration: "30 Mins",
+      totalQuestions: 15,
+      xpReward: 250,
+      badgeName: "NVIDIA CUDA Specialist",
+      badgeIcon: "bolt",
+      certTitle: "NVIDIA CUDA & Parallel Computing Kernel Specialist",
+      passRate: "79%",
+      candidatesCount: "9.2k",
+      rating: "4.95",
+      questions: [
+        {
+          id: 1,
+          question: "In NVIDIA CUDA programming, what is a 'warp'?",
+          category: "GPU Architecture",
+          options: ["A group of 32 threads executed concurrently by an SM in SIMT fashion", "A memory buffer in global VRAM", "A host CPU thread managing PCI Express transfers", "An asynchronous stream handle"],
+          correctIndex: 0,
+          explanation: "A warp is a set of 32 threads within a thread block that execute the same instruction simultaneously in SIMT mode."
+        }
+      ]
+    },
+    {
+      id: "tcs-nqt",
+      name: "TCS NQT Foundation & Advanced Cognitive",
+      icon: "apartment",
+      symbol: "domain",
+      company: "TCS",
+      tag: "Numerical, Reasoning & Pseudocode",
+      isAI: false,
+      description: "Numerical ability, abstract reasoning, C/Java pseudocode tracing, data interpretations & logic.",
+      level: "Placement Ready • Ninja/Digital",
+      duration: "40 Mins",
+      totalQuestions: 30,
+      xpReward: 180,
+      badgeName: "TCS NQT Certified",
+      badgeIcon: "workspace_premium",
+      certTitle: "TCS National Qualifier Test (NQT) Technical Certification",
+      passRate: "81%",
+      candidatesCount: "48k",
+      rating: "4.7",
+      questions: [
+        {
+          id: 1,
+          question: "What is the output of pseudocode: `int x = 5, y = 10; x = x ^ y; y = x ^ y; x = x ^ y;`?",
+          category: "Pseudocode Tracing",
+          options: ["x = 10, y = 5", "x = 5, y = 10", "x = 15, y = 15", "x = 0, y = 0"],
+          correctIndex: 0,
+          explanation: "Bitwise XOR swap swaps the values of x and y without using a temporary variable, yielding x = 10 and y = 5."
+        }
+      ]
+    },
+    {
+      id: "capgemini-tech",
+      name: "Capgemini Tech Challenge & Pseudo-Code Round",
+      icon: "terminal",
+      symbol: "sports_esports",
+      company: "Capgemini",
+      tag: "Logic Puzzles & Recursion Stacks",
+      isAI: false,
+      description: "Game-based logic puzzles, recursion stacks, bitwise operations, data interpretation & verbal ability.",
+      level: "Placement Ready • Analyst Campus",
+      duration: "35 Mins",
+      totalQuestions: 25,
+      xpReward: 180,
+      badgeName: "Capgemini Tech Champ",
+      badgeIcon: "workspace_premium",
+      certTitle: "Capgemini Analyst Campus Technical Certification",
+      passRate: "89%",
+      candidatesCount: "31k",
+      rating: "4.6",
+      questions: [
+        {
+          id: 1,
+          question: "What is the maximum depth of recursion stack for `func(n) = func(n-1) + func(n-2)` with `func(1)=1, func(0)=0`?",
+          category: "Recursion & Memory",
+          options: ["O(n)", "O(2^n)", "O(log n)", "O(1)"],
+          correctIndex: 0,
+          explanation: "The call stack grows linearly to depth n along the deepest left recursive branch `func(n-1)`."
+        }
+      ]
+    }
   ]
 };
 

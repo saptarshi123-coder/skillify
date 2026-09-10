@@ -38,24 +38,49 @@ export default function QuizSelectScreen() {
             Score ≥70% to unlock a verified credential badge & certificate.
           </p>
 
-          {/* Toggle Menu */}
-          <div className="flex bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-full p-1 w-full max-w-xs mx-auto mt-3">
+          {/* Top Category Nav Tabs (Matching Stitch design) */}
+          <div className="flex bg-slate-100 dark:bg-[#191D22] border border-slate-200 dark:border-[#2D333B] rounded-full p-1 w-full max-w-sm mx-auto mt-3">
+            <button
+              onClick={() => navigate('explore-courses')}
+              className="flex-1 text-center py-2 rounded-full text-xs font-mono font-bold text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer flex items-center justify-center gap-1"
+            >
+              <span className="material-symbols-outlined text-sm">school</span>
+              <span>Courses</span>
+            </button>
             <button
               onClick={() => setActiveTab('languages')}
-              className={`flex-1 text-center py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${
+              className={`flex-1 text-center py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
                 activeTab === 'languages'
-                  ? 'bg-[#D71921] text-white shadow-none'
+                  ? 'bg-[#D71921] text-white shadow-sm'
                   : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              <span className="material-symbols-outlined text-sm">code</span>
+              <span>Languages</span>
+            </button>
+            <button
+              onClick={() => navigate('company-based-quiz')}
+              className="flex-1 text-center py-2 rounded-full text-xs font-mono font-bold text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer flex items-center justify-center gap-1"
+            >
+              <span className="material-symbols-outlined text-sm">business</span>
+              <span>Company</span>
+            </button>
+          </div>
+
+          {/* Sub-Topics Toggle */}
+          <div className="flex justify-center gap-2 mt-2">
+            <button
+              onClick={() => setActiveTab('languages')}
+              className={`px-3 py-1 rounded-full text-[11px] font-mono font-bold transition-all ${
+                activeTab === 'languages' ? 'bg-[#D71921]/15 text-[#D71921]' : 'text-slate-500 dark:text-slate-400'
               }`}
             >
               Languages ({QUIZ_SUBJECTS.languages.length})
             </button>
             <button
               onClick={() => setActiveTab('topics')}
-              className={`flex-1 text-center py-2 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${
-                activeTab === 'topics'
-                  ? 'bg-[#D71921] text-white shadow-none'
-                  : 'text-slate-600 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
+              className={`px-3 py-1 rounded-full text-[11px] font-mono font-bold transition-all ${
+                activeTab === 'topics' ? 'bg-[#D71921]/15 text-[#D71921]' : 'text-slate-500 dark:text-slate-400'
               }`}
             >
               Topics ({QUIZ_SUBJECTS.topics.length})
@@ -76,6 +101,31 @@ export default function QuizSelectScreen() {
             />
           </div>
         </div>
+
+        {/* Company Based Quiz Spotlight Banner Card */}
+        {!searchQuery && (
+          <div className="bg-gradient-to-r from-red-950/90 via-slate-900 to-slate-900 border border-[#D71921]/40 rounded-3xl p-4 text-white flex items-center justify-between shadow-lg">
+            <div className="space-y-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-bold bg-[#D71921] text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="material-symbols-outlined text-xs">local_fire_department</span>
+                  HOT
+                </span>
+                <span className="text-xs font-mono text-slate-300 font-bold uppercase tracking-wider">Company Assessment</span>
+              </div>
+              <h3 className="font-headline text-sm font-bold text-white">Company Based Quiz</h3>
+              <p className="text-[11px] font-mono text-slate-400">Targeted mocks for Google, Amazon, NVIDIA, TCS & Capgemini.</p>
+            </div>
+
+            <button
+              onClick={() => navigate('company-based-quiz')}
+              className="px-4 py-2 bg-[#D71921] hover:bg-[#b0141b] text-white text-xs font-mono font-bold rounded-2xl transition-all shadow-md flex items-center gap-1 shrink-0 active:scale-95 cursor-pointer"
+            >
+              <span>Explore</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+          </div>
+        )}
 
         {/* Cards List */}
         <div className="space-y-3">

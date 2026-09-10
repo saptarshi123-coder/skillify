@@ -2,6 +2,7 @@ export const COURSE_CATEGORIES = [
   "All",
   "Web Development",
   "Data Science",
+  "Company Based Courses",
   "Design",
   "AI & ML",
   "Mobile Dev",

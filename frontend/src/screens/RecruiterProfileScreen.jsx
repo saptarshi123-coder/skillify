@@ -58,9 +58,17 @@ export default function RecruiterProfileScreen() {
               <h2 className="font-headline text-base md:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                 {userProfile.name}
               </h2>
-              <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-[#8E959E] bg-slate-100 dark:bg-[#20252B] border border-slate-200 dark:border-[#2D333B] px-2.5 py-0.5 rounded-full">
-                VERIFIED HR
-              </span>
+              <button
+                onClick={() => navigate('hr-identity-verification')}
+                className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 cursor-pointer transition-all active:scale-95 ${
+                  userProfile.hr_verified
+                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                    : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
+                }`}
+              >
+                <span className="material-symbols-outlined text-xs">verified_user</span>
+                <span>{userProfile.hr_verified ? 'VERIFIED HR' : 'VERIFY ID'}</span>
+              </button>
             </div>
             <p className="text-xs font-mono text-slate-500 dark:text-[#8E959E] mt-0.5">
               {userProfile.job_role || 'Senior Technical Recruiter'} • {userProfile.company_name || 'Skillify Inc.'}

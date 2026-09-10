@@ -1,0 +1,8 @@
+JavaScript / JSX (React frontend UI, Capacitor native bridges, Vite app)
+Python (Backend services, FastAPI/Flask chatbot server, AI logic)
+HTML5 (Web entry document and structure)
+CSS3 (Vanilla CSS, custom design tokens, TailwindCSS)
+Java (Android native MainActivity and native plugin execution)
+Groovy (Gradle Android build scripts and dependency configurations)
+SQL (Client-side SQLite relational persistence and schema management)
+JSON (Configuration files, Capacitor manifests, AI question banks)
