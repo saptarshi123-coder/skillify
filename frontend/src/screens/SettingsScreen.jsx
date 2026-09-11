@@ -26,47 +26,49 @@ export default function SettingsScreen() {
 
       <main className="px-4 py-4 space-y-4 w-full">
 
-        {/* Student Exposure Mode Section */}
-        <section className="bg-gradient-to-r from-[#D71921]/15 via-slate-900 to-black rounded-3xl p-5 border border-[#D71921]/50 shadow-card dark:shadow-none space-y-3 text-white">
-          <div className="flex items-center justify-between border-b border-white/15 pb-2">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#D71921] text-lg">rocket_launch</span>
-              <h2 className="font-headline text-xs font-bold text-white uppercase tracking-wider">
-                Student Exposure Mode
-              </h2>
-            </div>
-            <span className="text-[10px] font-mono font-bold bg-[#D71921] text-white px-2.5 py-0.5 rounded-full uppercase">
-              Skill Up Portal
-            </span>
-          </div>
-
-          <div className="flex items-center justify-between py-1 gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-10 h-10 rounded-2xl bg-[#D71921] text-white flex items-center justify-center shrink-0 shadow-md">
-                <span className="material-symbols-outlined text-xl">rocket_launch</span>
+        {/* Student Exposure Mode Section (Only visible for Student Mode, hidden for HR/Recruiter Mode) */}
+        {!isRecruiter && (
+          <section className="bg-gradient-to-r from-[#D71921]/15 via-slate-900 to-black rounded-3xl p-5 border border-[#D71921]/50 shadow-card dark:shadow-none space-y-3 text-white">
+            <div className="flex items-center justify-between border-b border-white/15 pb-2">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#D71921] text-lg">rocket_launch</span>
+                <h2 className="font-headline text-xs font-bold text-white uppercase tracking-wider">
+                  Student Exposure Mode
+                </h2>
               </div>
-              <div className="min-w-0">
-                <p className="font-headline text-xs font-bold text-white truncate">
-                  Exposure Mode
-                </p>
-                <p className="text-[10px] text-slate-300 truncate">
-                  Project Ideas, Jobs, HR Outreach & Tracker
-                </p>
-              </div>
+              <span className="text-[10px] font-mono font-bold bg-[#D71921] text-white px-2.5 py-0.5 rounded-full uppercase">
+                Skill Up Portal
+              </span>
             </div>
 
-            <button
-              onClick={() => {
-                navigate('exposure-mode');
-                showToast("🔥 Entered Student Exposure Mode!", "success");
-              }}
-              className="text-xs font-bold px-4 py-2 rounded-2xl transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white shadow-none"
-            >
-              <span>Switch to Exposure Mode</span>
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
-          </div>
-        </section>
+            <div className="flex items-center justify-between py-1 gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-10 h-10 rounded-2xl bg-[#D71921] text-white flex items-center justify-center shrink-0 shadow-md">
+                  <span className="material-symbols-outlined text-xl">rocket_launch</span>
+                </div>
+                <div className="min-w-0">
+                  <p className="font-headline text-xs font-bold text-white truncate">
+                    Exposure Mode
+                  </p>
+                  <p className="text-[10px] text-slate-300 truncate">
+                    Project Ideas, Jobs, HR Outreach & Tracker
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  navigate('exposure-mode');
+                  showToast("🔥 Entered Student Exposure Mode!", "success");
+                }}
+                className="text-xs font-bold px-4 py-2 rounded-2xl transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white shadow-none"
+              >
+                <span>Switch to Exposure Mode</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+          </section>
+        )}
         <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-3">
           <h2 className="font-headline text-xs font-bold text-primary border-b border-surface-variant/40 pb-2">
             Account & Security
