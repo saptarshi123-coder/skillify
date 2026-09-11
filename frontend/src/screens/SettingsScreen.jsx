@@ -26,60 +26,6 @@ export default function SettingsScreen() {
 
       <main className="px-4 py-4 space-y-4 w-full">
 
-        {/* Active Role & Perspective */}
-        <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-3">
-          <div className="flex items-center justify-between border-b border-surface-variant/40 pb-2">
-            <h2 className="font-headline text-xs font-bold text-primary">
-              Active App Role & Perspective
-            </h2>
-            <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${isRecruiter ? 'bg-primary/10 text-primary' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-              }`}>
-              {isRecruiter ? 'Exposure Mode' : 'Student Mode'}
-            </span>
-          </div>
-
-          <div className="flex items-center justify-between py-1 gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-xl">
-                  {isRecruiter ? 'work' : 'school'}
-                </span>
-              </div>
-              <div className="min-w-0">
-                <p className="font-headline text-xs font-bold text-on-surface dark:text-inverse-on-surface truncate">
-                  {isRecruiter ? 'Exposure Mode (HR / Recruiter)' : 'Student Developer'}
-                </p>
-                <p className="text-[10px] text-secondary truncate">
-                  {isRecruiter
-                    ? `${userProfile.job_role || 'Recruiter'} at ${userProfile.company_name || 'Skillify Inc.'}`
-                    : 'Learning, Quizzes & Portfolio'}
-                </p>
-              </div>
-            </div>
-
-            {/* Toggle Switch Button */}
-            <button
-              onClick={() => {
-                const nextRole = isRecruiter ? 'student' : 'recruiter';
-                switchRole(nextRole);
-                showToast(`Switched to ${nextRole === 'recruiter' ? 'Exposure Mode (Recruiter)' : 'Student Mode'}`, 'success');
-              }}
-              className={`text-[11px] font-bold px-3.5 py-1.5 rounded-full transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-2 ${
-                isRecruiter
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-primary/15 text-primary hover:bg-primary hover:text-white'
-              }`}
-            >
-              {/* Toggle Switch Indicator */}
-              <div className={`w-7 h-4 rounded-full p-0.5 transition-colors relative flex items-center ${
-                isRecruiter ? 'bg-white/30 justify-end' : 'bg-primary/30 justify-start'
-              }`}>
-                <div className="w-3 h-3 rounded-full bg-white shadow-sm"></div>
-              </div>
-              <span>{isRecruiter ? 'Switch to Student' : 'Switch to Exposure Mode'}</span>
-            </button>
-          </div>
-        </section>
 
         {/* Account & Security */}
         <section className="bg-surface-container-lowest dark:bg-surface-container-high rounded-3xl p-5 shadow-card border border-surface-variant/40 space-y-3">

@@ -142,7 +142,7 @@ export default function ChooseRoleScreen() {
           </button>
 
           <p className="text-[11px] font-mono text-slate-500 dark:text-[#8E959E] text-center">
-            You can always switch your perspective anytime in Settings.
+            Role is set during initial onboarding & sign in.
           </p>
         </footer>
 
