@@ -39,6 +39,7 @@ import CompanyBasedCoursesScreen from './screens/CompanyBasedCoursesScreen';
 import LiveLecturesScreen from './screens/LiveLecturesScreen';
 import CompanyBasedQuizScreen from './screens/CompanyBasedQuizScreen';
 import HRIdentityVerificationScreen from './screens/HRIdentityVerificationScreen';
+import ExposureModeScreen from './screens/ExposureModeScreen';
 
 export default function App() {
   const { currentScreen } = useApp();
@@ -114,6 +115,8 @@ export default function App() {
         return <ChatScreen />;
       case 'hr-identity-verification':
         return <HRIdentityVerificationScreen />;
+      case 'exposure-mode':
+        return <ExposureModeScreen />;
       default:
         return <DashboardScreen />;
     }
@@ -122,10 +125,10 @@ export default function App() {
   const showBottomNav = !['loading', 'login', 'signup', 'choose-role', 'complete-hr-profile', 'select-skill', 'quiz-active', 'internship-application-message', 'chat', 'hr-identity-verification'].includes(currentScreen);
 
   return (
-    <div className="min-h-screen bg-slate-900/5 dark:bg-[#0f1115] flex justify-center w-full transition-colors">
+    <div className="min-h-screen logo-pattern-bg bg-background flex justify-center w-full transition-colors">
       {/* Mobile App Canvas Container (Full width on phones, centered mobile canvas on desktop) */}
-      <div className="w-full max-w-md min-h-screen bg-background text-on-surface shadow-2xl relative flex flex-col font-sans transition-colors border-x border-transparent dark:border-white/5">
-        
+      <div className="w-full max-w-md min-h-screen logo-pattern-bg bg-background text-on-surface shadow-2xl relative flex flex-col font-sans transition-colors border-x border-transparent dark:border-white/5">
+
         {/* Active Screen */}
         <div className="flex-1 w-full">
           {renderScreen()}

@@ -88,7 +88,7 @@ export default function BottomNav() {
   };
 
   return (
-    <div className="fixed bottom-3 left-0 right-0 z-50 flex justify-center px-3 pointer-events-none">
+    <div className="!fixed bottom-3 left-0 right-0 z-[100] flex justify-center px-3 pointer-events-none">
       <nav className="bottom-nav w-[92%] max-w-[365px] bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-slate-200/80 dark:border-white/15 rounded-full shadow-2xl shadow-slate-900/10 dark:shadow-2xl dark:shadow-black/80 py-2 px-2 flex justify-around items-center pointer-events-auto transition-all duration-300">
         {navItems.map((item) => {
           const active = isItemActive(item);
@@ -96,11 +96,10 @@ export default function BottomNav() {
             <button
               key={item.id}
               onClick={() => navigate(item.screen)}
-              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1 px-1.5 rounded-full flex-1 cursor-pointer active:scale-95 ${
-                active
+              className={`relative flex flex-col items-center justify-center transition-all duration-150 py-1 px-1.5 rounded-full flex-1 cursor-pointer active:scale-95 ${active
                   ? 'text-[#D71921] dark:text-white font-bold'
                   : 'text-slate-500 dark:text-[#8E959E] hover:text-slate-900 dark:hover:text-white'
-              }`}
+                }`}
             >
               {/* Nothing OS Active Red Accent Indicator on Top */}
               {active && (

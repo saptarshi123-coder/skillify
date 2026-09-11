@@ -82,17 +82,17 @@ export default {
         "container-max": "1280px"
       },
       fontFamily: {
-        "sans": ["'Rosemary'", "'Plus Jakarta Sans'", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        "sans": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"],
         "headline": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
         "headline-xl": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
         "headline-lg": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
         "headline-lg-mobile": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
         "headline-md": ["'Ndot 55'", "'NDOT 55'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
-        "body-lg": ["'Rosemary'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
-        "body-md": ["'Rosemary'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
-        "label-md": ["'Rosemary'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
-        "label-sm": ["'Rosemary'", "'Plus Jakarta Sans'", "Inter", "sans-serif"],
-        "mono": ["'Rosemary'", "'JetBrains Mono'", "Geist", "monospace"]
+        "body-lg": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"],
+        "body-md": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"],
+        "label-md": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"],
+        "label-sm": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"],
+        "mono": ["'Comic Sans MS'", "'Comic Neue'", "'Comic Sans'", "cursive", "sans-serif"]
       },
       fontSize: {
         "2xs": ["0.75rem", { lineHeight: "1.05rem" }],
