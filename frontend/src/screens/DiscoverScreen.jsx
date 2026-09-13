@@ -318,39 +318,7 @@ export default function DiscoverScreen() {
           </div>
         </div>
 
-        {/* Internships Section (Nothing OS Card) */}
-        <section className="bg-white dark:bg-[#14171A] rounded-3xl p-5 border border-slate-200 dark:border-[#24292F] shadow-card dark:shadow-none space-y-3.5">
-          <div className="space-y-1">
-            <h2 className="font-headline text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-              Internships
-            </h2>
-            <p className="text-xs font-mono text-slate-600 dark:text-[#8E959E] leading-relaxed">
-              {isRecruiter
-                ? 'Manage active listings and review student applications.'
-                : 'Connect with top companies and kickstart your career with verified credentials.'}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2.5 pt-0.5">
-            {!isRecruiter && (
-              <button
-                onClick={() => navigate('find-internship')}
-                className="flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white px-4 py-2 rounded-2xl text-xs font-mono font-bold transition-all active:scale-95 cursor-pointer shadow-none"
-              >
-                <span className="material-symbols-outlined text-base">search</span>
-                <span>FIND INTERNSHIP</span>
-              </button>
-            )}
-            {isRecruiter && (
-              <button
-                onClick={() => navigate('list-internship')}
-                className="flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white px-4 py-2 rounded-2xl text-xs font-mono font-bold transition-all active:scale-95 cursor-pointer shadow-none"
-              >
-                <span className="material-symbols-outlined text-base">add_circle</span>
-                <span>LIST INTERNSHIP</span>
-              </button>
-            )}
-          </div>
-        </section>
+
 
         {/* Projects Feed */}
         <div className="space-y-4">

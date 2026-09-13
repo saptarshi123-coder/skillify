@@ -2,12 +2,27 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export default function BottomNav() {
-  const { currentScreen, navigate, userRole } = useApp();
+  const { currentScreen, navigate, userRole, isExposureMode } = useApp();
 
   const isRecruiter = userRole === 'recruiter' || userRole === 'hr';
 
-  const navItems = isRecruiter
-    ? [
+  const EXPOSURE_SCREENS = [
+    'exposure-mode',
+    'exposure-dashboard',
+    'project-recommendations',
+    'project-spec',
+    'job-opportunities',
+    'job-description',
+    'explore-opportunities',
+    'hr-inbox'
+  ];
+
+  const isInExposureMode = isExposureMode || EXPOSURE_SCREENS.includes(currentScreen);
+
+  let navItems = [];
+
+  if (isRecruiter) {
+    navItems = [
       {
         id: 'discover',
         label: 'Project',
@@ -42,8 +57,47 @@ export default function BottomNav() {
         screen: 'hr-notifications',
         activeScreens: ['hr-notifications', 'student-applicants']
       }
-    ]
-    : [
+    ];
+  } else if (isInExposureMode) {
+    navItems = [
+      {
+        id: 'exposure',
+        label: 'Exposure',
+        icon: 'radar',
+        screen: 'exposure-dashboard',
+        activeScreens: ['exposure-mode', 'exposure-dashboard']
+      },
+      {
+        id: 'jobs',
+        label: 'Jobs',
+        icon: 'work',
+        screen: 'job-opportunities',
+        activeScreens: ['job-opportunities', 'job-description']
+      },
+      {
+        id: 'projects',
+        label: 'Projects',
+        icon: 'folder_special',
+        screen: 'project-recommendations',
+        activeScreens: ['project-recommendations', 'project-spec']
+      },
+      {
+        id: 'hr-connect',
+        label: 'HR Connect',
+        icon: 'handshake',
+        screen: 'explore-opportunities',
+        activeScreens: ['explore-opportunities']
+      },
+      {
+        id: 'hr-inbox',
+        label: 'Inbox',
+        icon: 'mark_email_unread',
+        screen: 'hr-inbox',
+        activeScreens: ['hr-inbox']
+      }
+    ];
+  } else {
+    navItems = [
       {
         id: 'discover',
         label: 'Project',
@@ -79,6 +133,7 @@ export default function BottomNav() {
         activeScreens: ['notifications', 'internship-application-message']
       }
     ];
+  }
 
   const isItemActive = (item) => {
     if (item.activeScreens) {

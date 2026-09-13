@@ -4,7 +4,7 @@ import Navbar from '../components/Navigation/Navbar';
 import GoogleAuthModal from '../components/GoogleAuthModal';
 
 export default function SettingsScreen() {
-  const { darkMode, setDarkMode, navigate, showToast, userProfile, updateProfile, userRole, switchRole, logout } = useApp();
+  const { isExposureMode, currentScreen, darkMode, setDarkMode, navigate, showToast, userProfile, updateProfile, userRole, switchRole, logout } = useApp();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState('English (US)');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -56,16 +56,29 @@ export default function SettingsScreen() {
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  navigate('exposure-mode');
-                  showToast("🔥 Entered Student Exposure Mode!", "success");
-                }}
-                className="text-xs font-bold px-4 py-2 rounded-2xl transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white shadow-none"
-              >
-                <span>Switch to Exposure Mode</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
+              {isExposureMode || ['exposure-mode', 'exposure-dashboard', 'project-recommendations', 'project-spec', 'job-opportunities', 'job-description', 'explore-opportunities', 'hr-inbox'].includes(currentScreen) ? (
+                <button
+                  onClick={() => {
+                    navigate('dashboard');
+                    showToast("📚 Switched to Learning Mode!", "success");
+                  }}
+                  className="text-xs font-bold px-4 py-2 rounded-2xl transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white shadow-none"
+                >
+                  <span>Switch to Learning Mode</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    navigate('exposure-mode');
+                    showToast("🔥 Entered Student Exposure Mode!", "success");
+                  }}
+                  className="text-xs font-bold px-4 py-2 rounded-2xl transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-1.5 bg-[#D71921] hover:bg-[#b0141b] text-white shadow-none"
+                >
+                  <span>Switch to Exposure Mode</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+              )}
             </div>
           </section>
         )}

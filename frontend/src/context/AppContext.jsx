@@ -149,6 +149,14 @@ export function AppProvider({ children }) {
   // Badges
   const [badges, setBadges] = useState(DEFAULT_BADGES);
 
+  // Stitch Exposure Hub State
+  const [isExposureMode, setIsExposureMode] = useState(() => {
+    return localStorage.getItem('skillify_exposure_mode') === 'true';
+  });
+  const [selectedProjectSpec, setSelectedProjectSpec] = useState(null);
+  const [selectedJobDetail, setSelectedJobDetail] = useState(null);
+  const [selectedHROutreach, setSelectedHROutreach] = useState(null);
+
   // Active Quiz State
   const [activeQuizSubject, setActiveQuizSubject] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -332,6 +340,14 @@ export function AppProvider({ children }) {
 
   // Navigation Helper
   const navigate = (screenName) => {
+    const exposureScreens = ['exposure-mode', 'exposure-dashboard', 'project-recommendations', 'project-spec', 'job-opportunities', 'job-description', 'explore-opportunities', 'hr-inbox'];
+    if (exposureScreens.includes(screenName)) {
+      setIsExposureMode(true);
+      localStorage.setItem('skillify_exposure_mode', 'true');
+    } else if (screenName === 'dashboard') {
+      setIsExposureMode(false);
+      localStorage.setItem('skillify_exposure_mode', 'false');
+    }
     setNavHistory(prev => {
       if (prev[prev.length - 1] === screenName) return prev;
       return [...prev, screenName];
@@ -1531,7 +1547,16 @@ export function AppProvider({ children }) {
       activeChatContact,
       setActiveChatContact,
       openChat,
-      handleBackAction
+      handleBackAction,
+      // Stitch Exposure Hub State
+      isExposureMode,
+      setIsExposureMode,
+      selectedProjectSpec,
+      setSelectedProjectSpec,
+      selectedJobDetail,
+      setSelectedJobDetail,
+      selectedHROutreach,
+      setSelectedHROutreach
     }}>
       {children}
     </AppContext.Provider>

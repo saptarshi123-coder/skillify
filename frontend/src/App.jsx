@@ -40,6 +40,12 @@ import LiveLecturesScreen from './screens/LiveLecturesScreen';
 import CompanyBasedQuizScreen from './screens/CompanyBasedQuizScreen';
 import HRIdentityVerificationScreen from './screens/HRIdentityVerificationScreen';
 import ExposureModeScreen from './screens/ExposureModeScreen';
+import ProjectRecommendationsScreen from './screens/ProjectRecommendationsScreen';
+import ProjectSpecScreen from './screens/ProjectSpecScreen';
+import JobOpportunitiesScreen from './screens/JobOpportunitiesScreen';
+import JobDescriptionScreen from './screens/JobDescriptionScreen';
+import ExploreOpportunitiesScreen from './screens/ExploreOpportunitiesScreen';
+import HRInboxScreen from './screens/HRInboxScreen';
 
 export default function App() {
   const { currentScreen } = useApp();
@@ -116,7 +122,20 @@ export default function App() {
       case 'hr-identity-verification':
         return <HRIdentityVerificationScreen />;
       case 'exposure-mode':
+      case 'exposure-dashboard':
         return <ExposureModeScreen />;
+      case 'project-recommendations':
+        return <ProjectRecommendationsScreen />;
+      case 'project-spec':
+        return <ProjectSpecScreen />;
+      case 'job-opportunities':
+        return <JobOpportunitiesScreen />;
+      case 'job-description':
+        return <JobDescriptionScreen />;
+      case 'explore-opportunities':
+        return <ExploreOpportunitiesScreen />;
+      case 'hr-inbox':
+        return <HRInboxScreen />;
       default:
         return <DashboardScreen />;
     }
